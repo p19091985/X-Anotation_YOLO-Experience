@@ -6,7 +6,6 @@ import json
 import yaml
 from typing import List, Dict, Tuple, Optional, Any
 
-
 class Config:
     APP_NAME = "Editor e Visualizador de Anotações YOLO (v6.4 Verificação)"
     DEFAULT_GEOMETRY = "1366x768"
@@ -28,7 +27,6 @@ class Config:
     AUTO_DISABLE_DRAW_MODE = True
     CONFIG_FILE_PATH = "yolo_editor_config.json"
 
-
 def find_font_path() -> Optional[str]:
     font_paths = [
         "c:/windows/fonts/arial.ttf",
@@ -39,7 +37,6 @@ def find_font_path() -> Optional[str]:
         if os.path.exists(path):
             return path
     return None
-
 
 class AppState:
     def __init__(self) -> None:
@@ -60,7 +57,6 @@ class AppState:
         if 0 <= self.current_image_index < len(self.image_paths):
             return self.image_paths[self.current_image_index]
         return None
-
 
 class AnnotationManager:
     @staticmethod
@@ -141,7 +137,6 @@ class AnnotationManager:
 
         return (f"{class_id} {center_x / orig_w:.6f} {center_y / orig_h:.6f} "
                 f"{box_w / orig_w:.6f} {box_h / orig_h:.6f}")
-
 
 class CanvasController:
     def __init__(self, canvas: tk.Canvas, app_state: AppState, ui_manager: 'UIManager'):
@@ -378,7 +373,6 @@ class CanvasController:
         self.pan_start_pos = None
         self.on_mouse_hover(event)
 
-
 class UIManager:
     def __init__(self, root: tk.Tk, app: 'MainApplication'):
         self.root = root
@@ -519,7 +513,6 @@ class UIManager:
         else:
             self.preview_window.on_close()
 
-
 class MainApplication:
     def __init__(self, root: tk.Tk):
         self.root = root
@@ -545,7 +538,7 @@ class MainApplication:
                 if self._verify_dataset_structure(self.app_state.base_directory):
                     self.root.after(100, self._load_directory_contents)
                 else:
-                    self.app_state.base_directory = ""  # Invalida o diretório salvo
+                    self.app_state.base_directory = ""                              
         except (FileNotFoundError, json.JSONDecodeError):
             self.toggle_theme(update_config=False)
 
@@ -881,7 +874,6 @@ class MainApplication:
         except (ImportError, Exception):
             self.ui.update_status_bar("Módulo 'sv_ttk' não encontrado ou falha ao aplicar tema.")
 
-
 class ClassManagerWindow(Toplevel):
     def __init__(self, master, class_list: List[str], callback: callable):
         super().__init__(master)
@@ -946,7 +938,6 @@ class ClassManagerWindow(Toplevel):
         self.callback(self.class_list)
         self.destroy()
 
-
 class PreviewWindow(Toplevel):
     def __init__(self, master, app_instance: MainApplication):
         super().__init__(master)
@@ -994,7 +985,6 @@ class PreviewWindow(Toplevel):
     def on_close(self) -> None:
         self.app.ui.preview_window = None
         self.destroy()
-
 
 if __name__ == "__main__":
     root = tk.Tk()
