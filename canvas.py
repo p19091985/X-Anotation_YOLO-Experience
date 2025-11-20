@@ -138,6 +138,8 @@ class CanvasController:
             self.temp_text = self.canvas.create_text(event.x + 5, event.y - 10, anchor='w', text='', fill=Config.DIMENSION_TEXT_COLOR)
             return
         item_type, item_index = self.get_item_at(event.x, event.y)
+        if item_type and (item_type.startswith('handle_') or item_type == 'box'):
+            on_update_callback(save_history=True)
         if item_type and item_type.startswith('handle_'):
             self.action_mode = item_type
             self.drag_start_pos = (event.x, event.y)

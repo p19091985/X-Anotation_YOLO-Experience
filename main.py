@@ -6,6 +6,7 @@ import os
 import json
 import yaml
 import logging
+import copy
 from typing import List, Tuple, Optional
 import logger_config
 logger_config.setup_logging()
@@ -106,7 +107,43 @@ class MainApplication:
         self.root.bind('<w>', self.select_prev_annotation)
         self.root.bind('<s>', self.select_next_annotation)
         self.root.bind('<Escape>', self.deselect_all)
+        self.root.bind('<Control-z>', self.undo)
         self.root.protocol('WM_DELETE_WINDOW', self.on_close)
+
+    def save_history(self):
+        if self.app_state.current_image_index != -1:
+            current_annotations = copy.deepcopy(self.app_state.annotations)
+            self.app_state.undo_stack.append(current_annotations)
+            if len(self.app_state.undo_stack) > 50:
+                self.app_state.undo_stack.pop(0)
+            logger.debug('Histórico salvo. Tamanho da pilha: {}'.format(len(self.app_state.undo_stack)))
+
+    def undo(self, event=None):
+        if not self.app_state.undo_stack:
+            self.ui.update_status_bar('Nada para desfazer.')
+            return
+        logger.info('Executando Undo...')
+        last_state = self.app_state.undo_stack.pop()
+        self.app_state.annotations = last_state
+        self.deselect_all()
+        self._save_and_refresh()
+        self.ui.update_status_bar('Ação desfeita.')
+
+    def refresh_directory(self):
+        if not self.app_state.base_directory:
+            return
+        logger.info('Atualizando diretório...')
+        current_path = self.app_state.get_current_image_path()
+        self._load_directory_contents()
+        if current_path and current_path in self.app_state.image_paths:
+            new_index = self.app_state.image_paths.index(current_path)
+            self.app_state.current_image_index = new_index
+            self.ui.listbox.selection_clear(0, tk.END)
+            self.ui.listbox.selection_set(new_index)
+            self.ui.listbox.see(new_index)
+        elif self.app_state.image_paths:
+            self.show_image_at_index(0)
+        self.ui.update_status_bar('Lista de arquivos atualizada.')
 
     def open_new_project_wizard(self) -> None:
         NewProjectWindow(self.root, self.load_created_project)
@@ -139,6 +176,9 @@ class MainApplication:
     def _load_directory_contents(self) -> None:
         logger.info('Lendo conteúdo do diretório...')
         self.ui.dir_label.config(text=f'Pasta: {os.path.basename(self.app_state.base_directory)}')
+        self.app_state.selected_annotation_index = None
+        self.app_state.annotations = []
+        self.app_state.undo_stack = []
         try:
             self._load_class_names()
         except Exception as e:
@@ -154,14 +194,14 @@ class MainApplication:
         logger.info(f'Imagens encontradas: {len(self.app_state.image_paths)}')
         self.ui.refresh_image_list()
         if self.app_state.image_paths:
-            self.show_image_at_index(0)
+            if self.app_state.current_image_index == -1:
+                self.show_image_at_index(0)
             self.ui.add_box_check.config(state='normal')
             self.ui.update_status_bar(f'{len(self.app_state.image_paths)} imagens carregadas. Use as setas para navegar.')
         else:
             logger.info('Nenhuma imagem encontrada no diretório.')
             self.app_state.current_pil_image = None
             self.app_state.current_image_index = -1
-            self.app_state.annotations = []
             self.canvas_controller.display_image()
             self.ui.sync_ui_to_state()
             messagebox.showwarning('Nenhuma Imagem', f"Nenhuma imagem encontrada em '{self.app_state.base_directory}'.", parent=self.root)
@@ -208,6 +248,7 @@ class MainApplication:
         if not 0 <= index < len(self.app_state.image_paths):
             logger.warning(f'Tentativa de acessar índice inválido: {index}')
             return
+        self.app_state.undo_stack.clear()
         self.deselect_all()
         self.app_state.current_image_index = index
         image_path = self.app_state.get_current_image_path()
@@ -228,7 +269,7 @@ class MainApplication:
             self.app_state.current_pil_image = None
             return
         label_path = self.ann_manager.get_label_path(image_path)
-        self.app_state.annotations, error = self.ann_manager.load_annotations(label_path, self.app_state.original_image_size)
+        self.app_state.annotations, error = self.ann_manager.load_annotations(label_path, self.app_state.original_image_size, known_classes=self.app_state.class_names)
         if error:
             self._handle_malformed_annotation_file(label_path, error)
         self.canvas_controller.reset_view()
@@ -236,6 +277,8 @@ class MainApplication:
         self.ui.sync_ui_to_state()
 
     def process_canvas_update(self, **kwargs) -> None:
+        if kwargs.get('save_history'):
+            self.save_history()
         if kwargs.get('select_annotation_idx') is not None:
             self._select_annotation(kwargs['select_annotation_idx'])
         if kwargs.get('deselect_all'):
@@ -280,6 +323,7 @@ class MainApplication:
         self.canvas_controller.display_image()
 
     def _add_new_box_at(self, box_coords: Tuple[float, float, float, float]) -> None:
+        self.save_history()
         class_id = self._ask_for_class_id()
         if class_id is None:
             return
@@ -300,6 +344,7 @@ class MainApplication:
             new_id = self.app_state.class_names.index(selected_class_name)
         except ValueError:
             return
+        self.save_history()
         idx = self.app_state.selected_annotation_index
         ann = self.app_state.annotations[idx]
         parts = ann['yolo_string'].split()
@@ -314,6 +359,7 @@ class MainApplication:
             return
         if self.app_state.selected_annotation_index is not None:
             if messagebox.askyesno('Confirmar Exclusão', 'Deletar a anotação selecionada?', parent=self.root):
+                self.save_history()
                 idx_to_del = self.app_state.selected_annotation_index
                 self.app_state.annotations.pop(idx_to_del)
                 self.deselect_all()

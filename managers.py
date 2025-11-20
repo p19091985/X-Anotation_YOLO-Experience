@@ -1,5 +1,7 @@
 import os
+import logging
 from typing import List, Dict, Tuple, Optional, Any
+logger = logging.getLogger(__name__)
 
 class AnnotationManager:
 
@@ -7,15 +9,14 @@ class AnnotationManager:
     def get_label_path(image_path: str) -> str:
         image_dir = os.path.dirname(image_path)
         base_name = os.path.splitext(os.path.basename(image_path))[0]
-        if os.path.basename(image_dir).lower() == 'images':
-            parent_dir = os.path.dirname(image_dir)
-            label_dir = os.path.join(parent_dir, 'labels')
-            return os.path.join(label_dir, base_name + '.txt')
-        else:
-            return os.path.join(image_dir, base_name + '.txt')
+        parent_dir = os.path.dirname(image_dir)
+        possible_label_dir = os.path.join(parent_dir, 'labels')
+        if os.path.exists(possible_label_dir) and os.path.isdir(possible_label_dir):
+            return os.path.join(possible_label_dir, base_name + '.txt')
+        return os.path.join(image_dir, base_name + '.txt')
 
     @staticmethod
-    def load_annotations(label_path: str, image_size: Tuple[int, int]) -> Tuple[List[Dict[str, Any]], Optional[Exception]]:
+    def load_annotations(label_path: str, image_size: Tuple[int, int], known_classes: List[str]=None) -> Tuple[List[Dict[str, Any]], Optional[Exception]]:
         annotations = []
         img_w, img_h = image_size
         if not os.path.exists(label_path):
@@ -30,11 +31,15 @@ class AnnotationManager:
                     if len(parts) != 5:
                         raise ValueError(f'Linha {i + 1} não tem 5 valores.')
                     class_id, x_c, y_c, w, h = map(float, parts)
+                    class_id = int(class_id)
+                    if known_classes is not None:
+                        if class_id < 0 or class_id >= len(known_classes):
+                            logger.warning(f"Aviso: ID de classe {class_id} encontrado em '{os.path.basename(label_path)}' não existe em classes.txt!")
                     x1 = (x_c - w / 2) * img_w
                     y1 = (y_c - h / 2) * img_h
                     x2 = (x_c + w / 2) * img_w
                     y2 = (y_c + h / 2) * img_h
-                    annotations.append({'yolo_string': line, 'rect_orig': [x1, y1, x2, y2], 'class_id': int(class_id)})
+                    annotations.append({'yolo_string': line, 'rect_orig': [x1, y1, x2, y2], 'class_id': class_id})
             return (annotations, None)
         except (ValueError, IndexError, UnicodeDecodeError) as e:
             return ([], e)

@@ -27,6 +27,8 @@ class UIManager:
         btn_new_proj.pack(side=tk.LEFT, padx=(0, 5))
         btn_select_dir = ttk.Button(top_frame, text='📂 Abrir Pasta', command=self.app.select_directory)
         btn_select_dir.pack(side=tk.LEFT, padx=(0, 5))
+        btn_refresh = ttk.Button(top_frame, text='🔄', width=3, command=self.app.refresh_directory, bootstyle='outline')
+        btn_refresh.pack(side=tk.LEFT, padx=(0, 5))
         btn_preview = ttk.Button(top_frame, text='👁️ Prévia', command=self.toggle_preview_window)
         btn_preview.pack(side=tk.LEFT, padx=5)
         self.dir_label = ttk.Label(top_frame, text='Nenhuma pasta selecionada', style='TLabel')
@@ -124,14 +126,19 @@ class UIManager:
         self.refresh_annotation_list()
         if self.app_state.selected_annotation_index is not None:
             idx = self.app_state.selected_annotation_index
-            self.annotation_listbox.selection_set(idx)
-            self.annotation_listbox.activate(idx)
-            self.set_edit_controls_state('normal' if self.app_state.class_names else 'disabled')
-            class_id = self.app_state.annotations[idx]['class_id']
-            if class_id < len(self.app_state.class_names):
-                self.class_id_var.set(self.app_state.class_names[class_id])
+            if idx < len(self.app_state.annotations):
+                self.annotation_listbox.selection_set(idx)
+                self.annotation_listbox.activate(idx)
+                self.set_edit_controls_state('normal' if self.app_state.class_names else 'disabled')
+                class_id = self.app_state.annotations[idx]['class_id']
+                if class_id < len(self.app_state.class_names):
+                    self.class_id_var.set(self.app_state.class_names[class_id])
+                else:
+                    self.class_id_var.set('')
             else:
-                self.class_id_var.set('')
+                self.app_state.selected_annotation_index = None
+                self.annotation_listbox.selection_clear(0, tk.END)
+                self.set_edit_controls_state('disabled')
         else:
             self.annotation_listbox.selection_clear(0, tk.END)
             self.set_edit_controls_state('disabled')
