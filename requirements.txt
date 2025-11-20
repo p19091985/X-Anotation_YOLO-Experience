@@ -1,2 +1,4 @@
 pillow==12.0.0
 PyYAML==6.0.3
+sv_ttk==2.6.1
+ttkbootstrap==1.19.0
