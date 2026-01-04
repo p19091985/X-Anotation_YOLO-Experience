@@ -132,6 +132,6 @@ Este projeto é distribuído sob a licença MIT. Veja o arquivo LICENSE para mai
 
 ##  Arquitetura
 
-![Diagrama](digramaFuncionamento.png)
+![Diagrama](Untitled Graph.svg)
 ```
 ```
