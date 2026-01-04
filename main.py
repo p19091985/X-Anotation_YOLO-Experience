@@ -2,483 +2,422 @@ import tkinter as tk
 from tkinter import ttk, filedialog, messagebox, simpledialog
 import ttkbootstrap as tb
 from PIL import Image
-import os
-import json
-import yaml
-import logging
-import copy
+import os, json, yaml, logging, copy
 from typing import List, Tuple, Optional
 import logger_config
-logger_config.setup_logging()
-logger = logging.getLogger(__name__)
 from config import Config
 from state import AppState
-from managers import AnnotationManager
+from managers import AnnotationManager, DatasetUtils
 from canvas import CanvasController
 from ui import UIManager
-from windows import ClassManagerWindow, NewProjectWindow
+from windows import ClassManagerWindow, NewProjectWindow, SplitWizard
+from visualizador_grid import GridViewerWindow
+from analisador_dataset import DatasetAnalyzerWindow
+logger_config.setup_logging()
+logger = logging.getLogger(__name__)
 
 class MainApplication:
 
     def __init__(self, root: tb.Window):
-        logger.info('Inicializando MainApplication...')
+        logger.info('Start God Mode...')
         self.root = root
         self.app_state = AppState()
         self.ann_manager = AnnotationManager()
         self.root.title(Config.APP_NAME)
         self.root.geometry(Config.DEFAULT_GEOMETRY)
-        self.root.minsize(*map(int, Config.MIN_GEOMETRY.split('x')))
         self.ui_theme_name = 'darkly'
         self._load_config()
         self.ui = UIManager(root, self)
         self.canvas_controller = CanvasController(self.ui.canvas, self.app_state, self.ui)
         self._bind_events()
-        self.ui.update_status_bar('Bem-vindo! Selecione uma pasta ou crie um novo projeto para começar.')
-        logger.info('Interface inicializada.')
+        self.ui.update_status_bar('Pronto.')
 
-    def _load_config(self) -> None:
-        logger.info('Carregando configurações...')
+    def _load_config(self):
         try:
             with open(Config.CONFIG_FILE_PATH, 'r') as f:
-                config = json.load(f)
-            self.app_state.base_directory = config.get('last_directory', '')
-            saved_theme = config.get('theme', 'darkly')
-            valid_themes = self.root.style.theme_names()
-            if saved_theme not in valid_themes:
-                logger.warning(f"Tema salvo '{saved_theme}' não é válido para ttkbootstrap. Revertendo para 'darkly'.")
-                saved_theme = 'darkly'
-            self.ui_theme_name = saved_theme
-            self.root.style.theme_use(saved_theme)
+                c = json.load(f)
+            self.app_state.base_directory = c.get('last_directory', '')
+            self.ui_theme_name = c.get('theme', 'darkly')
+            self.root.style.theme_use(self.ui_theme_name)
             if self.app_state.base_directory and os.path.exists(self.app_state.base_directory):
-                if self._verify_dataset_structure(self.app_state.base_directory):
-                    logger.info(f'Carregando diretório anterior: {self.app_state.base_directory}')
-                    self.root.after(100, self._load_directory_contents)
-                else:
-                    logger.warning('Diretório anterior não possui estrutura válida.')
-                    self.app_state.base_directory = ''
-        except (FileNotFoundError, json.JSONDecodeError):
-            logger.warning('Arquivo de configuração não encontrado ou inválido. Usando padrões.')
+                self.root.after(100, self._load_directory_contents)
+        except:
+            pass
+
+    def _save_config(self):
+        try:
+            with open(Config.CONFIG_FILE_PATH, 'w') as f:
+                json.dump({'last_directory': self.app_state.base_directory, 'theme': self.ui_theme_name}, f)
+        except:
+            pass
 
     def save_current_theme(self):
         self._save_config()
 
-    def _save_config(self) -> None:
-        config = {'last_directory': self.app_state.base_directory, 'theme': self.ui_theme_name}
-        try:
-            with open(Config.CONFIG_FILE_PATH, 'w') as f:
-                json.dump(config, f, indent=4)
-        except Exception as e:
-            logger.error(f'Erro ao salvar configuração: {e}')
-
-    def _verify_dataset_structure(self, path: str) -> bool:
-        required_dirs = {'train', 'test', 'valid'}
-        found_dirs = set()
-        if not os.path.isdir(path):
-            return False
-        for item in os.listdir(path):
-            if os.path.isdir(os.path.join(path, item)):
-                found_dirs.add(item)
-        is_valid = required_dirs.issubset(found_dirs)
-        if not is_valid:
-            logger.debug(f'Estrutura inválida em {path}. Encontrado: {found_dirs}')
-        return is_valid
-
-    def _bind_events(self) -> None:
+    def _bind_events(self):
         self.ui.listbox.bind('<<ListboxSelect>>', self.on_image_select_from_list)
+        self.ui.listbox.bind('<Delete>', lambda e: self.delete_image_file(force=False))
+        self.ui.listbox.bind('<Shift-Delete>', lambda e: self.delete_image_file(force=True))
         self.ui.annotation_listbox.bind('<<ListboxSelect>>', self.on_annotation_select_from_list)
         self.ui.canvas.bind('<Configure>', self.on_canvas_resize)
-        self.ui.canvas.bind('<ButtonPress-1>', lambda e: self.canvas_controller.on_canvas_press(e, self.process_canvas_update))
+        self.ui.canvas.bind('<ButtonPress-1>', self.on_canvas_click_start)
         self.ui.canvas.bind('<B1-Motion>', self.canvas_controller.on_canvas_drag)
         self.ui.canvas.bind('<ButtonRelease-1>', lambda e: self.canvas_controller.on_canvas_release(e, self.process_canvas_update))
         self.ui.canvas.bind('<Motion>', self.canvas_controller.on_mouse_hover)
         self.ui.canvas.bind('<MouseWheel>', self.canvas_controller.on_zoom)
-        self.ui.canvas.bind('<Button-4>', self.canvas_controller.on_zoom)
-        self.ui.canvas.bind('<Button-5>', self.canvas_controller.on_zoom)
         self.ui.canvas.bind('<ButtonPress-2>', self.canvas_controller.on_pan_start)
-        self.ui.canvas.bind('<ButtonPress-3>', self.canvas_controller.on_pan_start)
         self.ui.canvas.bind('<B2-Motion>', self.canvas_controller.on_pan_move)
-        self.ui.canvas.bind('<B3-Motion>', self.canvas_controller.on_pan_move)
         self.ui.canvas.bind('<ButtonRelease-2>', self.canvas_controller.on_pan_end)
-        self.ui.canvas.bind('<ButtonRelease-3>', self.canvas_controller.on_pan_end)
-        self.root.bind('<Left>', lambda e: self.show_previous_image())
-        self.root.bind('<Right>', lambda e: self.show_next_image())
+        self.root.bind('<Left>', self.handle_left_key)
+        self.root.bind('<Right>', self.handle_right_key)
+        self.root.bind('<Up>', self.handle_up_key)
+        self.root.bind('<Down>', self.handle_down_key)
         self.root.bind('<Delete>', self.delete_current_item)
-        self.root.bind('<b>', self.toggle_drawing_mode_event)
-        self.root.bind('<w>', self.select_prev_annotation)
-        self.root.bind('<s>', self.select_next_annotation)
-        self.root.bind('<Escape>', self.deselect_all)
+        self.root.bind('<d>', self.toggle_drawing_mode_event)
+        self.root.bind('<D>', self.toggle_drawing_mode_event)
         self.root.bind('<Control-z>', self.undo)
         self.root.protocol('WM_DELETE_WINDOW', self.on_close)
 
-    def save_history(self):
+    def on_image_select_from_list(self, event):
+        sel = self.ui.listbox.curselection()
+        if sel:
+            self._save_and_refresh()
+            self.show_image_at_index(sel[0])
+
+    def on_annotation_select_from_list(self, event):
+        sel = self.ui.annotation_listbox.curselection()
+        if sel:
+            self._select_annotation(sel[0])
+
+    def on_canvas_resize(self, event):
         if self.app_state.current_image_index != -1:
-            current_annotations = copy.deepcopy(self.app_state.annotations)
-            self.app_state.undo_stack.append(current_annotations)
-            if len(self.app_state.undo_stack) > 50:
-                self.app_state.undo_stack.pop(0)
-            logger.debug('Histórico salvo. Tamanho da pilha: {}'.format(len(self.app_state.undo_stack)))
+            self.canvas_controller.on_canvas_resize(event)
 
-    def undo(self, event=None):
-        if not self.app_state.undo_stack:
-            self.ui.update_status_bar('Nada para desfazer.')
-            return
-        logger.info('Executando Undo...')
-        last_state = self.app_state.undo_stack.pop()
-        self.app_state.annotations = last_state
-        self.deselect_all()
-        self._save_and_refresh()
-        self.ui.update_status_bar('Ação desfeita.')
+    def on_canvas_click_start(self, event):
+        self.root.focus_set()
+        self.canvas_controller.on_canvas_press(event, self.process_canvas_update)
 
-    def refresh_directory(self):
-        if not self.app_state.base_directory:
-            return
-        logger.info('Atualizando diretório...')
-        current_path = self.app_state.get_current_image_path()
-        self._load_directory_contents()
-        if current_path and current_path in self.app_state.image_paths:
-            new_index = self.app_state.image_paths.index(current_path)
-            self.app_state.current_image_index = new_index
-            self.ui.listbox.selection_clear(0, tk.END)
-            self.ui.listbox.selection_set(new_index)
-            self.ui.listbox.see(new_index)
-        elif self.app_state.image_paths:
-            self.show_image_at_index(0)
-        self.ui.update_status_bar('Lista de arquivos atualizada.')
-
-    def open_new_project_wizard(self) -> None:
-        NewProjectWindow(self.root, self.load_created_project)
-
-    def load_created_project(self, path: str) -> None:
-        logger.info(f'Carregando novo projeto criado: {path}')
-        if not os.path.exists(path):
-            logger.error('Caminho do projeto não existe.')
-            return
-        if self._verify_dataset_structure(path):
-            self.app_state.base_directory = path
-            self._load_directory_contents()
-            self._save_config()
-            messagebox.showinfo('Projeto Carregado', "Dataset criado com sucesso.\n\nAgora adicione suas imagens nas pastas 'train/images', 'valid/images', etc.", parent=self.root)
+    def handle_left_key(self, event):
+        if self.app_state.selected_annotation_index is not None:
+            self.save_history()
+            self.canvas_controller.move_selection_by_pixel(-1, 0, self.process_canvas_update)
         else:
-            logger.error('Estrutura do projeto inválida após criação.')
-            messagebox.showerror('Erro', 'A estrutura do projeto criado parece inválida.', parent=self.root)
+            self.show_previous_image()
 
-    def select_directory(self) -> None:
-        path = filedialog.askdirectory(title='Selecione a pasta raiz do seu dataset (deve conter train/test/valid)', parent=self.root)
-        if not path:
-            return
-        if not self._verify_dataset_structure(path):
-            messagebox.showerror('Estrutura Inválida', "A pasta selecionada deve conter os subdiretórios 'train', 'test' e 'valid'.\n\nO programa não carregará esta pasta.", parent=self.root)
-            return
-        self.app_state.base_directory = path
-        self._load_directory_contents()
-        self._save_config()
+    def handle_right_key(self, event):
+        if self.app_state.selected_annotation_index is not None:
+            self.save_history()
+            self.canvas_controller.move_selection_by_pixel(1, 0, self.process_canvas_update)
+        else:
+            self.show_next_image()
 
-    def _load_directory_contents(self) -> None:
-        logger.info('Lendo conteúdo do diretório...')
-        self.ui.dir_label.config(text=f'Pasta: {os.path.basename(self.app_state.base_directory)}')
-        self.app_state.selected_annotation_index = None
+    def handle_up_key(self, event):
+        if self.app_state.selected_annotation_index is not None:
+            self.save_history()
+            self.canvas_controller.move_selection_by_pixel(0, -1, self.process_canvas_update)
+
+    def handle_down_key(self, event):
+        if self.app_state.selected_annotation_index is not None:
+            self.save_history()
+            self.canvas_controller.move_selection_by_pixel(0, 1, self.process_canvas_update)
+
+    def perform_fine_resize(self, side: str, amount: float):
+        if self.app_state.selected_annotation_index is not None:
+            self.save_history()
+            self.canvas_controller.resize_selection_side(side, amount, self.process_canvas_update)
+
+    def perform_fine_move(self, dx: int, dy: int):
+        if self.app_state.selected_annotation_index is not None:
+            self.save_history()
+            self.canvas_controller.move_selection_by_pixel(dx, dy, self.process_canvas_update)
+
+    def _load_directory_contents(self):
+        self.app_state.current_image_index = -1
+        self.app_state.data_is_safe_to_save = False
         self.app_state.annotations = []
         self.app_state.undo_stack = []
-        try:
-            self._load_class_names()
-        except Exception as e:
-            logger.error(f'Erro ao carregar classes: {e}', exc_info=True)
+        self.ui.dir_label.config(text=f'Pasta: {os.path.basename(self.app_state.base_directory)}')
+        self._load_class_names()
+        valid = ('.png', '.jpg', '.jpeg', '.bmp')
         self.app_state.image_paths = []
-        valid_extensions = ('.png', '.jpg', '.jpeg', '.bmp', '.gif')
-        for root_dir, _, files in os.walk(self.app_state.base_directory):
-            if os.path.basename(root_dir).startswith(('.', '_')):
+        for r, _, files in os.walk(self.app_state.base_directory):
+            if 'labels' in r:
                 continue
-            for file in sorted(files):
-                if file.lower().endswith(valid_extensions):
-                    self.app_state.image_paths.append(os.path.join(root_dir, file))
-        logger.info(f'Imagens encontradas: {len(self.app_state.image_paths)}')
+            for f in sorted(files):
+                if f.lower().endswith(valid):
+                    self.app_state.image_paths.append(os.path.join(r, f))
         self.ui.refresh_image_list()
         if self.app_state.image_paths:
-            if self.app_state.current_image_index == -1:
-                self.show_image_at_index(0)
             self.ui.add_box_check.config(state='normal')
-            self.ui.update_status_bar(f'{len(self.app_state.image_paths)} imagens carregadas. Use as setas para navegar.')
-        else:
-            logger.info('Nenhuma imagem encontrada no diretório.')
-            self.app_state.current_pil_image = None
-            self.app_state.current_image_index = -1
-            self.canvas_controller.display_image()
-            self.ui.sync_ui_to_state()
-            messagebox.showwarning('Nenhuma Imagem', f"Nenhuma imagem encontrada em '{self.app_state.base_directory}'.", parent=self.root)
-            self.ui.add_box_check.config(state='disabled')
+            self.show_image_at_index(0)
 
-    def _load_class_names(self) -> None:
-        self.app_state.class_names = []
-        logger.info('Procurando definições de classes...')
-        for yaml_name in ('data.yaml', 'dataset.yaml'):
-            yaml_path = os.path.join(self.app_state.base_directory, yaml_name)
-            if os.path.exists(yaml_path):
-                try:
-                    with open(yaml_path, 'r', encoding='utf-8') as f:
-                        data = yaml.safe_load(f)
-                    if 'names' in data and isinstance(data['names'], list):
-                        self.app_state.class_names = data['names']
-                        self.ui.update_class_selector()
-                        logger.info(f'Classes carregadas de {yaml_name}: {self.app_state.class_names}')
-                        return
-                except Exception as e:
-                    logger.error(f'Erro ao ler {yaml_name}: {e}')
-                    messagebox.showerror('Erro de Leitura', f"Não foi possível ler '{yaml_name}':\n{e}", parent=self.root)
-        classes_path = os.path.join(self.app_state.base_directory, 'classes.txt')
-        if not os.path.exists(classes_path):
-            parent_dir_classes = os.path.join(os.path.dirname(self.app_state.base_directory), 'classes.txt')
-            if os.path.exists(parent_dir_classes):
-                classes_path = parent_dir_classes
-            else:
-                logger.warning('Nenhum arquivo de classes encontrado.')
-                self.ui.update_class_selector()
-                return
-        try:
-            with open(classes_path, 'r', encoding='utf-8') as f:
-                self.app_state.class_names = [line.strip() for line in f if line.strip()]
-            logger.info(f'Classes carregadas de classes.txt: {self.app_state.class_names}')
-        except Exception as e:
-            logger.error(f'Erro ao ler classes.txt: {e}')
-            messagebox.showerror('Erro de Leitura', f"Não foi possível ler 'classes.txt':\n{e}", parent=self.root)
-        self.ui.update_class_selector()
-
-    def show_image_at_index(self, index: int) -> None:
-        if not self.app_state.image_paths:
-            return
+    def show_image_at_index(self, index):
         if not 0 <= index < len(self.app_state.image_paths):
-            logger.warning(f'Tentativa de acessar índice inválido: {index}')
             return
+        self.app_state.data_is_safe_to_save = False
         self.app_state.undo_stack.clear()
         self.deselect_all()
         self.app_state.current_image_index = index
-        image_path = self.app_state.get_current_image_path()
-        if not image_path:
-            return
-        logger.debug(f'Abrindo imagem: {image_path}')
+        p = self.app_state.get_current_image_path()
         try:
-            image = Image.open(image_path)
-            if image.mode == 'P':
-                image = image.convert('RGBA')
+            im = Image.open(p).convert('RGB')
+            self.app_state.current_pil_image = im
+            self.app_state.original_image_size = im.size
+            lp = self.ann_manager.get_label_path(p)
+            anns, err = self.ann_manager.load_annotations(lp, im.size)
+            if err:
+                self.app_state.annotations = []
+                logger.error(f'Erro label: {err}')
             else:
-                image = image.convert('RGB')
-            self.app_state.current_pil_image = image
-            self.app_state.original_image_size = image.size
+                self.app_state.annotations = anns
+                self.app_state.data_is_safe_to_save = True
+            self.canvas_controller.reset_view()
+            self.canvas_controller.display_image()
+            self.ui.sync_ui_to_state()
         except Exception as e:
-            logger.error(f'Erro ao abrir imagem {image_path}: {e}')
-            messagebox.showerror('Erro de Imagem', f'Não foi possível carregar a imagem:\n{image_path}\n\nErro: {e}', parent=self.root)
-            self.app_state.current_pil_image = None
-            return
-        label_path = self.ann_manager.get_label_path(image_path)
-        self.app_state.annotations, error = self.ann_manager.load_annotations(label_path, self.app_state.original_image_size, known_classes=self.app_state.class_names)
-        if error:
-            self._handle_malformed_annotation_file(label_path, error)
-        self.canvas_controller.reset_view()
-        self.canvas_controller.display_image()
-        self.ui.sync_ui_to_state()
+            messagebox.showerror('Erro Imagem', str(e))
 
-    def process_canvas_update(self, **kwargs) -> None:
+    def process_canvas_update(self, **kwargs):
         if kwargs.get('save_history'):
             self.save_history()
+        if kwargs.get('add_new_box'):
+            self._add_new_box_at(kwargs['add_new_box'])
         if kwargs.get('select_annotation_idx') is not None:
             self._select_annotation(kwargs['select_annotation_idx'])
         if kwargs.get('deselect_all'):
             self.deselect_all()
         if kwargs.get('toggle_draw_mode'):
-            self.toggle_drawing_mode()
-        if kwargs.get('add_new_box'):
-            self._add_new_box_at(kwargs['add_new_box'])
-        if kwargs.get('save_and_refresh'):
-            self._save_and_refresh(new_selection=self.app_state.selected_annotation_index)
+            self.toggle_drawing_mode(force_state=False)
+        if kwargs.get('fast_update'):
+            self._save_and_refresh(self.app_state.selected_annotation_index, update_listbox=False)
+        elif kwargs.get('save_and_refresh'):
+            self._save_and_refresh(self.app_state.selected_annotation_index, update_listbox=True)
+        if self.app_state.selected_annotation_index is not None:
+            idx = self.app_state.selected_annotation_index
+            if idx < len(self.app_state.annotations):
+                rect = self.app_state.annotations[idx]['rect_orig']
+                self.ui.update_inspector_values(rect)
 
-    def _select_annotation(self, index: int) -> None:
-        if not 0 <= index < len(self.app_state.annotations):
+    def _save_and_refresh(self, new_selection=None, update_listbox=True):
+        if self.app_state.current_image_index == -1 or not self.app_state.data_is_safe_to_save:
             return
-        self.deselect_all()
-        self.app_state.selected_annotation_index = index
+        lp = self.ann_manager.get_label_path(self.app_state.get_current_image_path())
+        if self.ann_manager.save_annotations(lp, self.app_state.annotations):
+            if update_listbox:
+                self.ui.refresh_annotation_list()
+            if new_selection is not None:
+                self._select_annotation(new_selection)
+            self.canvas_controller.display_image()
+
+    def _add_new_box_at(self, coords):
+        cid = self._ask_for_class_id()
+        if cid is None:
+            return
+        self.save_history()
+        x1, y1, x2, y2 = coords
+        rect = [min(x1, x2), min(y1, y2), max(x1, x2), max(y1, y2)]
+        yolo = self.ann_manager.convert_to_yolo_format(cid, tuple(rect), self.app_state.original_image_size)
+        self.app_state.annotations.append({'yolo_string': yolo, 'rect_orig': rect, 'class_id': cid})
+        self._save_and_refresh(len(self.app_state.annotations) - 1)
+
+    def _select_annotation(self, idx):
+        self.app_state.selected_annotation_index = idx
         self.ui.sync_ui_to_state()
         self.canvas_controller.display_image()
 
-    def deselect_all(self, event: Optional[tk.Event]=None) -> str:
-        if self.app_state.selected_annotation_index is not None:
-            self.app_state.selected_annotation_index = None
-            self.ui.sync_ui_to_state()
-            self.canvas_controller.display_image()
+    def deselect_all(self, e=None):
+        self.app_state.selected_annotation_index = None
+        self.ui.sync_ui_to_state()
+        self.canvas_controller.display_image()
         return 'break'
 
-    def _save_and_refresh(self, new_selection: Optional[int]=None) -> None:
-        if self.app_state.current_image_index == -1:
-            return
-        image_path = self.app_state.get_current_image_path()
-        if not image_path:
-            return
-        label_path = self.ann_manager.get_label_path(image_path)
-        if not self.ann_manager.save_annotations(label_path, self.app_state.annotations):
-            messagebox.showerror('Erro', 'Falha ao salvar o arquivo de anotação.', parent=self.root)
-            return
-        self.ui.refresh_annotation_list()
-        if new_selection is not None and new_selection < len(self.app_state.annotations):
-            self._select_annotation(new_selection)
-        else:
-            self.deselect_all()
-        self.canvas_controller.display_image()
-
-    def _add_new_box_at(self, box_coords: Tuple[float, float, float, float]) -> None:
-        self.save_history()
-        class_id = self._ask_for_class_id()
-        if class_id is None:
-            return
-        yolo_string = self.ann_manager.convert_to_yolo_format(class_id, box_coords, self.app_state.original_image_size)
-        x1, y1, x2, y2 = box_coords
-        rect_orig = [min(x1, x2), min(y1, y2), max(x1, x2), max(y1, y2)]
-        self.app_state.annotations.append({'yolo_string': yolo_string, 'rect_orig': rect_orig, 'class_id': class_id})
-        self._save_and_refresh(new_selection=len(self.app_state.annotations) - 1)
-        self.ui.update_status_bar(f'Nova caixa adicionada e salva.')
-
-    def change_annotation_class(self) -> None:
-        if self.app_state.selected_annotation_index is None or not self.app_state.class_names:
-            return
-        selected_class_name = self.ui.class_id_var.get()
-        if not selected_class_name:
-            return
-        try:
-            new_id = self.app_state.class_names.index(selected_class_name)
-        except ValueError:
-            return
-        self.save_history()
-        idx = self.app_state.selected_annotation_index
-        ann = self.app_state.annotations[idx]
-        parts = ann['yolo_string'].split()
-        parts[0] = str(new_id)
-        ann['class_id'] = new_id
-        ann['yolo_string'] = ' '.join(parts)
-        self._save_and_refresh(new_selection=idx)
-        self.ui.update_status_bar(f"Classe alterada para '{selected_class_name}' e salva.")
-
-    def delete_current_item(self, event: Optional[tk.Event]=None) -> None:
-        if self.app_state.current_image_index == -1:
-            return
-        if self.app_state.selected_annotation_index is not None:
-            if messagebox.askyesno('Confirmar Exclusão', 'Deletar a anotação selecionada?', parent=self.root):
-                self.save_history()
-                idx_to_del = self.app_state.selected_annotation_index
-                self.app_state.annotations.pop(idx_to_del)
-                self.deselect_all()
-                self._save_and_refresh()
-            return
-
-    def on_image_select_from_list(self, event: tk.Event) -> None:
-        selections = self.ui.listbox.curselection()
-        if selections:
-            self._save_and_refresh()
-            self.show_image_at_index(selections[0])
-
-    def on_annotation_select_from_list(self, event: tk.Event) -> None:
-        selections = self.ui.annotation_listbox.curselection()
-        if selections:
-            self._select_annotation(selections[0])
-
-    def on_canvas_resize(self, event: tk.Event) -> None:
-        if self.app_state.current_image_index != -1:
-            self.canvas_controller.display_image()
-
-    def show_previous_image(self) -> None:
+    def show_previous_image(self):
         if self.app_state.current_image_index > 0:
             self._save_and_refresh()
             self.show_image_at_index(self.app_state.current_image_index - 1)
 
-    def show_next_image(self) -> None:
+    def show_next_image(self):
         if self.app_state.current_image_index < len(self.app_state.image_paths) - 1:
             self._save_and_refresh()
             self.show_image_at_index(self.app_state.current_image_index + 1)
 
-    def _select_adj_annotation(self, direction: int) -> None:
-        if not self.ui.annotation_listbox.size():
+    def save_history(self):
+        self.app_state.undo_stack.append(copy.deepcopy(self.app_state.annotations))
+        if len(self.app_state.undo_stack) > 50:
+            self.app_state.undo_stack.pop(0)
+
+    def undo(self, e=None):
+        if self.app_state.undo_stack:
+            self.app_state.annotations = self.app_state.undo_stack.pop()
+            self._save_and_refresh()
+
+    def delete_current_item(self, e=None):
+        if self.app_state.selected_annotation_index is not None:
+            self.save_history()
+            self.app_state.annotations.pop(self.app_state.selected_annotation_index)
+            self.deselect_all()
+            self._save_and_refresh()
+
+    def delete_image_file(self, force=False):
+        sel = self.ui.listbox.curselection()
+        if not sel:
             return
-        current_idx = self.app_state.selected_annotation_index if self.app_state.selected_annotation_index is not None else -1
-        new_idx = max(0, min(self.ui.annotation_listbox.size() - 1, current_idx + direction))
-        self._select_annotation(new_idx)
+        index = sel[0]
+        image_path = self.app_state.image_paths[index]
+        image_name = os.path.basename(image_path)
+        label_path = self.ann_manager.get_label_path(image_path)
+        if not force:
+            confirm = messagebox.askyesno('Excluir Imagem', f'Tem certeza que deseja excluir permanentemente:\n\n{image_name}\n\nIsso apagará a imagem e o arquivo de anotação (txt).', icon='warning', parent=self.root)
+            if not confirm:
+                return
+        try:
+            if self.app_state.current_image_index == index:
+                self.app_state.current_pil_image = None
+                self.canvas_controller.displayed_photo = None
+                self.ui.canvas.delete('all')
+            if os.path.exists(image_path):
+                os.remove(image_path)
+            if os.path.exists(label_path):
+                os.remove(label_path)
+            logger.info(f'Imagem deletada: {image_path}')
+            self.app_state.image_paths.pop(index)
+            self.ui.listbox.delete(index)
+            new_index = index
+            if new_index >= len(self.app_state.image_paths):
+                new_index = len(self.app_state.image_paths) - 1
+            if new_index >= 0:
+                self.ui.listbox.selection_set(new_index)
+                self.show_image_at_index(new_index)
+            else:
+                self.app_state.current_image_index = -1
+                self.ui.dir_label.config(text='Pasta vazia')
+                self.ui.status_label.config(text='--')
+                self.ui.annotation_listbox.delete(0, tk.END)
+        except Exception as e:
+            messagebox.showerror('Erro ao Deletar', f'Não foi possível deletar o arquivo:\n{str(e)}')
 
-    def select_prev_annotation(self, event: Optional[tk.Event]=None) -> None:
-        self._select_adj_annotation(-1)
+    def change_annotation_class(self):
+        if self.app_state.selected_annotation_index is None:
+            return
+        try:
+            new_id = self.app_state.class_names.index(self.ui.class_id_var.get())
+            self.save_history()
+            self.app_state.annotations[self.app_state.selected_annotation_index]['class_id'] = new_id
+            idx = self.app_state.selected_annotation_index
+            rect = self.app_state.annotations[idx]['rect_orig']
+            self.app_state.annotations[idx]['yolo_string'] = self.ann_manager.convert_to_yolo_format(new_id, tuple(rect), self.app_state.original_image_size)
+            self._save_and_refresh(idx)
+        except:
+            pass
 
-    def select_next_annotation(self, event: Optional[tk.Event]=None) -> None:
-        self._select_adj_annotation(1)
-
-    def toggle_drawing_mode(self) -> None:
+    def toggle_drawing_mode(self, force_state: Optional[bool]=None):
+        if self.app_state.current_image_index == -1 or not self.app_state.current_pil_image:
+            self.ui.drawing_mode_var.set(False)
+            self.app_state.is_drawing = False
+            messagebox.showinfo('Ação Necessária', 'Por favor, abra uma pasta e selecione uma imagem antes de desenhar.', parent=self.root)
+            return
+        if force_state is not None:
+            target_state = force_state
+            self.ui.drawing_mode_var.set(target_state)
+        else:
+            target_state = self.ui.drawing_mode_var.get()
+        self.app_state.is_drawing = target_state
         self.deselect_all()
-        self.app_state.is_drawing = self.ui.drawing_mode_var.get()
-        status = 'Modo de Desenho: Clique e arraste na imagem para criar uma caixa.' if self.app_state.is_drawing else 'Modo de Navegação: Clique numa caixa para editar ou mover.'
+        status = 'Modo de Desenho: ON (Arraste na imagem)' if self.app_state.is_drawing else 'Modo de Navegação'
         self.ui.update_status_bar(status)
+        cursor = 'crosshair' if self.app_state.is_drawing else ''
+        self.ui.canvas.config(cursor=cursor)
 
-    def toggle_drawing_mode_event(self, event: Optional[tk.Event]=None) -> None:
+    def toggle_drawing_mode_event(self, e):
         if self.ui.add_box_check['state'] == 'normal':
             self.ui.drawing_mode_var.set(not self.ui.drawing_mode_var.get())
             self.toggle_drawing_mode()
 
-    def _ask_for_class_id(self) -> Optional[int]:
+    def _load_class_names(self):
+        self.app_state.class_names = []
+        p = os.path.join(self.app_state.base_directory, 'classes.txt')
+        if os.path.exists(p):
+            with open(p, 'r') as f:
+                self.app_state.class_names = [x.strip() for x in f if x.strip()]
+        self.ui.update_class_selector()
+
+    def _ask_for_class_id(self):
         if not self.app_state.class_names:
-            return simpledialog.askinteger('ID da Classe', 'Digite o ID para a nova caixa:', parent=self.root, minvalue=0)
-        dialog = tk.Toplevel(self.root)
-        dialog.title('Selecionar Classe')
-        dialog.geometry('300x120')
-        dialog.resizable(False, False)
-        ttk.Label(dialog, text='Selecione a classe para a nova caixa:').pack(pady=10, padx=10)
-        class_var = tk.StringVar()
-        combo = ttk.Combobox(dialog, textvariable=class_var, values=self.app_state.class_names, state='readonly')
-        combo.pack(padx=10, fill=tk.X, expand=True)
-        if self.app_state.class_names:
-            combo.set(self.app_state.class_names[0])
-        result = tk.IntVar(value=-1)
+            return simpledialog.askinteger('Classe', 'ID:', parent=self.root)
+        w = tk.Toplevel(self.root)
+        w.geometry('250x100')
+        w.title('Classe')
+        v = tk.StringVar(value=self.app_state.class_names[0])
+        ttk.Combobox(w, textvariable=v, values=self.app_state.class_names).pack(pady=10)
+        res = []
 
-        def on_ok() -> None:
-            if class_var.get():
-                try:
-                    result.set(self.app_state.class_names.index(class_var.get()))
-                except ValueError:
-                    result.set(-1)
-            dialog.destroy()
-        ttk.Button(dialog, text='OK', command=on_ok).pack(pady=10)
-        dialog.transient(self.root)
-        dialog.grab_set()
-        self.root.wait_window(dialog)
-        return result.get() if result.get() != -1 else None
-
-    def _handle_malformed_annotation_file(self, label_path: str, error: Exception) -> None:
-        msg = f'O arquivo de anotação está corrompido ou mal formatado:\n{os.path.basename(label_path)}\n\nErro: {error}\n\nDeseja deletar o arquivo corrompido?'
-        if messagebox.askyesno('Arquivo Corrompido', msg, icon='error', parent=self.root):
+        def ok():
+            res.append(v.get())
+            w.destroy()
+        ttk.Button(w, text='OK', command=ok).pack()
+        self.root.wait_window(w)
+        if res:
             try:
-                os.remove(label_path)
-                logger.info(f'Arquivo corrompido removido: {label_path}')
-            except OSError as e:
-                logger.error(f'Falha ao remover arquivo: {e}')
-                messagebox.showerror('Erro', f'Não foi possível deletar o arquivo:\n{e}', parent=self.root)
+                return self.app_state.class_names.index(res[0])
+            except:
+                return 0
+        return None
 
-    def open_class_manager(self) -> None:
+    def perform_dataset_split(self, train, val, test, shuffle):
         if not self.app_state.base_directory:
-            messagebox.showwarning('Aviso', 'Selecione uma pasta de projeto primeiro.', parent=self.root)
             return
-        manager = ClassManagerWindow(self.root, self.app_state.class_names, self._on_classes_updated)
-        self.root.wait_window(manager)
-
-    def _on_classes_updated(self, new_class_list: List[str]) -> None:
-        self.app_state.class_names = new_class_list
-        classes_path = os.path.join(self.app_state.base_directory, 'classes.txt')
         try:
-            with open(classes_path, 'w', encoding='utf-8') as f:
-                f.write('\n'.join(new_class_list))
-            self.ui.update_class_selector()
-            if self.app_state.current_image_index != -1:
-                self.show_image_at_index(self.app_state.current_image_index)
-            self.ui.update_status_bar('Lista de classes atualizada com sucesso.')
+            DatasetUtils.split_dataset(base_dir=self.app_state.base_directory, train_ratio=train, val_ratio=val, test_ratio=test, shuffle=shuffle)
+            messagebox.showinfo('Sucesso', 'Dataset dividido com sucesso! As pastas train/val/test foram criadas.')
+            self.refresh_directory()
+        except AttributeError:
+            messagebox.showerror('Erro Crítico', 'A classe DatasetUtils não possui o método split_dataset. Verifique o arquivo managers.py.')
         except Exception as e:
-            logger.error(f'Erro ao atualizar classes.txt: {e}')
-            messagebox.showerror('Erro de Escrita', f"Não foi possível salvar 'classes.txt':\n{e}", parent=self.root)
+            messagebox.showerror('Erro', f'Falha ao dividir dataset: {str(e)}')
 
-    def on_close(self) -> None:
-        self._save_and_refresh()
+    def on_close(self):
+        if self.app_state.data_is_safe_to_save:
+            self._save_and_refresh()
         self._save_config()
-        logger.info('Encerrando aplicação.')
         self.root.destroy()
+
+    def select_directory(self):
+        p = filedialog.askdirectory()
+        if p:
+            self.app_state.base_directory = p
+            self._load_directory_contents()
+            self._save_config()
+
+    def open_new_project_wizard(self):
+        NewProjectWindow(self.root, lambda p: (setattr(self.app_state, 'base_directory', p), self._load_directory_contents()))
+
+    def refresh_directory(self):
+        self._load_directory_contents()
+
+    def open_class_manager(self):
+        ClassManagerWindow(self.root, self.app_state.class_names, self._on_classes_updated)
+
+    def _on_classes_updated(self, l):
+        self.app_state.class_names = l
+        with open(os.path.join(self.app_state.base_directory, 'classes.txt'), 'w') as f:
+            f.write('\n'.join(l))
+        self.ui.update_class_selector()
+        self.show_image_at_index(self.app_state.current_image_index)
+
+    def open_split_wizard(self):
+        SplitWizard(self.root, self.perform_dataset_split)
+
+    def open_grid_viewer(self):
+        if not self.app_state.image_paths:
+            messagebox.showwarning('Aviso', 'Abra um dataset primeiro.')
+            return
+        GridViewerWindow(self.root, self)
+
+    def open_dataset_analyzer(self):
+        if not self.app_state.base_directory:
+            messagebox.showwarning('Aviso', 'Abra um dataset primeiro.')
+            return
+        DatasetAnalyzerWindow(self.root, self.app_state.base_directory, self.app_state.class_names)
 if __name__ == '__main__':
     root = tb.Window(themename='darkly')
     app = MainApplication(root)

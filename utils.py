@@ -9,7 +9,7 @@ def find_font_path() -> Optional[str]:
             return font_path
     except ImportError:
         pass
-    font_paths = ['c:/windows/fonts/arial.ttf', 'c:/windows/fonts/segoeui.ttf', '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', '/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf', '/System/Library/Fonts/Supplemental/Arial.ttf', '/Library/Fonts/Arial.ttf']
+    font_paths = ['c:/windows/fonts/arial.ttf', 'c:/windows/fonts/segoeui.ttf', 'c:/windows/fonts/calibri.ttf', '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', '/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf', '/System/Library/Fonts/Supplemental/Arial.ttf', '/Library/Fonts/Arial.ttf']
     for path in font_paths:
         if os.path.exists(path):
             return path

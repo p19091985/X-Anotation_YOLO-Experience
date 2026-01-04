@@ -5,6 +5,8 @@ import yaml
 import logging
 from PIL import Image, ImageTk
 from typing import List, TYPE_CHECKING
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 if TYPE_CHECKING:
     from main import MainApplication
 logger = logging.getLogger(__name__)
@@ -13,222 +15,251 @@ class ClassManagerWindow(tk.Toplevel):
 
     def __init__(self, master, class_list: List[str], callback: callable):
         super().__init__(master)
-        self.title('Gerenciador de Classes')
+        self.title('Gerenciar Classes')
         self.geometry('400x450')
         self.transient(master)
         self.grab_set()
         self.class_list = class_list[:]
         self.callback = callback
-        main_frame = ttk.Frame(self, padding=10)
-        main_frame.pack(fill=tk.BOTH, expand=True)
-        list_frame = ttk.Frame(main_frame)
-        list_frame.pack(fill=tk.BOTH, expand=True, pady=5)
-        self.listbox = Listbox(list_frame)
-        self.listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
-        scrollbar = ttk.Scrollbar(list_frame, orient='vertical', command=self.listbox.yview)
-        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-        self.listbox.config(yscrollcommand=scrollbar.set)
-        for item in self.class_list:
-            self.listbox.insert(tk.END, item)
-        self.listbox.bind('<Double-1>', self.edit_item)
-        button_frame = ttk.Frame(main_frame)
-        button_frame.pack(fill=tk.X, pady=5)
-        ttk.Button(button_frame, text='Adicionar', command=self.add_item).pack(side=tk.LEFT, expand=True, fill=tk.X, padx=2)
-        ttk.Button(button_frame, text='Renomear', command=self.edit_item).pack(side=tk.LEFT, expand=True, fill=tk.X, padx=2)
-        ttk.Button(button_frame, text='Excluir', command=self.delete_item).pack(side=tk.LEFT, expand=True, fill=tk.X, padx=2)
-        action_frame = ttk.Frame(main_frame)
-        action_frame.pack(fill=tk.X, side=tk.BOTTOM, pady=(10, 0))
-        ttk.Button(action_frame, text='Salvar e Fechar', command=self.save_and_close).pack(side=tk.RIGHT)
-        ttk.Button(action_frame, text='Cancelar', command=self.destroy).pack(side=tk.RIGHT, padx=10)
+        self.geometry('+%d+%d' % (master.winfo_rootx() + 50, master.winfo_rooty() + 50))
+        fr = ttk.Frame(self, padding=10)
+        fr.pack(fill=tk.BOTH, expand=True)
+        self.lb = Listbox(fr)
+        self.lb.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        for i in self.class_list:
+            self.lb.insert(tk.END, i)
+        btn_fr = ttk.Frame(fr)
+        btn_fr.pack(fill=tk.X, pady=5)
+        ttk.Button(btn_fr, text='Adicionar', command=self.add).pack(side=tk.LEFT, expand=True, fill=tk.X, padx=2)
+        ttk.Button(btn_fr, text='Renomear', command=self.edit).pack(side=tk.LEFT, expand=True, fill=tk.X, padx=2)
+        ttk.Button(btn_fr, text='Excluir', command=self.delete).pack(side=tk.LEFT, expand=True, fill=tk.X, padx=2)
+        ttk.Button(self, text='Salvar e Fechar', command=self.save, bootstyle='success').pack(pady=10, fill=tk.X, padx=10)
 
-    def add_item(self) -> None:
-        new_class = simpledialog.askstring('Nova Classe', 'Nome da nova classe:', parent=self)
-        if new_class and new_class.strip() and (new_class not in self.class_list):
-            self.class_list.append(new_class)
-            self.listbox.insert(tk.END, new_class)
+    def add(self):
+        n = simpledialog.askstring('Nova Classe', 'Nome:')
+        if n:
+            self.class_list.append(n)
+            self.lb.insert(tk.END, n)
 
-    def edit_item(self, event=None) -> None:
-        selected = self.listbox.curselection()
-        if not selected:
+    def edit(self):
+        sel = self.lb.curselection()
+        if not sel:
             return
-        idx = selected[0]
-        old_name = self.listbox.get(idx)
-        new_name = simpledialog.askstring('Renomear Classe', f"Novo nome para '{old_name}':", initialvalue=old_name, parent=self)
-        if new_name and new_name.strip() and (new_name != old_name) and (new_name not in self.class_list):
-            self.class_list[idx] = new_name
-            self.listbox.delete(idx)
-            self.listbox.insert(idx, new_name)
-            self.listbox.selection_set(idx)
+        idx = sel[0]
+        old = self.class_list[idx]
+        new = simpledialog.askstring('Editar', 'Nome:', initialvalue=old)
+        if new:
+            self.class_list[idx] = new
+            self.lb.delete(idx)
+            self.lb.insert(idx, new)
 
-    def delete_item(self) -> None:
-        selected = self.listbox.curselection()
-        if not selected:
+    def delete(self):
+        sel = self.lb.curselection()
+        if not sel:
             return
-        idx = selected[0]
-        if messagebox.askyesno('Confirmar', f"Tem certeza que deseja excluir '{self.listbox.get(idx)}'?", parent=self):
-            self.class_list.pop(idx)
-            self.listbox.delete(idx)
+        self.class_list.pop(sel[0])
+        self.lb.delete(sel[0])
 
-    def save_and_close(self) -> None:
+    def save(self):
         self.callback(self.class_list)
-        self.destroy()
-
-class PreviewWindow(tk.Toplevel):
-
-    def __init__(self, master, app_instance: 'MainApplication'):
-        super().__init__(master)
-        self.app = app_instance
-        self.title('Prévia das Próximas Imagens')
-        self.geometry('650x250')
-        self.minsize(500, 200)
-        self.photo_images = []
-        main_frame = ttk.Frame(self, padding='10')
-        main_frame.pack(fill=tk.BOTH, expand=True)
-        self.image_labels = []
-        self.filename_labels = []
-        for i in range(3):
-            frame = ttk.Frame(main_frame)
-            frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=5)
-            img_label = ttk.Label(frame, background='gray30', anchor=tk.CENTER)
-            img_label.pack(fill=tk.BOTH, expand=True)
-            filename_label = ttk.Label(frame, text='', anchor=tk.CENTER, wraplength=180)
-            filename_label.pack(fill=tk.X, pady=(5, 0))
-            self.image_labels.append(img_label)
-            self.filename_labels.append(filename_label)
-        self.protocol('WM_DELETE_WINDOW', self.on_close)
-
-    def update_previews(self) -> None:
-        self.photo_images.clear()
-        current_index = self.app.app_state.current_image_index
-        all_paths = self.app.app_state.image_paths
-        for i in range(3):
-            preview_index = current_index + 1 + i
-            if preview_index < len(all_paths):
-                try:
-                    path = all_paths[preview_index]
-                    image = Image.open(path)
-                    image.thumbnail((190, 190), Image.Resampling.LANCZOS)
-                    photo = ImageTk.PhotoImage(image)
-                    self.photo_images.append(photo)
-                    self.image_labels[i].config(image=photo)
-                    self.filename_labels[i].config(text=os.path.basename(path))
-                except Exception as e:
-                    logger.error(f'Erro ao carregar preview: {e}')
-                    self.image_labels[i].config(image='', text='Erro ao carregar')
-            else:
-                self.image_labels[i].config(image='')
-                self.filename_labels[i].config(text='Fim da lista')
-
-    def on_close(self) -> None:
-        self.app.ui.preview_window = None
         self.destroy()
 
 class NewProjectWindow(tk.Toplevel):
 
-    def __init__(self, master, callback_load_project: callable):
+    def __init__(self, master, cb):
         super().__init__(master)
-        self.title('Criar Novo Dataset YOLO')
-        self.geometry('500x550')
-        self.transient(master)
-        self.grab_set()
-        self.callback_load_project = callback_load_project
-        self.base_path = ''
-        self.classes = []
-        logger.info('Janela de Novo Projeto aberta.')
-        self._create_ui()
+        self.cb = cb
+        self.title('Novo Projeto YOLO')
+        self.geometry('500x350')
+        self.path = ''
+        self.geometry('+%d+%d' % (master.winfo_rootx() + 100, master.winfo_rooty() + 100))
+        p = ttk.Frame(self, padding=20)
+        p.pack(fill=tk.BOTH, expand=True)
+        ttk.Label(p, text='Nome do Projeto:', font=('Segoe UI', 10, 'bold')).pack(anchor='w')
+        self.e_name = ttk.Entry(p)
+        self.e_name.pack(fill=tk.X, pady=(0, 10))
+        ttk.Label(p, text='Localização:', font=('Segoe UI', 10, 'bold')).pack(anchor='w')
+        f_dir = ttk.Frame(p)
+        f_dir.pack(fill=tk.X, pady=(0, 10))
+        self.l_path = ttk.Label(f_dir, text='Nenhuma pasta selecionada', bootstyle='secondary', relief='sunken')
+        self.l_path.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(0, 5))
+        ttk.Button(f_dir, text='Browse', command=self.browse, bootstyle='info-outline').pack(side=tk.RIGHT)
+        ttk.Label(p, text='Classes Iniciais (separadas por vírgula):', font=('Segoe UI', 10, 'bold')).pack(anchor='w')
+        self.e_cls = ttk.Entry(p)
+        self.e_cls.pack(fill=tk.X, pady=(0, 20))
+        self.e_cls.insert(0, 'pessoa, carro, moto')
+        ttk.Button(p, text='Criar Estrutura YOLO', command=self.create, bootstyle='success').pack(fill=tk.X, pady=10)
 
-    def _create_ui(self):
-        main_frame = ttk.Frame(self, padding=15)
-        main_frame.pack(fill=tk.BOTH, expand=True)
-        info_frame = ttk.LabelFrame(main_frame, text='Configuração do Projeto', padding=10)
-        info_frame.pack(fill=tk.X, pady=(0, 10))
-        ttk.Label(info_frame, text='Nome do Projeto:').grid(row=0, column=0, sticky='w', pady=5)
-        self.entry_name = ttk.Entry(info_frame)
-        self.entry_name.grid(row=0, column=1, sticky='ew', padx=5)
-        ttk.Label(info_frame, text='Localização:').grid(row=1, column=0, sticky='w', pady=5)
-        self.entry_path = ttk.Entry(info_frame, state='readonly')
-        self.entry_path.grid(row=1, column=1, sticky='ew', padx=5)
-        btn_browse = ttk.Button(info_frame, text='...', width=3, command=self.browse_folder)
-        btn_browse.grid(row=1, column=2)
-        info_frame.columnconfigure(1, weight=1)
-        class_frame = ttk.LabelFrame(main_frame, text='Classes do Dataset', padding=10)
-        class_frame.pack(fill=tk.BOTH, expand=True, pady=(0, 10))
-        input_frame = ttk.Frame(class_frame)
-        input_frame.pack(fill=tk.X, pady=(0, 5))
-        self.entry_class = ttk.Entry(input_frame)
-        self.entry_class.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(0, 5))
-        self.entry_class.bind('<Return>', lambda e: self.add_class())
-        ttk.Button(input_frame, text='+ Adicionar', command=self.add_class).pack(side=tk.LEFT)
-        list_frame = ttk.Frame(class_frame)
-        list_frame.pack(fill=tk.BOTH, expand=True)
-        self.listbox_classes = Listbox(list_frame, height=10)
-        self.listbox_classes.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
-        scrollbar = ttk.Scrollbar(list_frame, orient='vertical', command=self.listbox_classes.yview)
-        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-        self.listbox_classes.config(yscrollcommand=scrollbar.set)
-        btn_remove_class = ttk.Button(class_frame, text='Remover Selecionada', command=self.remove_class)
-        btn_remove_class.pack(anchor='e', pady=5)
-        ttk.Button(main_frame, text='✅ CRIAR E ABRIR PROJETO', command=self.create_structure, style='Accent.TButton').pack(fill=tk.X, pady=10)
+    def browse(self):
+        self.path = filedialog.askdirectory()
+        self.l_path.config(text=self.path)
 
-    def browse_folder(self):
-        path = filedialog.askdirectory(title='Selecione a pasta onde o projeto será criado', parent=self)
-        if path:
-            self.entry_path.config(state='normal')
-            self.entry_path.delete(0, tk.END)
-            self.entry_path.insert(0, path)
-            self.entry_path.config(state='readonly')
-            self.base_path = path
-            logger.debug(f'Pasta base selecionada: {path}')
-
-    def add_class(self):
-        name = self.entry_class.get().strip()
-        if name and name not in self.classes:
-            self.classes.append(name)
-            self.listbox_classes.insert(tk.END, name)
-            self.entry_class.delete(0, tk.END)
-            logger.debug(f'Classe adicionada: {name}')
-
-    def remove_class(self):
-        selection = self.listbox_classes.curselection()
-        if selection:
-            idx = selection[0]
-            removed = self.classes.pop(idx)
-            self.listbox_classes.delete(idx)
-            logger.debug(f'Classe removida: {removed}')
-
-    def create_structure(self):
-        project_name = self.entry_name.get().strip()
-        logger.info(f'Iniciando criação do projeto: {project_name}')
-        if not project_name or not self.base_path:
-            messagebox.showwarning('Atenção', 'Preencha o nome do projeto e selecione um local.', parent=self)
+    def create(self):
+        name = self.e_name.get()
+        cls = [x.strip() for x in self.e_cls.get().split(',') if x.strip()]
+        if not name or not self.path:
+            messagebox.showwarning('Aviso', 'Preencha o nome e selecione uma pasta.')
             return
-        if not self.classes:
-            if not messagebox.askyesno('Sem Classes', 'Você não definiu nenhuma classe. Deseja criar o projeto mesmo assim?', parent=self):
-                return
-        full_path = os.path.join(self.base_path, project_name)
-        if os.path.exists(full_path):
-            messagebox.showerror('Erro', 'Já existe uma pasta com esse nome no local selecionado.', parent=self)
-            return
+        full = os.path.join(self.path, name)
         try:
-            subdirs = ['train/images', 'train/labels', 'valid/images', 'valid/labels', 'test/images', 'test/labels']
-            logger.info(f'Criando diretórios em: {full_path}')
-            for sub in subdirs:
-                p = os.path.join(full_path, sub)
-                os.makedirs(p, exist_ok=True)
-                logger.debug(f'Dir criado: {p}')
-            classes_txt_path = os.path.join(full_path, 'classes.txt')
-            with open(classes_txt_path, 'w', encoding='utf-8') as f:
-                f.write('\n'.join(self.classes))
-            logger.info(f'Arquivo classes.txt criado em {classes_txt_path}')
-            data_yaml_path = os.path.join(full_path, 'data.yaml')
-            data_yaml = {'train': os.path.join(full_path, 'train/images'), 'val': os.path.join(full_path, 'valid/images'), 'test': os.path.join(full_path, 'test/images'), 'nc': len(self.classes), 'names': self.classes}
-            with open(data_yaml_path, 'w', encoding='utf-8') as f:
-                yaml.dump(data_yaml, f, allow_unicode=True)
-            logger.info(f'Arquivo data.yaml criado em {data_yaml_path}')
-            messagebox.showinfo('Sucesso', f"Projeto '{project_name}' criado com sucesso!", parent=self)
-            logger.info('Chamando callback de carregamento...')
-            self.callback_load_project(full_path)
+            for s in ['train/images', 'train/labels', 'valid/images', 'valid/labels', 'test/images', 'test/labels']:
+                os.makedirs(os.path.join(full, s), exist_ok=True)
+            with open(os.path.join(full, 'classes.txt'), 'w') as f:
+                f.write('\n'.join(cls))
+            data_yaml = {'train': os.path.abspath(os.path.join(full, 'train/images')), 'val': os.path.abspath(os.path.join(full, 'valid/images')), 'nc': len(cls), 'names': cls}
+            with open(os.path.join(full, 'data.yaml'), 'w') as f:
+                yaml.dump(data_yaml, f)
+            self.cb(full)
             self.destroy()
         except Exception as e:
-            logger.error('Falha crítica ao criar estrutura do projeto', exc_info=True)
-            messagebox.showerror('Erro Crítico', f"Falha ao criar diretórios:\n{e}\n\nConsulte 'application.log' para detalhes.", parent=self)
+            messagebox.showerror('Erro', str(e))
+
+class SplitWizard(tk.Toplevel):
+
+    def __init__(self, master, callback):
+        super().__init__(master)
+        self.callback = callback
+        self.title('Assistente de Divisão de Dataset (Split)')
+        self.geometry('700x500')
+        self.resizable(False, False)
+        self.geometry('+%d+%d' % (master.winfo_rootx() + 50, master.winfo_rooty() + 50))
+        self.train_pct = tk.DoubleVar(value=80)
+        self.val_pct = tk.DoubleVar(value=20)
+        self.test_pct = tk.DoubleVar(value=0)
+        self.shuffle = tk.BooleanVar(value=True)
+        self.use_test_set = tk.BooleanVar(value=False)
+        self._setup_ui()
+        self._update_chart()
+
+    def _setup_ui(self):
+        main_frame = ttk.Frame(self, padding=15)
+        main_frame.pack(fill=tk.BOTH, expand=True)
+        ttk.Label(main_frame, text='Configurar Distribuição do Dataset', font=('Segoe UI', 14, 'bold')).pack(pady=(0, 10))
+        ttk.Checkbutton(main_frame, text='Incluir Conjunto de Teste (Test Set)', variable=self.use_test_set, command=self._toggle_test_set, bootstyle='round-toggle').pack(pady=(0, 15))
+        content = ttk.Frame(main_frame)
+        content.pack(fill=tk.BOTH, expand=True)
+        left_panel = ttk.Frame(content)
+        left_panel.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=(0, 10))
+        ttk.Label(left_panel, text='Treino (Train)', bootstyle='primary').pack(anchor='w')
+        self.lbl_train = ttk.Label(left_panel, text='80%', font=('Segoe UI', 10, 'bold'), foreground='#007bff')
+        self.lbl_train.pack(anchor='w')
+        self.scale_train = ttk.Scale(left_panel, from_=0, to=100, variable=self.train_pct, command=self._on_train_change, bootstyle='primary')
+        self.scale_train.pack(fill=tk.X, pady=(0, 15))
+        ttk.Label(left_panel, text='Validação (Val)', bootstyle='warning').pack(anchor='w')
+        self.lbl_val = ttk.Label(left_panel, text='20%', font=('Segoe UI', 10, 'bold'), foreground='#ffc107')
+        self.lbl_val.pack(anchor='w')
+        self.scale_val = ttk.Scale(left_panel, from_=0, to=100, variable=self.val_pct, command=self._on_val_change, bootstyle='warning')
+        self.scale_val.pack(fill=tk.X, pady=(0, 15))
+        self.lbl_test_title = ttk.Label(left_panel, text='Teste (Test)', bootstyle='secondary')
+        self.lbl_test_title.pack(anchor='w')
+        self.lbl_test = ttk.Label(left_panel, text='0% (Desativado)', font=('Segoe UI', 12, 'bold'), foreground='#6c757d')
+        self.lbl_test.pack(anchor='w', pady=(0, 20))
+        ttk.Checkbutton(left_panel, text='Embaralhar (Shuffle)', variable=self.shuffle, bootstyle='round-toggle').pack(anchor='w', pady=10)
+        right_panel = ttk.Frame(content, width=320)
+        right_panel.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
+        self.fig = plt.Figure(figsize=(3, 3), dpi=100)
+        self.fig.patch.set_facecolor('#2b2b2b')
+        self.ax = self.fig.add_subplot(111)
+        self.ax.set_facecolor('#2b2b2b')
+        self.canvas = FigureCanvasTkAgg(self.fig, master=right_panel)
+        self.canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
+        ttk.Button(main_frame, text='APLICAR DIVISÃO', command=self.apply, bootstyle='success').pack(fill=tk.X, pady=10)
+
+    def _toggle_test_set(self):
+        if self.use_test_set.get():
+            self.lbl_test_title.configure(bootstyle='success')
+            self.lbl_test.configure(foreground='#28a745')
+            current_val = self.val_pct.get()
+            if current_val > 10:
+                self.val_pct.set(current_val - 10)
+                self.test_pct.set(10)
+            else:
+                self.train_pct.set(self.train_pct.get() - 10)
+                self.test_pct.set(10)
+        else:
+            self.lbl_test_title.configure(bootstyle='secondary')
+            self.lbl_test.configure(foreground='#6c757d', text='DESATIVADO')
+            self.test_pct.set(0)
+            t = self.train_pct.get()
+            self.val_pct.set(100 - t)
+        self._update_ui_values()
+
+    def _on_train_change(self, val):
+        t = int(float(val))
+        if self.use_test_set.get():
+            v = int(self.val_pct.get())
+            if t + v > 100:
+                v = 100 - t
+                self.val_pct.set(v)
+        else:
+            self.val_pct.set(100 - t)
+        self._update_ui_values()
+
+    def _on_val_change(self, val):
+        v = int(float(val))
+        if self.use_test_set.get():
+            t = int(self.train_pct.get())
+            if t + v > 100:
+                t = 100 - v
+                self.train_pct.set(t)
+        else:
+            self.train_pct.set(100 - v)
+        self._update_ui_values()
+
+    def _update_ui_values(self):
+        t = int(self.train_pct.get())
+        v = int(self.val_pct.get())
+        if self.use_test_set.get():
+            test = 100 - t - v
+            self.test_pct.set(test)
+            self.lbl_test.config(text=f'{test}%')
+        else:
+            self.test_pct.set(0)
+            self.lbl_test.config(text='0% (Desativado)')
+        self.lbl_train.config(text=f'{t}%')
+        self.lbl_val.config(text=f'{v}%')
+        self._update_chart()
+
+    def _update_chart(self):
+        t = self.train_pct.get()
+        v = self.val_pct.get()
+        te = self.test_pct.get()
+        self.ax.clear()
+        if self.use_test_set.get():
+            sizes = [t, v, te]
+            labels = ['Train', 'Val', 'Test']
+            colors = ['#007bff', '#ffc107', '#28a745']
+            explode = (0.05, 0, 0)
+        else:
+            sizes = [t, v]
+            labels = ['Train', 'Val']
+            colors = ['#007bff', '#ffc107']
+            explode = (0.05, 0)
+        final_sizes = []
+        final_labels = []
+        final_colors = []
+        final_explode = []
+        for i, s in enumerate(sizes):
+            if s > 0:
+                final_sizes.append(s)
+                final_labels.append(labels[i])
+                final_colors.append(colors[i])
+                final_explode.append(explode[i])
+        if final_sizes:
+            self.ax.pie(final_sizes, labels=final_labels, autopct='%1.1f%%', startangle=90, colors=final_colors, explode=final_explode, pctdistance=0.85, textprops=dict(color='white'))
+            centre_circle = plt.Circle((0, 0), 0.7, fc='#2b2b2b')
+            self.ax.add_artist(centre_circle)
+        self.ax.axis('equal')
+        self.canvas.draw()
+
+    def apply(self):
+        t = self.train_pct.get() / 100
+        v = self.val_pct.get() / 100
+        te = self.test_pct.get() / 100 if self.use_test_set.get() else 0.0
+        shuff = self.shuffle.get()
+        total = t + v + te
+        if abs(total - 1.0) > 0.01:
+            messagebox.showerror('Erro', 'A soma das porcentagens não é 100%. Ajuste os sliders.')
+            return
+        self.callback(t, v, te, shuff)
+        self.destroy()
