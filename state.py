@@ -13,6 +13,7 @@ class AppState:
         self.annotations: List[Dict[str, Any]] = []
         self.selected_annotation_index: Optional[int] = None
         self.is_drawing: bool = False
+        self.annotation_mode: str = 'box'
         self.undo_stack: List[List[Dict[str, Any]]] = []
         self.data_is_safe_to_save: bool = False
 

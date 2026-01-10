@@ -1,44 +1,63 @@
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox, simpledialog
-import ttkbootstrap as tb
 from PIL import Image
 import os, json, yaml, logging, copy
 from typing import List, Tuple, Optional
+import localization
 import logger_config
 from config import Config
 from state import AppState
 from managers import AnnotationManager, DatasetUtils
 from canvas import CanvasController
 from ui import UIManager
-from windows import ClassManagerWindow, NewProjectWindow, SplitWizard
+from window_class_manager import ClassManagerWindow
+from window_new_project import NewProjectWindow
+from window_split_wizard import SplitWizard
+from visualizador_grid import GridViewerWindow
 from visualizador_grid import GridViewerWindow
 from analisador_dataset import DatasetAnalyzerWindow
+from window_about import AboutWindow
 logger_config.setup_logging()
 logger = logging.getLogger(__name__)
 
 class MainApplication:
 
-    def __init__(self, root: tb.Window):
-        logger.info('Start God Mode...')
+    def __init__(self, root: tk.Tk):
+        logger.info('Start Application...')
         self.root = root
         self.app_state = AppState()
         self.ann_manager = AnnotationManager()
         self.root.title(Config.APP_NAME)
-        self.root.geometry(Config.DEFAULT_GEOMETRY)
-        self.ui_theme_name = 'darkly'
+        self.root.minsize(1024, 700)
+        w, h = (self.root.winfo_screenwidth(), self.root.winfo_screenheight())
+        try:
+            self.root.state('zoomed')
+        except:
+            self.root.geometry(f'{w}x{h}+0+0')
+        self.ui_theme_name = Config.STYLE_THEME
+        self._set_theme()
         self._load_config()
         self.ui = UIManager(root, self)
         self.canvas_controller = CanvasController(self.ui.canvas, self.app_state, self.ui)
         self._bind_events()
-        self.ui.update_status_bar('Pronto.')
+        self.ui.update_status_bar('Pronto. Segmentation Mode Ativado.')
+
+    def _set_theme(self):
+        style = ttk.Style()
+        available_themes = style.theme_names()
+        if 'clam' in available_themes:
+            style.theme_use('clam')
+        elif 'alt' in available_themes:
+            style.theme_use('alt')
+        style.configure('TButton', padding=5)
 
     def _load_config(self):
         try:
             with open(Config.CONFIG_FILE_PATH, 'r') as f:
                 c = json.load(f)
             self.app_state.base_directory = c.get('last_directory', '')
-            self.ui_theme_name = c.get('theme', 'darkly')
-            self.root.style.theme_use(self.ui_theme_name)
+            lang = c.get('language', 'pt_BR')
+            localization.set_language(lang)
             if self.app_state.base_directory and os.path.exists(self.app_state.base_directory):
                 self.root.after(100, self._load_directory_contents)
         except:
@@ -47,7 +66,7 @@ class MainApplication:
     def _save_config(self):
         try:
             with open(Config.CONFIG_FILE_PATH, 'w') as f:
-                json.dump({'last_directory': self.app_state.base_directory, 'theme': self.ui_theme_name}, f)
+                json.dump({'last_directory': self.app_state.base_directory, 'theme': 'default', 'language': localization.get_current_language()}, f)
         except:
             pass
 
@@ -63,6 +82,7 @@ class MainApplication:
         self.ui.canvas.bind('<ButtonPress-1>', self.on_canvas_click_start)
         self.ui.canvas.bind('<B1-Motion>', self.canvas_controller.on_canvas_drag)
         self.ui.canvas.bind('<ButtonRelease-1>', lambda e: self.canvas_controller.on_canvas_release(e, self.process_canvas_update))
+        self.ui.canvas.bind('<ButtonPress-3>', lambda e: self.canvas_controller.on_right_click(e, self.process_canvas_update))
         self.ui.canvas.bind('<Motion>', self.canvas_controller.on_mouse_hover)
         self.ui.canvas.bind('<MouseWheel>', self.canvas_controller.on_zoom)
         self.ui.canvas.bind('<ButtonPress-2>', self.canvas_controller.on_pan_start)
@@ -77,6 +97,16 @@ class MainApplication:
         self.root.bind('<D>', self.toggle_drawing_mode_event)
         self.root.bind('<Control-z>', self.undo)
         self.root.protocol('WM_DELETE_WINDOW', self.on_close)
+
+    def toggle_drawing_mode_event(self, e):
+        if self.ui.add_box_check.instate(['!disabled']):
+            self.ui.add_box_check.invoke()
+
+    def set_annotation_mode(self, mode):
+        self.app_state.annotation_mode = mode
+        self.app_state.selected_annotation_index = None
+        self.canvas_controller.poly_points_buffer = []
+        self.canvas_controller.display_image()
 
     def on_image_select_from_list(self, event):
         sel = self.ui.listbox.curselection()
@@ -136,7 +166,9 @@ class MainApplication:
         self.app_state.data_is_safe_to_save = False
         self.app_state.annotations = []
         self.app_state.undo_stack = []
-        self.ui.dir_label.config(text=f'Pasta: {os.path.basename(self.app_state.base_directory)}')
+        if self.app_state.is_drawing:
+            self.toggle_drawing_mode(force_state=False)
+        self.ui.dir_label.config(text=f'{localization.tr('COL_FOLDER')}: {os.path.basename(self.app_state.base_directory)}')
         self._load_class_names()
         valid = ('.png', '.jpg', '.jpeg', '.bmp')
         self.app_state.image_paths = []
@@ -150,6 +182,15 @@ class MainApplication:
         if self.app_state.image_paths:
             self.ui.add_box_check.config(state='normal')
             self.show_image_at_index(0)
+        else:
+            self.app_state.current_pil_image = None
+            self.canvas_controller.displayed_photo = None
+            self.ui.canvas.delete('all')
+            self.app_state.current_image_index = -1
+            self.ui.dir_label.config(text=f'{localization.tr('COL_FOLDER')}: {os.path.basename(self.app_state.base_directory)} (Empty)')
+            self.ui.status_label.config(text='--')
+            self.ui.annotation_listbox.delete(0, tk.END)
+            self.ui.add_box_check.config(state='disabled')
 
     def show_image_at_index(self, index):
         if not 0 <= index < len(self.app_state.image_paths):
@@ -181,7 +222,9 @@ class MainApplication:
         if kwargs.get('save_history'):
             self.save_history()
         if kwargs.get('add_new_box'):
-            self._add_new_box_at(kwargs['add_new_box'])
+            self._add_new_shape('box', kwargs['add_new_box'])
+        if kwargs.get('add_new_poly'):
+            self._add_new_shape('polygon', kwargs['add_new_poly'])
         if kwargs.get('select_annotation_idx') is not None:
             self._select_annotation(kwargs['select_annotation_idx'])
         if kwargs.get('deselect_all'):
@@ -209,15 +252,23 @@ class MainApplication:
                 self._select_annotation(new_selection)
             self.canvas_controller.display_image()
 
-    def _add_new_box_at(self, coords):
+    def _add_new_shape(self, shape_type, data):
         cid = self._ask_for_class_id()
         if cid is None:
             return
         self.save_history()
-        x1, y1, x2, y2 = coords
-        rect = [min(x1, x2), min(y1, y2), max(x1, x2), max(y1, y2)]
-        yolo = self.ann_manager.convert_to_yolo_format(cid, tuple(rect), self.app_state.original_image_size)
-        self.app_state.annotations.append({'yolo_string': yolo, 'rect_orig': rect, 'class_id': cid})
+        if shape_type == 'box':
+            x1, y1, x2, y2 = data
+            rect = [min(x1, x2), min(y1, y2), max(x1, x2), max(y1, y2)]
+            yolo = self.ann_manager.convert_box_to_yolo(cid, tuple(rect), self.app_state.original_image_size)
+            self.app_state.annotations.append({'type': 'box', 'yolo_string': yolo, 'rect_orig': rect, 'class_id': cid, 'points': []})
+        elif shape_type == 'polygon':
+            points = data
+            xs = [p[0] for p in points]
+            ys = [p[1] for p in points]
+            rect = [min(xs), min(ys), max(xs), max(ys)]
+            yolo = self.ann_manager.convert_poly_to_yolo(cid, points, self.app_state.original_image_size)
+            self.app_state.annotations.append({'type': 'polygon', 'yolo_string': yolo, 'rect_orig': rect, 'class_id': cid, 'points': points})
         self._save_and_refresh(len(self.app_state.annotations) - 1)
 
     def _select_annotation(self, idx):
@@ -267,7 +318,7 @@ class MainApplication:
         image_name = os.path.basename(image_path)
         label_path = self.ann_manager.get_label_path(image_path)
         if not force:
-            confirm = messagebox.askyesno('Excluir Imagem', f'Tem certeza que deseja excluir permanentemente:\n\n{image_name}\n\nIsso apagará a imagem e o arquivo de anotação (txt).', icon='warning', parent=self.root)
+            confirm = messagebox.askyesno('Excluir Imagem', f'Excluir: {image_name}?', icon='warning', parent=self.root)
             if not confirm:
                 return
         try:
@@ -279,12 +330,9 @@ class MainApplication:
                 os.remove(image_path)
             if os.path.exists(label_path):
                 os.remove(label_path)
-            logger.info(f'Imagem deletada: {image_path}')
             self.app_state.image_paths.pop(index)
             self.ui.listbox.delete(index)
-            new_index = index
-            if new_index >= len(self.app_state.image_paths):
-                new_index = len(self.app_state.image_paths) - 1
+            new_index = min(index, len(self.app_state.image_paths) - 1)
             if new_index >= 0:
                 self.ui.listbox.selection_set(new_index)
                 self.show_image_at_index(new_index)
@@ -294,7 +342,7 @@ class MainApplication:
                 self.ui.status_label.config(text='--')
                 self.ui.annotation_listbox.delete(0, tk.END)
         except Exception as e:
-            messagebox.showerror('Erro ao Deletar', f'Não foi possível deletar o arquivo:\n{str(e)}')
+            messagebox.showerror('Erro', str(e))
 
     def change_annotation_class(self):
         if self.app_state.selected_annotation_index is None:
@@ -304,8 +352,7 @@ class MainApplication:
             self.save_history()
             self.app_state.annotations[self.app_state.selected_annotation_index]['class_id'] = new_id
             idx = self.app_state.selected_annotation_index
-            rect = self.app_state.annotations[idx]['rect_orig']
-            self.app_state.annotations[idx]['yolo_string'] = self.ann_manager.convert_to_yolo_format(new_id, tuple(rect), self.app_state.original_image_size)
+            self.canvas_controller._update_yolo_string(idx)
             self._save_and_refresh(idx)
         except:
             pass
@@ -314,24 +361,15 @@ class MainApplication:
         if self.app_state.current_image_index == -1 or not self.app_state.current_pil_image:
             self.ui.drawing_mode_var.set(False)
             self.app_state.is_drawing = False
-            messagebox.showinfo('Ação Necessária', 'Por favor, abra uma pasta e selecione uma imagem antes de desenhar.', parent=self.root)
             return
         if force_state is not None:
-            target_state = force_state
-            self.ui.drawing_mode_var.set(target_state)
-        else:
-            target_state = self.ui.drawing_mode_var.get()
-        self.app_state.is_drawing = target_state
+            self.ui.drawing_mode_var.set(force_state)
+        self.app_state.is_drawing = self.ui.drawing_mode_var.get()
         self.deselect_all()
-        status = 'Modo de Desenho: ON (Arraste na imagem)' if self.app_state.is_drawing else 'Modo de Navegação'
+        mode_txt = 'Polígono' if self.app_state.annotation_mode == 'polygon' else 'Box'
+        status = f'Modo Desenho: ON ({mode_txt})' if self.app_state.is_drawing else 'Modo de Navegação'
         self.ui.update_status_bar(status)
-        cursor = 'crosshair' if self.app_state.is_drawing else ''
-        self.ui.canvas.config(cursor=cursor)
-
-    def toggle_drawing_mode_event(self, e):
-        if self.ui.add_box_check['state'] == 'normal':
-            self.ui.drawing_mode_var.set(not self.ui.drawing_mode_var.get())
-            self.toggle_drawing_mode()
+        self.ui.canvas.config(cursor='crosshair' if self.app_state.is_drawing else '')
 
     def _load_class_names(self):
         self.app_state.class_names = []
@@ -363,33 +401,14 @@ class MainApplication:
                 return 0
         return None
 
-    def perform_dataset_split(self, train, val, test, shuffle):
-        if not self.app_state.base_directory:
-            return
-        try:
-            DatasetUtils.split_dataset(base_dir=self.app_state.base_directory, train_ratio=train, val_ratio=val, test_ratio=test, shuffle=shuffle)
-            messagebox.showinfo('Sucesso', 'Dataset dividido com sucesso! As pastas train/val/test foram criadas.')
-            self.refresh_directory()
-        except AttributeError:
-            messagebox.showerror('Erro Crítico', 'A classe DatasetUtils não possui o método split_dataset. Verifique o arquivo managers.py.')
-        except Exception as e:
-            messagebox.showerror('Erro', f'Falha ao dividir dataset: {str(e)}')
-
-    def on_close(self):
-        if self.app_state.data_is_safe_to_save:
-            self._save_and_refresh()
+    def on_project_created(self, path):
+        self.app_state.base_directory = path
         self._save_config()
-        self.root.destroy()
-
-    def select_directory(self):
-        p = filedialog.askdirectory()
-        if p:
-            self.app_state.base_directory = p
-            self._load_directory_contents()
-            self._save_config()
+        self._load_directory_contents()
+        self.root.lift()
 
     def open_new_project_wizard(self):
-        NewProjectWindow(self.root, lambda p: (setattr(self.app_state, 'base_directory', p), self._load_directory_contents()))
+        NewProjectWindow(self.root, self.on_project_created)
 
     def refresh_directory(self):
         self._load_directory_contents()
@@ -404,21 +423,53 @@ class MainApplication:
         self.ui.update_class_selector()
         self.show_image_at_index(self.app_state.current_image_index)
 
+    def perform_dataset_split(self, train, val, test, shuffle):
+        if not self.app_state.base_directory:
+            return
+        try:
+            DatasetUtils.split_dataset(base_dir=self.app_state.base_directory, train_ratio=train, val_ratio=val, test_ratio=test, shuffle=shuffle)
+            messagebox.showinfo('Sucesso', 'Dataset dividido com sucesso! As pastas train/val/test foram criadas.')
+            self.refresh_directory()
+        except Exception as e:
+            messagebox.showerror('Erro', f'Falha ao dividir dataset: {str(e)}')
+
     def open_split_wizard(self):
         SplitWizard(self.root, self.perform_dataset_split)
 
     def open_grid_viewer(self):
         if not self.app_state.image_paths:
-            messagebox.showwarning('Aviso', 'Abra um dataset primeiro.')
+            messagebox.showwarning('Aviso', 'Abra um dataset.')
             return
         GridViewerWindow(self.root, self)
 
     def open_dataset_analyzer(self):
         if not self.app_state.base_directory:
-            messagebox.showwarning('Aviso', 'Abra um dataset primeiro.')
+            messagebox.showwarning('Aviso', 'Abra um dataset.')
             return
         DatasetAnalyzerWindow(self.root, self.app_state.base_directory, self.app_state.class_names)
+
+    def select_directory(self):
+        p = filedialog.askdirectory()
+        if p:
+            self.app_state.base_directory = p
+            self._load_directory_contents()
+            self._save_config()
+
+    def show_about_dialog(self):
+        localization.reload()
+        AboutWindow(self.root)
+
+    def change_language(self, code):
+        localization.set_language(code)
+        self._save_config()
+        self.ui.refresh_ui()
+
+    def on_close(self):
+        if self.app_state.data_is_safe_to_save:
+            self._save_and_refresh()
+        self._save_config()
+        self.root.destroy()
 if __name__ == '__main__':
-    root = tb.Window(themename='darkly')
+    root = tk.Tk()
     app = MainApplication(root)
     root.mainloop()

@@ -1,8 +1,14 @@
+import platform
+
 class Config:
-    APP_NAME = 'X-Annotation YOLO Ultimate (v7.0 God Mode)'
+    APP_NAME = 'X-Annotation YOLO Ultimate (v7.0)'
     DEFAULT_GEOMETRY = '1440x900'
     MIN_GEOMETRY = '1024x600'
-    STYLE_THEME = 'darkly'
+    STYLE_THEME = 'clam'
+    IS_WINDOWS = platform.system() == 'Windows'
+    IS_LINUX = platform.system() == 'Linux'
+    IS_MAC = platform.system() == 'Darwin'
+    FONTS = {'main': ('Segoe UI', 10) if IS_WINDOWS else ('Helvetica', 10), 'main_bold': ('Segoe UI', 10, 'bold') if IS_WINDOWS else ('Helvetica', 10, 'bold'), 'header': ('Impact', 16) if IS_WINDOWS else ('Dejavu Sans', 16, 'bold'), 'sub_header': ('Segoe UI', 12) if IS_WINDOWS else ('Helvetica', 12), 'mono': ('Consolas', 10) if IS_WINDOWS else ('Courier New', 10), 'mono_small': ('Consolas', 9) if IS_WINDOWS else ('Courier New', 9), 'small': ('Segoe UI', 8) if IS_WINDOWS else ('Helvetica', 8), 'small_italic': ('Segoe UI', 8, 'italic') if IS_WINDOWS else ('Helvetica', 8, 'italic')}
     CANVAS_BG_COLOR = '#1E1E1E'
     HIGHLIGHT_COLOR = '#FFFFFF'
     NEW_BOX_COLOR = '#00FFFF'

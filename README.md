@@ -1,105 +1,124 @@
-# 🎯 X-Anotation YOLO Experience
+# 🎯 X-Annotation YOLO Experience
 
-Um editor e visualizador de anotações moderno para datasets YOLO, construído em Python com **Tkinter** e **ttkbootstrap**.
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux-lightgrey.svg)]()
+[![Languages](https://img.shields.io/badge/Languages-100%2B-orange.svg)]()
 
-Este projeto oferece uma interface gráfica amigável para criar, editar e visualizar *Bounding Boxes* em imagens para treinamento de modelos de Visão Computacional (YOLOv5, v8, v11, etc).
+**A state-of-the-art, cross-platform dataset annotation tool for YOLO, built with Python & Tkinter.**
 
----
-
-## ✨ Funcionalidades Principais
-
-* **🎨 Interface Moderna:** Suporte a múltiplos temas (Darkly, Cosmo, Flatly, etc) via `ttkbootstrap`.
-* **📁 Gerenciamento de Projetos:**
-    * Crie novos datasets do zero com estrutura automática de pastas (`train`, `valid`, `test`).
-    * Carregue datasets existentes.
-* **✏️ Edição Completa:**
-    * Desenhar novas caixas (Arrastar e soltar).
-    * Redimensionar e mover caixas existentes.
-    * Alterar a classe de uma anotação.
-    * Excluir anotações.
-* **🔍 Navegação Avançada:**
-    * **Zoom:** Zoom in/out com a roda do mouse.
-    * **Pan:** Arraste com o botão direito ou do meio para mover a imagem.
-* **⚙️ Gerenciador de Classes:** Adicione, renomeie ou remova classes diretamente na interface (atualiza o `classes.txt`).
-* **📝 Logs:** Sistema de log detalhado (`application.log`) para debug e rastreamento de erros.
+X-Annotation YOLO Experience is a professional-grade GUI for creating, visualizing, and managing object detection datasets. Designed for efficiency and reliability, it supports the latest YOLO formats (v5, v8, v11) and provides advanced features for computer vision workflows.
 
 ---
 
-## 🛠️ Instalação
+## ✨ Features
 
-Certifique-se de ter o **Python 3.10+** instalado.
-````
-1.  **Clone o repositório:**
-    ```bash
-    git clone [https://github.com/SeuUsuario/X-Anotation_YOLO-Experience.git](https://github.com/SeuUsuario/X-Anotation_YOLO-Experience.git)
-    cd X-Anotation_YOLO-Experience
-    ```
+### 🚀 Core Experience
+*   **Modern Native UI**: Built with standard `tkinter` for maximum performance and native look-and-feel on Windows and Linux (no heavy external dependencies).
+*   **Robust Stability**: Validated with an automated macro testing suite to ensure high reliability.
+*   **Universal Compatibility**: Optimized for seamless operation across different operating systems with automatic font handling and DPI scaling.
 
-2.  **Crie um ambiente virtual (Recomendado):**
-    ```bash
-    # Linux/Mac
-    python3 -m venv .venv
-    source .venv/bin/activate
+### 🌍 Global Reach
+*   **Multi-Language Support**: Complete translations for **100+ languages**.
+*   **Searchable Language Selector**: Quickly find your language with a smart, filterable dropdown.
+*   **Intelligent Fallback**: Automatic English fallback ensures the interface never breaks, even if a translation is missing.
 
-    # Windows
-    python -m venv .venv
-    .venv\Scripts\activate
-    ```
+### 🛠️ Advanced Tooling
+*   **Project Management**:
+    *   **Automated Setup**: Instantly creates standardized YOLO directory structures (`train`, `valid`, `test`, `data.yaml`).
+    *   **Class Manager**: Add, rename, or delete classes dynamically.
+*   **Data Analysis**:
+    *   **Grid Viewer**: Visualize your dataset in a mosaic grid to spot inconsistencies.
+    *   **Dataset Analyzer**: Generating distribution charts and statistics (train/val split ratio, class balance).
+    *   **Split Wizard**: Easily redistribute images between training and validation sets with intuitive sliders.
 
-3.  **Instale as dependências:**
-    ```bash
-    pip install pillow pyyaml ttkbootstrap
-    ```
+### ✏️ Annotation Power
+*   **Smart Drawing**: Rapid bounding box creation with "Draw Mode" (`B`).
+*   **Fine Controls**:
+    *   Precision resizing with "W" and "H" spinners (with safety checks against inversion).
+    *   Pixel-perfect movement using arrow keys or UI controls.
+*   **Zoom & Pan**: Smooth navigation using mouse wheel and drag (right/middle click) for detailing high-res images.
 
 ---
 
-## 🚀 Como Usar
+## 🛠️ Installation
 
-Execute o arquivo principal para iniciar a aplicação:
+Ensure you have **Python 3.10+** installed.
 
+### 1. Clone the Repository
+```bash
+git clone https://github.com/SeuUsuario/X-Anotation_YOLO-Experience.git
+cd X-Anotation_YOLO-Experience
+```
+
+### 2. Create a Virtual Environment (Recommended)
+**Linux/Mac:**
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+**Windows:**
+```powershell
+python -m venv .venv
+.venv\Scripts\activate
+```
+
+### 3. Install Dependencies
+```bash
+pip install -r requirements.txt
+```
+*(Or manually: `pip install pillow pyyaml`)*
+
+---
+
+## 🚀 Usage
+
+Launch the application:
 ```bash
 python main.py
-````
+```
 
-### Fluxo de Trabalho
+### Workflow
 
-1.  **Novo Projeto:** Clique em `✨ Novo Dataset`, escolha o nome, o local e defina as classes iniciais.
-2.  **Carregar Imagens:** Coloque suas imagens (`.jpg`, `.png`) dentro da pasta `train/images` (ou `valid/images`) que foi criada.
-3.  **Anotar:**
-      * Pressione `B` para ativar o modo de desenho.
-      * Clique e arraste na imagem para criar uma caixa.
-      * Selecione a classe no menu lateral.
-4.  **Navegar:** Use as setas do teclado ou os botões na interface para trocar de imagem. **O salvamento é automático** ao mudar de imagem ou fechar o app.
+1.  **Create Project**: Click `✨ New Project`, define your classes, and choose a save location.
+2.  **Add Data**: Drop your images into the created `train/images` folder.
+3.  **Annotate**:
+    *   Press `B` to toggle **Draw Mode**.
+    *   Drag to draw boxes.
+    *   Select classes from the right panel.
+4.  **Manage**: Use the `Statistics` or `Grid` tabs to audit your dataset quality.
+5.  **Export**: Your data is always saved in real-time in standard YOLO format (`.txt` files).
 
------
+---
 
-## ⌨️ Atalhos e Controles
+## ⌨️ Shortcuts
 
-| Ação | Comando / Tecla |
+| Action | Control / Key |
 | :--- | :--- |
-| **Zoom In/Out** | `Roda do Mouse` |
-| **Mover Imagem (Pan)** | `Botão Direito` ou `Botão do Meio` (Segurar e arrastar) |
-| **Modo Desenho** | Tecla `B` (Alterna entre Navegação/Desenho) |
-| **Deletar Caixa** | Tecla `Delete` (Na caixa selecionada) |
-| **Próxima Imagem** | `Seta Direita` |
-| **Imagem Anterior** | `Seta Esquerda` |
-| **Próxima Anotação** | Tecla `S` |
-| **Anotação Anterior** | Tecla `W` |
-| **Cancelar Seleção** | `Esc` |
+| **Draw Mode** | `B` (Toggle) |
+| **Next Image** | `Right Arrow` |
+| **Previous Image** | `Left Arrow` |
+| **Delete Box** | `Delete` |
+| **Next Annotation** | `S` |
+| **Prev Annotation** | `W` |
+| **Zoom** | `Mouse Wheel` |
+| **Pan Image** | `Right/Middle Click + Drag` |
+| **Cancel** | `Esc` |
 
------
+---
 
-## 📂 Estrutura do Dataset
+## 📂 Project Structure
 
-O software trabalha com a estrutura padrão YOLO:
+X-Annotation adheres to the rigorous YOLO filesystem standard:
 
 ```text
-NomeDoProjeto/
-├── classes.txt       # Lista de nomes das classes
-├── data.yaml         # Configuração do dataset
+MyProject/
+├── classes.txt       # Class definitions
+├── data.yaml         # Dataset configuration needed for training
 ├── train/
-│   ├── images/       # Coloque suas imagens aqui
-│   └── labels/       # Onde os .txt das anotações serão salvos
+│   ├── images/       # Source images
+│   └── labels/       # YOLO format annotations
 ├── valid/
 │   ├── images/
 │   └── labels/
@@ -108,30 +127,28 @@ NomeDoProjeto/
     └── labels/
 ```
 
------
+---
 
-## 🔧 Estrutura do Código
+## 🔧 Architecture
 
-O projeto foi modularizado seguindo boas práticas (MVC):
+The project follows a clean, modular Model-View-Controller (MVC) adaptation:
 
-  * `main.py`: Ponto de entrada e controle principal.
-  * `ui.py`: Construção da interface gráfica.
-  * `canvas.py`: Lógica de desenho, zoom e manipulação da imagem.
-  * `managers.py`: Leitura e escrita de arquivos YOLO e anotações.
-  * `state.py`: Gerenciamento do estado da aplicação (dados).
-  * `windows.py`: Janelas secundárias (Novo Projeto, Gerenciador de Classes, Preview).
-  * `config.py`: Cores, constantes e configurações.
-  * `utils.py`: Funções utilitárias.
-  * `logger_config.py`: Configuração do sistema de logs.
+*   **`main.py`**: Application entry point and controller orchestrator.
+*   **`ui.py`**: UI definition (View) using pure Tkinter/TTK.
+*   **`canvas.py`**: Complex canvas logic (Zoom, Pan, Draw, Resize).
+*   **`state.py`**: Centralized application state management.
+*   **`localization.py`**: Dynamic translation engine.
+*   **`managers.py`**: File I/O for YOLO formats.
+*   **`tests/macro/`**: Automated UI test suite for stability verification.
 
------
+---
 
-## 📄 Licença
+## 📄 License
 
-Este projeto é distribuído sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
+Distributed under the **MIT License**. See `LICENSE` for more information.
 
-##  Arquitetura
+---
 
-![Diagrama](Untitled Graph.svg)
-```
-```
+<p align="center">
+  <i>Quality Tools for Computer Vision. Built with ❤️ by the X-Annotation Team.</i>
+</p>

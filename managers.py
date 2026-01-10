@@ -26,7 +26,7 @@ class AnnotationManager:
             return (annotations, None)
         try:
             with open(label_path, 'r', encoding='utf-8') as f:
-                for i, line in enumerate(f):
+                for line in f:
                     line = line.strip()
                     if not line:
                         continue
@@ -34,16 +34,28 @@ class AnnotationManager:
                     if len(parts) < 5:
                         continue
                     class_id = int(parts[0])
-                    cx, cy, w, h = map(float, parts[1:5])
-                    center_x = cx * img_w
-                    center_y = cy * img_h
-                    width = w * img_w
-                    height = h * img_h
-                    x1 = center_x - width / 2
-                    y1 = center_y - height / 2
-                    x2 = center_x + width / 2
-                    y2 = center_y + height / 2
-                    annotations.append({'class_id': class_id, 'rect_orig': [x1, y1, x2, y2], 'yolo_string': line})
+                    coords = list(map(float, parts[1:]))
+                    if len(coords) == 4:
+                        cx, cy, w, h = coords
+                        center_x = cx * img_w
+                        center_y = cy * img_h
+                        width = w * img_w
+                        height = h * img_h
+                        x1 = center_x - width / 2
+                        y1 = center_y - height / 2
+                        x2 = center_x + width / 2
+                        y2 = center_y + height / 2
+                        annotations.append({'type': 'box', 'class_id': class_id, 'rect_orig': [x1, y1, x2, y2], 'points': [], 'yolo_string': line})
+                    else:
+                        points = []
+                        for i in range(0, len(coords), 2):
+                            px = coords[i] * img_w
+                            py = coords[i + 1] * img_h
+                            points.append((px, py))
+                        xs = [p[0] for p in points]
+                        ys = [p[1] for p in points]
+                        rect = [min(xs), min(ys), max(xs), max(ys)]
+                        annotations.append({'type': 'polygon', 'class_id': class_id, 'rect_orig': rect, 'points': points, 'yolo_string': line})
             return (annotations, None)
         except Exception as e:
             return ([], str(e))
@@ -61,7 +73,7 @@ class AnnotationManager:
             return False
 
     @staticmethod
-    def convert_to_yolo_format(class_id: int, rect: Tuple[float, float, float, float], img_size: Tuple[int, int]) -> str:
+    def convert_box_to_yolo(class_id: int, rect: List[float], img_size: Tuple[int, int]) -> str:
         img_w, img_h = img_size
         x1, y1, x2, y2 = rect
         dw = 1.0 / img_w
@@ -75,6 +87,18 @@ class AnnotationManager:
         y *= dh
         h *= dh
         return f'{class_id} {x:.6f} {y:.6f} {w:.6f} {h:.6f}'
+
+    @staticmethod
+    def convert_poly_to_yolo(class_id: int, points: List[Tuple[float, float]], img_size: Tuple[int, int]) -> str:
+        img_w, img_h = img_size
+        parts = [str(class_id)]
+        for px, py in points:
+            nx = px / img_w
+            ny = py / img_h
+            nx = max(0.0, min(1.0, nx))
+            ny = max(0.0, min(1.0, ny))
+            parts.append(f'{nx:.6f} {ny:.6f}')
+        return ' '.join(parts)
 
 class DatasetUtils:
 
