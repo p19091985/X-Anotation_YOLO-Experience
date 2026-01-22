@@ -185,18 +185,18 @@ class UIManager:
         geo_fr = ttk.Frame(act_fr)
         geo_fr.pack(fill=tk.X, padx=5, pady=5)
 
-        def create_geo_control(parent, label_text, var, cmd_minus, cmd_plus, row):
+        def create_geo_control(parent, label_text, var, cmd_minus, cmd_plus, row, labels=('◀', '▶')):
             ttk.Label(parent, text=label_text, font=Config.FONTS['mono'], width=2).grid(row=row, column=0, padx=2, pady=2)
             e = ttk.Entry(parent, textvariable=var, width=5, justify='center', state='readonly', font=Config.FONTS['mono'])
             e.grid(row=row, column=1, padx=2, pady=2)
             btn_frame = ttk.Frame(parent)
             btn_frame.grid(row=row, column=2, padx=2)
-            ttk.Button(btn_frame, text='◀', width=3, command=cmd_minus).pack(side=tk.LEFT)
-            ttk.Button(btn_frame, text='▶', width=3, command=cmd_plus).pack(side=tk.LEFT)
+            ttk.Button(btn_frame, text=labels[0], width=3, command=cmd_minus).pack(side=tk.LEFT)
+            ttk.Button(btn_frame, text=labels[1], width=3, command=cmd_plus).pack(side=tk.LEFT)
         create_geo_control(geo_fr, 'X', self.prop_x, lambda: self.app.perform_fine_move(-1, 0), lambda: self.app.perform_fine_move(1, 0), 0)
-        create_geo_control(geo_fr, 'Y', self.prop_y, lambda: self.app.perform_fine_move(0, -1), lambda: self.app.perform_fine_move(0, 1), 1)
+        create_geo_control(geo_fr, 'Y', self.prop_y, lambda: self.app.perform_fine_move(0, -1), lambda: self.app.perform_fine_move(0, 1), 1, labels=('▲', '▼'))
         create_geo_control(geo_fr, 'W', self.prop_w, lambda: self.app.perform_fine_resize('right', -1), lambda: self.app.perform_fine_resize('right', 1), 2)
-        create_geo_control(geo_fr, 'H', self.prop_h, lambda: self.app.perform_fine_resize('bottom', -1), lambda: self.app.perform_fine_resize('bottom', 1), 3)
+        create_geo_control(geo_fr, 'H', self.prop_h, lambda: self.app.perform_fine_resize('bottom', -1), lambda: self.app.perform_fine_resize('bottom', 1), 3, labels=('▲', '▼'))
         self.canvas = tk.Canvas(content_frame, bg=Config.CANVAS_BG_COLOR, highlightthickness=0)
         self.canvas.grid(row=0, column=1, sticky='nsew')
         bot_frame = ttk.Frame(self.root, padding=10)

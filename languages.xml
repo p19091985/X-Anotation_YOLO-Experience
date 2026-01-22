@@ -10485,7 +10485,7 @@ Zaprojektowany, aby ułatwić tworzenie, edycję i analizę zbiorów danych z za
         <string key="GRID_VIEW">🔍 Grade</string>
         <string key="ANALYZER">📊 Análise</string>
         <string key="SPLIT">⚖️ Divisão</string>
-        <string key="ABOUT">ℹ️ Sobre</string>
+        <string key="ABOUT">Sobre</string>
         <string key="DRAW_MODE">Ativar Modo Desenho (D)</string>
         <string key="ANNOTATION_TYPE">Tipo de Anotação</string>
         <string key="BOX_MODE">⬛ Box (Detecção)</string>

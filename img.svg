@@ -1,208 +1,238 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="2662pt" height="1570pt" viewBox="0.00 0.00 2662.00 1570.00">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(72 1498)">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="2643pt" height="1904pt" viewBox="0.00 0.00 2643.00 1904.00">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(72 1831.8)">
 <title>YOLO_Complete_Architecture_Pastel</title>
-<polygon fill="#fafafa" stroke="none" points="-72,72 -72,-1498 2589.77,-1498 2589.77,72 -72,72"/>
-<text xml:space="preserve" text-anchor="start" x="1139.87" y="-30.8" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="18.00" fill="#7a8b8b">YOLO ANNOTATION TOOL</text>
-<text xml:space="preserve" text-anchor="start" x="1171.28" y="-20" font-family="Helvetica, Arial, sans-serif" font-size="10.00" fill="#9ca3af">Architecture Diagram - Pastel Color Theme</text>
+<polygon fill="#fafafa" stroke="none" points="-72,72 -72,-1831.8 2570.77,-1831.8 2570.77,72 -72,72"/>
+<text xml:space="preserve" text-anchor="start" x="1130.37" y="-30.8" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="18.00" fill="#7a8b8b">YOLO ANNOTATION TOOL</text>
+<text xml:space="preserve" text-anchor="start" x="1161.78" y="-20" font-family="Helvetica, Arial, sans-serif" font-size="10.00" fill="#9ca3af">Architecture Diagram - Pastel Color Theme</text>
 <g id="clust1" class="cluster">
 <title>cluster_legend</title>
-<path fill="#cbd5e1" stroke="#cbd5e1" stroke-width="1.5" d="M385,-1189.8C385,-1189.8 551,-1189.8 551,-1189.8 557,-1189.8 563,-1195.8 563,-1201.8 563,-1201.8 563,-1393.4 563,-1393.4 563,-1399.4 557,-1405.4 551,-1405.4 551,-1405.4 385,-1405.4 385,-1405.4 379,-1405.4 373,-1399.4 373,-1393.4 373,-1393.4 373,-1201.8 373,-1201.8 373,-1195.8 379,-1189.8 385,-1189.8"/>
-<text xml:space="preserve" text-anchor="start" x="438.44" y="-1389.8" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="14.00" fill="#7a8b8b">LEGEND</text>
+<path fill="#cbd5e1" stroke="#cbd5e1" stroke-width="1.5" d="M384,-1523.6C384,-1523.6 550,-1523.6 550,-1523.6 556,-1523.6 562,-1529.6 562,-1535.6 562,-1535.6 562,-1727.2 562,-1727.2 562,-1733.2 556,-1739.2 550,-1739.2 550,-1739.2 384,-1739.2 384,-1739.2 378,-1739.2 372,-1733.2 372,-1727.2 372,-1727.2 372,-1535.6 372,-1535.6 372,-1529.6 378,-1523.6 384,-1523.6"/>
+<text xml:space="preserve" text-anchor="start" x="437.44" y="-1723.6" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="14.00" fill="#7a8b8b">LEGEND</text>
 </g>
 <g id="clust2" class="cluster">
 <title>cluster_infra</title>
-<path fill="#f8bbd0" stroke="#f8bbd0" stroke-width="1.5" d="M830,-1177.2C830,-1177.2 1692,-1177.2 1692,-1177.2 1698,-1177.2 1704,-1183.2 1704,-1189.2 1704,-1189.2 1704,-1406 1704,-1406 1704,-1412 1698,-1418 1692,-1418 1692,-1418 830,-1418 830,-1418 824,-1418 818,-1412 818,-1406 818,-1406 818,-1189.2 818,-1189.2 818,-1183.2 824,-1177.2 830,-1177.2"/>
-<text xml:space="preserve" text-anchor="start" x="1169.41" y="-1402.4" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="14.00" fill="#e91e63">INFRASTRUCTURE LAYER</text>
+<path fill="#f8bbd0" stroke="#f8bbd0" stroke-width="1.5" d="M811,-1511C811,-1511 1673,-1511 1673,-1511 1679,-1511 1685,-1517 1685,-1523 1685,-1523 1685,-1739.8 1685,-1739.8 1685,-1745.8 1679,-1751.8 1673,-1751.8 1673,-1751.8 811,-1751.8 811,-1751.8 805,-1751.8 799,-1745.8 799,-1739.8 799,-1739.8 799,-1523 799,-1523 799,-1517 805,-1511 811,-1511"/>
+<text xml:space="preserve" text-anchor="start" x="1150.41" y="-1736.2" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="14.00" fill="#e91e63">INFRASTRUCTURE LAYER</text>
 </g>
 <g id="clust3" class="cluster">
 <title>cluster_controller</title>
-<path fill="#ffecb3" stroke="#ffecb3" stroke-width="1.5" d="M1216,-778.4C1216,-778.4 1474,-778.4 1474,-778.4 1480,-778.4 1486,-784.4 1486,-790.4 1486,-790.4 1486,-1035.4 1486,-1035.4 1486,-1041.4 1480,-1047.4 1474,-1047.4 1474,-1047.4 1216,-1047.4 1216,-1047.4 1210,-1047.4 1204,-1041.4 1204,-1035.4 1204,-1035.4 1204,-790.4 1204,-790.4 1204,-784.4 1210,-778.4 1216,-778.4"/>
-<text xml:space="preserve" text-anchor="start" x="1274.02" y="-1031.8" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="14.00" fill="#ff8f00">MAIN CONTROLLER</text>
+<path fill="#ffecb3" stroke="#ffecb3" stroke-width="1.5" d="M1216,-959.8C1216,-959.8 1474,-959.8 1474,-959.8 1480,-959.8 1486,-965.8 1486,-971.8 1486,-971.8 1486,-1216.8 1486,-1216.8 1486,-1222.8 1480,-1228.8 1474,-1228.8 1474,-1228.8 1216,-1228.8 1216,-1228.8 1210,-1228.8 1204,-1222.8 1204,-1216.8 1204,-1216.8 1204,-971.8 1204,-971.8 1204,-965.8 1210,-959.8 1216,-959.8"/>
+<text xml:space="preserve" text-anchor="start" x="1274.02" y="-1213.2" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="14.00" fill="#ff8f00">MAIN CONTROLLER</text>
 </g>
 <g id="clust4" class="cluster">
 <title>cluster_model</title>
-<path fill="#bbdefb" stroke="#bbdefb" stroke-width="1.5" d="M20,-410.4C20,-410.4 574,-410.4 574,-410.4 580,-410.4 586,-416.4 586,-422.4 586,-422.4 586,-631.8 586,-631.8 586,-637.8 580,-643.8 574,-643.8 574,-643.8 20,-643.8 20,-643.8 14,-643.8 8,-637.8 8,-631.8 8,-631.8 8,-422.4 8,-422.4 8,-416.4 14,-410.4 20,-410.4"/>
-<text xml:space="preserve" text-anchor="start" x="211.63" y="-628.2" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="14.00" fill="#1976d2">MODEL &amp; LOGIC LAYER</text>
+<path fill="#bbdefb" stroke="#bbdefb" stroke-width="1.5" d="M20,-591.8C20,-591.8 574,-591.8 574,-591.8 580,-591.8 586,-597.8 586,-603.8 586,-603.8 586,-813.2 586,-813.2 586,-819.2 580,-825.2 574,-825.2 574,-825.2 20,-825.2 20,-825.2 14,-825.2 8,-819.2 8,-813.2 8,-813.2 8,-603.8 8,-603.8 8,-597.8 14,-591.8 20,-591.8"/>
+<text xml:space="preserve" text-anchor="start" x="211.63" y="-809.6" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="14.00" fill="#1976d2">MODEL &amp; LOGIC LAYER</text>
 </g>
 <g id="clust5" class="cluster">
 <title>cluster_ui_core</title>
-<path fill="#dcedc8" stroke="#dcedc8" stroke-width="1.5" d="M630,-415.2C630,-415.2 1171,-415.2 1171,-415.2 1177,-415.2 1183,-421.2 1183,-427.2 1183,-427.2 1183,-627 1183,-627 1183,-633 1177,-639 1171,-639 1171,-639 630,-639 630,-639 624,-639 618,-633 618,-627 618,-627 618,-427.2 618,-427.2 618,-421.2 624,-415.2 630,-415.2"/>
-<text xml:space="preserve" text-anchor="start" x="844.49" y="-623.4" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="14.00" fill="#689f38">UI CORE LAYER</text>
+<path fill="#dcedc8" stroke="#dcedc8" stroke-width="1.5" d="M630,-596.6C630,-596.6 1171,-596.6 1171,-596.6 1177,-596.6 1183,-602.6 1183,-608.6 1183,-608.6 1183,-808.4 1183,-808.4 1183,-814.4 1177,-820.4 1171,-820.4 1171,-820.4 630,-820.4 630,-820.4 624,-820.4 618,-814.4 618,-808.4 618,-808.4 618,-608.6 618,-608.6 618,-602.6 624,-596.6 630,-596.6"/>
+<text xml:space="preserve" text-anchor="start" x="844.49" y="-804.8" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="14.00" fill="#689f38">UI CORE LAYER</text>
 </g>
 <g id="clust6" class="cluster">
 <title>cluster_windows</title>
 <path fill="#e1bee7" stroke="#e1bee7" stroke-width="1.5" d="M771,-72C771,-72 2379,-72 2379,-72 2385,-72 2391,-78 2391,-84 2391,-84 2391,-278.4 2391,-278.4 2391,-284.4 2385,-290.4 2379,-290.4 2379,-290.4 771,-290.4 771,-290.4 765,-290.4 759,-284.4 759,-278.4 759,-278.4 759,-84 759,-84 759,-78 765,-72 771,-72"/>
 <text xml:space="preserve" text-anchor="start" x="1517.63" y="-274.8" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="14.00" fill="#9575cd">TOOL MODULES</text>
 </g>
+<g id="clust7" class="cluster">
+<title>cluster_utils</title>
+<path fill="#bdbdbd" stroke="#bdbdbd" stroke-width="1.5" d="M679,-322.4C679,-322.4 1117,-322.4 1117,-322.4 1123,-322.4 1129,-328.4 1129,-334.4 1129,-334.4 1129,-538 1129,-538 1129,-544 1123,-550 1117,-550 1117,-550 679,-550 679,-550 673,-550 667,-544 667,-538 667,-538 667,-334.4 667,-334.4 667,-328.4 673,-322.4 679,-322.4"/>
+<text xml:space="preserve" text-anchor="start" x="835.95" y="-534.4" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="14.00" fill="#757575">UTILITIES LAYER</text>
+</g>
+<g id="clust8" class="cluster">
+<title>cluster_build</title>
+<path fill="#ffab91" stroke="#ffab91" stroke-width="1.5" d="M497,-1260.8C497,-1260.8 927,-1260.8 927,-1260.8 933,-1260.8 939,-1266.8 939,-1272.8 939,-1272.8 939,-1457.2 939,-1457.2 939,-1463.2 933,-1469.2 927,-1469.2 927,-1469.2 497,-1469.2 497,-1469.2 491,-1469.2 485,-1463.2 485,-1457.2 485,-1457.2 485,-1272.8 485,-1272.8 485,-1266.8 491,-1260.8 497,-1260.8"/>
+<text xml:space="preserve" text-anchor="start" x="637.71" y="-1453.6" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="14.00" fill="#ff7043">BUILD &amp; RESOURCES</text>
+</g>
 <!-- Legend_Key -->
 <g id="node1" class="node">
 <title>Legend_Key</title>
-<path fill="#ffffff" stroke="none" stroke-width="1.2" d="M535.51,-1340.8C535.51,-1340.8 400.49,-1340.8 400.49,-1340.8 394.49,-1340.8 388.49,-1334.8 388.49,-1328.8 388.49,-1328.8 388.49,-1216.8 388.49,-1216.8 388.49,-1210.8 394.49,-1204.8 400.49,-1204.8 400.49,-1204.8 535.51,-1204.8 535.51,-1204.8 541.51,-1204.8 547.51,-1210.8 547.51,-1216.8 547.51,-1216.8 547.51,-1328.8 547.51,-1328.8 547.51,-1334.8 541.51,-1340.8 535.51,-1340.8"/>
-<polygon fill="#ffe4ec" stroke="none" points="410.89,-1301.6 410.89,-1318.4 435.89,-1318.4 435.89,-1301.6 410.89,-1301.6"/>
-<polygon fill="none" stroke="#f8bbd0" points="410.89,-1301.6 410.89,-1318.4 435.89,-1318.4 435.89,-1301.6 410.89,-1301.6"/>
-<text xml:space="preserve" text-anchor="start" x="446.89" y="-1307.3" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#7a8b8b">Infrastructure Layer</text>
-<polygon fill="#e3f2fd" stroke="none" points="410.89,-1276.8 410.89,-1293.6 435.89,-1293.6 435.89,-1276.8 410.89,-1276.8"/>
-<polygon fill="none" stroke="#bbdefb" points="410.89,-1276.8 410.89,-1293.6 435.89,-1293.6 435.89,-1276.8 410.89,-1276.8"/>
-<text xml:space="preserve" text-anchor="start" x="446.89" y="-1282.5" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#7a8b8b">Model &amp; Data Layer</text>
-<polygon fill="#fff8e1" stroke="none" points="410.89,-1252 410.89,-1268.8 435.89,-1268.8 435.89,-1252 410.89,-1252"/>
-<polygon fill="none" stroke="#ffecb3" points="410.89,-1252 410.89,-1268.8 435.89,-1268.8 435.89,-1252 410.89,-1252"/>
-<text xml:space="preserve" text-anchor="start" x="446.89" y="-1257.7" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#7a8b8b">Controller Layer</text>
-<polygon fill="#f1f8e9" stroke="none" points="410.89,-1227.2 410.89,-1244 435.89,-1244 435.89,-1227.2 410.89,-1227.2"/>
-<polygon fill="none" stroke="#dcedc8" points="410.89,-1227.2 410.89,-1244 435.89,-1244 435.89,-1227.2 410.89,-1227.2"/>
-<text xml:space="preserve" text-anchor="start" x="446.89" y="-1232.9" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#7a8b8b">View / UI Layer</text>
+<path fill="#ffffff" stroke="none" stroke-width="1.2" d="M534.51,-1674.6C534.51,-1674.6 399.49,-1674.6 399.49,-1674.6 393.49,-1674.6 387.49,-1668.6 387.49,-1662.6 387.49,-1662.6 387.49,-1550.6 387.49,-1550.6 387.49,-1544.6 393.49,-1538.6 399.49,-1538.6 399.49,-1538.6 534.51,-1538.6 534.51,-1538.6 540.51,-1538.6 546.51,-1544.6 546.51,-1550.6 546.51,-1550.6 546.51,-1662.6 546.51,-1662.6 546.51,-1668.6 540.51,-1674.6 534.51,-1674.6"/>
+<polygon fill="#ffe4ec" stroke="none" points="409.89,-1635.4 409.89,-1652.2 434.89,-1652.2 434.89,-1635.4 409.89,-1635.4"/>
+<polygon fill="none" stroke="#f8bbd0" points="409.89,-1635.4 409.89,-1652.2 434.89,-1652.2 434.89,-1635.4 409.89,-1635.4"/>
+<text xml:space="preserve" text-anchor="start" x="445.89" y="-1641.1" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#7a8b8b">Infrastructure Layer</text>
+<polygon fill="#e3f2fd" stroke="none" points="409.89,-1610.6 409.89,-1627.4 434.89,-1627.4 434.89,-1610.6 409.89,-1610.6"/>
+<polygon fill="none" stroke="#bbdefb" points="409.89,-1610.6 409.89,-1627.4 434.89,-1627.4 434.89,-1610.6 409.89,-1610.6"/>
+<text xml:space="preserve" text-anchor="start" x="445.89" y="-1616.3" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#7a8b8b">Model &amp; Data Layer</text>
+<polygon fill="#fff8e1" stroke="none" points="409.89,-1585.8 409.89,-1602.6 434.89,-1602.6 434.89,-1585.8 409.89,-1585.8"/>
+<polygon fill="none" stroke="#ffecb3" points="409.89,-1585.8 409.89,-1602.6 434.89,-1602.6 434.89,-1585.8 409.89,-1585.8"/>
+<text xml:space="preserve" text-anchor="start" x="445.89" y="-1591.5" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#7a8b8b">Controller Layer</text>
+<polygon fill="#f1f8e9" stroke="none" points="409.89,-1561 409.89,-1577.8 434.89,-1577.8 434.89,-1561 409.89,-1561"/>
+<polygon fill="none" stroke="#dcedc8" points="409.89,-1561 409.89,-1577.8 434.89,-1577.8 434.89,-1561 409.89,-1561"/>
+<text xml:space="preserve" text-anchor="start" x="445.89" y="-1566.7" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#7a8b8b">View / UI Layer</text>
 </g>
 <!-- node_config -->
 <g id="node2" class="node">
 <title>node_config</title>
-<path fill="#ffffff" stroke="none" stroke-width="1.2" d="M1018.02,-1348.4C1018.02,-1348.4 849.98,-1348.4 849.98,-1348.4 843.98,-1348.4 837.98,-1342.4 837.98,-1336.4 837.98,-1336.4 837.98,-1209.2 837.98,-1209.2 837.98,-1203.2 843.98,-1197.2 849.98,-1197.2 849.98,-1197.2 1018.02,-1197.2 1018.02,-1197.2 1024.02,-1197.2 1030.02,-1203.2 1030.02,-1209.2 1030.02,-1209.2 1030.02,-1336.4 1030.02,-1336.4 1030.02,-1342.4 1024.02,-1348.4 1018.02,-1348.4"/>
-<polygon fill="#ffe4ec" stroke="none" points="852.38,-1211.6 852.38,-1334 1015.62,-1334 1015.62,-1211.6 852.38,-1211.6"/>
-<polygon fill="#fce4ec" stroke="none" points="852.38,-1295.2 852.38,-1334 1015.62,-1334 1015.62,-1295.2 852.38,-1295.2"/>
-<polygon fill="none" stroke="#f8bbd0" points="852.38,-1295.2 852.38,-1334 1015.62,-1334 1015.62,-1295.2 852.38,-1295.2"/>
-<text xml:space="preserve" text-anchor="start" x="906.58" y="-1311.4" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="14.00" fill="#c2185b">config.py</text>
-<polygon fill="none" stroke="#f8bbd0" points="852.38,-1262.4 852.38,-1295.2 1015.62,-1295.2 1015.62,-1262.4 852.38,-1262.4"/>
-<text xml:space="preserve" text-anchor="start" x="863.38" y="-1276.1" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#e91e63">CONFIGURATION MANAGEMENT</text>
-<polygon fill="none" stroke="#f8bbd0" points="852.38,-1211.6 852.38,-1262.4 1015.62,-1262.4 1015.62,-1211.6 852.38,-1211.6"/>
-<text xml:space="preserve" text-anchor="start" x="877.15" y="-1244.2" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#7b1fa2">                • Application Settings</text>
-<text xml:space="preserve" text-anchor="start" x="883.82" y="-1234.6" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#7b1fa2">                • Path Definitions</text>
-<text xml:space="preserve" text-anchor="start" x="863.38" y="-1225" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#7b1fa2">                • System Parameters                </text>
+<path fill="#ffffff" stroke="none" stroke-width="1.2" d="M999.02,-1682.2C999.02,-1682.2 830.98,-1682.2 830.98,-1682.2 824.98,-1682.2 818.98,-1676.2 818.98,-1670.2 818.98,-1670.2 818.98,-1543 818.98,-1543 818.98,-1537 824.98,-1531 830.98,-1531 830.98,-1531 999.02,-1531 999.02,-1531 1005.02,-1531 1011.02,-1537 1011.02,-1543 1011.02,-1543 1011.02,-1670.2 1011.02,-1670.2 1011.02,-1676.2 1005.02,-1682.2 999.02,-1682.2"/>
+<polygon fill="#ffe4ec" stroke="none" points="833.38,-1545.4 833.38,-1667.8 996.62,-1667.8 996.62,-1545.4 833.38,-1545.4"/>
+<polygon fill="#fce4ec" stroke="none" points="833.38,-1629 833.38,-1667.8 996.62,-1667.8 996.62,-1629 833.38,-1629"/>
+<polygon fill="none" stroke="#f8bbd0" points="833.38,-1629 833.38,-1667.8 996.62,-1667.8 996.62,-1629 833.38,-1629"/>
+<text xml:space="preserve" text-anchor="start" x="887.58" y="-1645.2" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="14.00" fill="#c2185b">config.py</text>
+<polygon fill="none" stroke="#f8bbd0" points="833.38,-1596.2 833.38,-1629 996.62,-1629 996.62,-1596.2 833.38,-1596.2"/>
+<text xml:space="preserve" text-anchor="start" x="844.38" y="-1609.9" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#e91e63">CONFIGURATION MANAGEMENT</text>
+<polygon fill="none" stroke="#f8bbd0" points="833.38,-1545.4 833.38,-1596.2 996.62,-1596.2 996.62,-1545.4 833.38,-1545.4"/>
+<text xml:space="preserve" text-anchor="start" x="858.15" y="-1578" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#7b1fa2">                • Application Settings</text>
+<text xml:space="preserve" text-anchor="start" x="864.82" y="-1568.4" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#7b1fa2">                • Path Definitions</text>
+<text xml:space="preserve" text-anchor="start" x="844.38" y="-1558.8" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#7b1fa2">                • System Parameters                </text>
 </g>
 <!-- node_locale -->
 <g id="node3" class="node">
 <title>node_locale</title>
-<path fill="#ffffff" stroke="none" stroke-width="1.2" d="M1358.72,-1348.4C1358.72,-1348.4 1185.28,-1348.4 1185.28,-1348.4 1179.28,-1348.4 1173.28,-1342.4 1173.28,-1336.4 1173.28,-1336.4 1173.28,-1209.2 1173.28,-1209.2 1173.28,-1203.2 1179.28,-1197.2 1185.28,-1197.2 1185.28,-1197.2 1358.72,-1197.2 1358.72,-1197.2 1364.72,-1197.2 1370.72,-1203.2 1370.72,-1209.2 1370.72,-1209.2 1370.72,-1336.4 1370.72,-1336.4 1370.72,-1342.4 1364.72,-1348.4 1358.72,-1348.4"/>
-<polygon fill="#ffe4ec" stroke="none" points="1187.68,-1211.6 1187.68,-1334 1356.32,-1334 1356.32,-1211.6 1187.68,-1211.6"/>
-<polygon fill="#fce4ec" stroke="none" points="1187.68,-1295.2 1187.68,-1334 1356.32,-1334 1356.32,-1295.2 1187.68,-1295.2"/>
-<polygon fill="none" stroke="#f8bbd0" points="1187.68,-1295.2 1187.68,-1334 1356.32,-1334 1356.32,-1295.2 1187.68,-1295.2"/>
-<text xml:space="preserve" text-anchor="start" x="1228.64" y="-1311.4" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="14.00" fill="#c2185b">localization.py</text>
-<polygon fill="none" stroke="#f8bbd0" points="1187.68,-1262.4 1187.68,-1295.2 1356.32,-1295.2 1356.32,-1262.4 1187.68,-1262.4"/>
-<text xml:space="preserve" text-anchor="start" x="1217.26" y="-1276.1" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#e91e63">INTERNATIONALIZATION</text>
-<polygon fill="none" stroke="#f8bbd0" points="1187.68,-1211.6 1187.68,-1262.4 1356.32,-1262.4 1356.32,-1211.6 1187.68,-1211.6"/>
-<text xml:space="preserve" text-anchor="start" x="1213.67" y="-1244.2" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#7b1fa2">                • Multi-language Support</text>
-<text xml:space="preserve" text-anchor="start" x="1215.12" y="-1234.6" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#7b1fa2">                • XML Translation Files</text>
-<text xml:space="preserve" text-anchor="start" x="1198.68" y="-1225" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#7b1fa2">                • Dynamic Text Loading                </text>
+<path fill="#ffffff" stroke="none" stroke-width="1.2" d="M1339.72,-1682.2C1339.72,-1682.2 1166.28,-1682.2 1166.28,-1682.2 1160.28,-1682.2 1154.28,-1676.2 1154.28,-1670.2 1154.28,-1670.2 1154.28,-1543 1154.28,-1543 1154.28,-1537 1160.28,-1531 1166.28,-1531 1166.28,-1531 1339.72,-1531 1339.72,-1531 1345.72,-1531 1351.72,-1537 1351.72,-1543 1351.72,-1543 1351.72,-1670.2 1351.72,-1670.2 1351.72,-1676.2 1345.72,-1682.2 1339.72,-1682.2"/>
+<polygon fill="#ffe4ec" stroke="none" points="1168.68,-1545.4 1168.68,-1667.8 1337.32,-1667.8 1337.32,-1545.4 1168.68,-1545.4"/>
+<polygon fill="#fce4ec" stroke="none" points="1168.68,-1629 1168.68,-1667.8 1337.32,-1667.8 1337.32,-1629 1168.68,-1629"/>
+<polygon fill="none" stroke="#f8bbd0" points="1168.68,-1629 1168.68,-1667.8 1337.32,-1667.8 1337.32,-1629 1168.68,-1629"/>
+<text xml:space="preserve" text-anchor="start" x="1209.64" y="-1645.2" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="14.00" fill="#c2185b">localization.py</text>
+<polygon fill="none" stroke="#f8bbd0" points="1168.68,-1596.2 1168.68,-1629 1337.32,-1629 1337.32,-1596.2 1168.68,-1596.2"/>
+<text xml:space="preserve" text-anchor="start" x="1198.26" y="-1609.9" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#e91e63">INTERNATIONALIZATION</text>
+<polygon fill="none" stroke="#f8bbd0" points="1168.68,-1545.4 1168.68,-1596.2 1337.32,-1596.2 1337.32,-1545.4 1168.68,-1545.4"/>
+<text xml:space="preserve" text-anchor="start" x="1194.67" y="-1578" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#7b1fa2">                • Multi-language Support</text>
+<text xml:space="preserve" text-anchor="start" x="1196.12" y="-1568.4" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#7b1fa2">                • XML Translation Files</text>
+<text xml:space="preserve" text-anchor="start" x="1179.68" y="-1558.8" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#7b1fa2">                • Dynamic Text Loading                </text>
 </g>
 <!-- node_config&#45;&gt;node_locale -->
 <!-- node_logger -->
 <g id="node4" class="node">
 <title>node_logger</title>
-<path fill="#ffffff" stroke="none" stroke-width="1.2" d="M1672.28,-1348.4C1672.28,-1348.4 1525.72,-1348.4 1525.72,-1348.4 1519.72,-1348.4 1513.72,-1342.4 1513.72,-1336.4 1513.72,-1336.4 1513.72,-1209.2 1513.72,-1209.2 1513.72,-1203.2 1519.72,-1197.2 1525.72,-1197.2 1525.72,-1197.2 1672.28,-1197.2 1672.28,-1197.2 1678.28,-1197.2 1684.28,-1203.2 1684.28,-1209.2 1684.28,-1209.2 1684.28,-1336.4 1684.28,-1336.4 1684.28,-1342.4 1678.28,-1348.4 1672.28,-1348.4"/>
-<polygon fill="#ffe4ec" stroke="none" points="1528.12,-1211.6 1528.12,-1334 1669.88,-1334 1669.88,-1211.6 1528.12,-1211.6"/>
-<polygon fill="#fce4ec" stroke="none" points="1528.12,-1295.2 1528.12,-1334 1669.88,-1334 1669.88,-1295.2 1528.12,-1295.2"/>
-<polygon fill="none" stroke="#f8bbd0" points="1528.12,-1295.2 1528.12,-1334 1669.88,-1334 1669.88,-1295.2 1528.12,-1295.2"/>
-<text xml:space="preserve" text-anchor="start" x="1549.42" y="-1311.4" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="14.00" fill="#c2185b">logger_config.py</text>
-<polygon fill="none" stroke="#f8bbd0" points="1528.12,-1262.4 1528.12,-1295.2 1669.88,-1295.2 1669.88,-1262.4 1528.12,-1262.4"/>
-<text xml:space="preserve" text-anchor="start" x="1559.62" y="-1276.1" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#e91e63">LOGGING SYSTEM</text>
-<polygon fill="none" stroke="#f8bbd0" points="1528.12,-1211.6 1528.12,-1262.4 1669.88,-1262.4 1669.88,-1211.6 1528.12,-1211.6"/>
-<text xml:space="preserve" text-anchor="start" x="1553.78" y="-1244.2" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#7b1fa2">                • Log Formatting</text>
-<text xml:space="preserve" text-anchor="start" x="1543.12" y="-1234.6" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#7b1fa2">                • File/Console Handlers</text>
-<text xml:space="preserve" text-anchor="start" x="1539.12" y="-1225" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#7b1fa2">                • Error Tracking                </text>
+<path fill="#ffffff" stroke="none" stroke-width="1.2" d="M1653.28,-1682.2C1653.28,-1682.2 1506.72,-1682.2 1506.72,-1682.2 1500.72,-1682.2 1494.72,-1676.2 1494.72,-1670.2 1494.72,-1670.2 1494.72,-1543 1494.72,-1543 1494.72,-1537 1500.72,-1531 1506.72,-1531 1506.72,-1531 1653.28,-1531 1653.28,-1531 1659.28,-1531 1665.28,-1537 1665.28,-1543 1665.28,-1543 1665.28,-1670.2 1665.28,-1670.2 1665.28,-1676.2 1659.28,-1682.2 1653.28,-1682.2"/>
+<polygon fill="#ffe4ec" stroke="none" points="1509.12,-1545.4 1509.12,-1667.8 1650.88,-1667.8 1650.88,-1545.4 1509.12,-1545.4"/>
+<polygon fill="#fce4ec" stroke="none" points="1509.12,-1629 1509.12,-1667.8 1650.88,-1667.8 1650.88,-1629 1509.12,-1629"/>
+<polygon fill="none" stroke="#f8bbd0" points="1509.12,-1629 1509.12,-1667.8 1650.88,-1667.8 1650.88,-1629 1509.12,-1629"/>
+<text xml:space="preserve" text-anchor="start" x="1530.42" y="-1645.2" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="14.00" fill="#c2185b">logger_config.py</text>
+<polygon fill="none" stroke="#f8bbd0" points="1509.12,-1596.2 1509.12,-1629 1650.88,-1629 1650.88,-1596.2 1509.12,-1596.2"/>
+<text xml:space="preserve" text-anchor="start" x="1540.62" y="-1609.9" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#e91e63">LOGGING SYSTEM</text>
+<polygon fill="none" stroke="#f8bbd0" points="1509.12,-1545.4 1509.12,-1596.2 1650.88,-1596.2 1650.88,-1545.4 1509.12,-1545.4"/>
+<text xml:space="preserve" text-anchor="start" x="1534.78" y="-1578" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#7b1fa2">                • Log Formatting</text>
+<text xml:space="preserve" text-anchor="start" x="1524.12" y="-1568.4" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#7b1fa2">                • File/Console Handlers</text>
+<text xml:space="preserve" text-anchor="start" x="1520.12" y="-1558.8" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#7b1fa2">                • Error Tracking                </text>
 </g>
 <!-- node_locale&#45;&gt;node_logger -->
+<!-- node_lang_xml -->
+<g id="node19" class="node">
+<title>node_lang_xml</title>
+<path fill="#ffffff" stroke="none" stroke-width="1.2" d="M907.3,-1399.6C907.3,-1399.6 806.7,-1399.6 806.7,-1399.6 800.7,-1399.6 794.7,-1393.6 794.7,-1387.6 794.7,-1387.6 794.7,-1292.8 794.7,-1292.8 794.7,-1286.8 800.7,-1280.8 806.7,-1280.8 806.7,-1280.8 907.3,-1280.8 907.3,-1280.8 913.3,-1280.8 919.3,-1286.8 919.3,-1292.8 919.3,-1292.8 919.3,-1387.6 919.3,-1387.6 919.3,-1393.6 913.3,-1399.6 907.3,-1399.6"/>
+<polygon fill="#ffccbc" stroke="none" points="809.1,-1295.2 809.1,-1385.2 904.9,-1385.2 904.9,-1295.2 809.1,-1295.2"/>
+<polygon fill="#ffab91" stroke="none" points="809.1,-1350.4 809.1,-1385.2 904.9,-1385.2 904.9,-1350.4 809.1,-1350.4"/>
+<polygon fill="none" stroke="#ffab91" points="809.1,-1350.4 809.1,-1385.2 904.9,-1385.2 904.9,-1350.4 809.1,-1350.4"/>
+<text xml:space="preserve" text-anchor="start" x="818.1" y="-1364.6" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="14.00" fill="#bf360c">RESOURCE</text>
+<polygon fill="none" stroke="#ffab91" points="809.1,-1322.8 809.1,-1350.4 904.9,-1350.4 904.9,-1322.8 809.1,-1322.8"/>
+<text xml:space="preserve" text-anchor="start" x="833.78" y="-1334.2" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#d84315">languages.xml</text>
+<polygon fill="none" stroke="#ffab91" points="809.1,-1295.2 809.1,-1322.8 904.9,-1322.8 904.9,-1295.2 809.1,-1295.2"/>
+<text xml:space="preserve" text-anchor="start" x="828.46" y="-1306.6" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#e64a19">Localization Data</text>
+</g>
+<!-- node_locale&#45;&gt;node_lang_xml -->
+<g id="edge19" class="edge">
+<title>node_locale-&gt;node_lang_xml</title>
+<path fill="none" stroke="#ff7043" stroke-width="1.2" d="M1158.69,-1531.27C1158.69,-1452.44 1158.69,-1340 1158.69,-1340 1158.69,-1340 927.61,-1340 927.61,-1340"/>
+<polygon fill="#ff7043" stroke="#ff7043" stroke-width="1.2" points="920.61,-1340 927.61,-1336.85 922.64,-1339.9 927.61,-1339.9 927.61,-1340 927.61,-1340.1 922.64,-1340.1 927.61,-1343.15 920.61,-1340"/>
+<text xml:space="preserve" text-anchor="middle" x="1194.62" y="-1479.9" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#bf360c"> reads</text>
+</g>
 <!-- node_main -->
 <g id="node5" class="node">
 <title>node_main</title>
-<path fill="#ffffff" stroke="none" stroke-width="1.2" d="M1448.9,-972.8C1448.9,-972.8 1241.1,-972.8 1241.1,-972.8 1235.1,-972.8 1229.1,-966.8 1229.1,-960.8 1229.1,-960.8 1229.1,-815.4 1229.1,-815.4 1229.1,-809.4 1235.1,-803.4 1241.1,-803.4 1241.1,-803.4 1448.9,-803.4 1448.9,-803.4 1454.9,-803.4 1460.9,-809.4 1460.9,-815.4 1460.9,-815.4 1460.9,-960.8 1460.9,-960.8 1460.9,-966.8 1454.9,-972.8 1448.9,-972.8"/>
-<polygon fill="#fff3e0" stroke="none" points="1243.5,-817.8 1243.5,-958.4 1446.5,-958.4 1446.5,-817.8 1243.5,-817.8"/>
-<polygon fill="#ffecb3" stroke="none" points="1243.5,-909.4 1243.5,-958.4 1446.5,-958.4 1446.5,-909.4 1243.5,-909.4"/>
-<polygon fill="none" stroke="#ffe0b2" points="1243.5,-909.4 1243.5,-958.4 1446.5,-958.4 1446.5,-909.4 1243.5,-909.4"/>
-<text xml:space="preserve" text-anchor="start" x="1279.82" y="-934.7" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="13.00" fill="#ff6f00">MAIN APPLICATION</text>
-<text xml:space="preserve" text-anchor="start" x="1328.75" y="-924.4" font-family="Helvetica, Arial, sans-serif" font-size="10.00" fill="#ff8f00">main.py</text>
-<polygon fill="none" stroke="#ffe0b2" points="1243.5,-872.6 1243.5,-909.4 1446.5,-909.4 1446.5,-872.6 1243.5,-872.6"/>
-<text xml:space="preserve" text-anchor="start" x="1256.5" y="-888.3" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#ff9800">APPLICATION LIFECYCLE MANAGEMENT</text>
-<polygon fill="none" stroke="#ffe0b2" points="1243.5,-817.8 1243.5,-872.6 1446.5,-872.6 1446.5,-817.8 1243.5,-817.8"/>
-<text xml:space="preserve" text-anchor="start" x="1264.5" y="-852.4" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#ef6c00">                • Component Initialization</text>
-<text xml:space="preserve" text-anchor="start" x="1265.62" y="-842.8" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#ef6c00">                • Inter-layer Coordination</text>
-<text xml:space="preserve" text-anchor="start" x="1256.5" y="-833.2" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#ef6c00">                • Event Orchestration                </text>
+<path fill="#ffffff" stroke="none" stroke-width="1.2" d="M1448.9,-1154.2C1448.9,-1154.2 1241.1,-1154.2 1241.1,-1154.2 1235.1,-1154.2 1229.1,-1148.2 1229.1,-1142.2 1229.1,-1142.2 1229.1,-996.8 1229.1,-996.8 1229.1,-990.8 1235.1,-984.8 1241.1,-984.8 1241.1,-984.8 1448.9,-984.8 1448.9,-984.8 1454.9,-984.8 1460.9,-990.8 1460.9,-996.8 1460.9,-996.8 1460.9,-1142.2 1460.9,-1142.2 1460.9,-1148.2 1454.9,-1154.2 1448.9,-1154.2"/>
+<polygon fill="#fff3e0" stroke="none" points="1243.5,-999.2 1243.5,-1139.8 1446.5,-1139.8 1446.5,-999.2 1243.5,-999.2"/>
+<polygon fill="#ffecb3" stroke="none" points="1243.5,-1090.8 1243.5,-1139.8 1446.5,-1139.8 1446.5,-1090.8 1243.5,-1090.8"/>
+<polygon fill="none" stroke="#ffe0b2" points="1243.5,-1090.8 1243.5,-1139.8 1446.5,-1139.8 1446.5,-1090.8 1243.5,-1090.8"/>
+<text xml:space="preserve" text-anchor="start" x="1279.82" y="-1116.1" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="13.00" fill="#ff6f00">MAIN APPLICATION</text>
+<text xml:space="preserve" text-anchor="start" x="1328.75" y="-1105.8" font-family="Helvetica, Arial, sans-serif" font-size="10.00" fill="#ff8f00">main.py</text>
+<polygon fill="none" stroke="#ffe0b2" points="1243.5,-1054 1243.5,-1090.8 1446.5,-1090.8 1446.5,-1054 1243.5,-1054"/>
+<text xml:space="preserve" text-anchor="start" x="1256.5" y="-1069.7" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#ff9800">APPLICATION LIFECYCLE MANAGEMENT</text>
+<polygon fill="none" stroke="#ffe0b2" points="1243.5,-999.2 1243.5,-1054 1446.5,-1054 1446.5,-999.2 1243.5,-999.2"/>
+<text xml:space="preserve" text-anchor="start" x="1264.5" y="-1033.8" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#ef6c00">                • Component Initialization</text>
+<text xml:space="preserve" text-anchor="start" x="1265.62" y="-1024.2" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#ef6c00">                • Inter-layer Coordination</text>
+<text xml:space="preserve" text-anchor="start" x="1256.5" y="-1014.6" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#ef6c00">                • Event Orchestration                </text>
 </g>
 <!-- node_logger&#45;&gt;node_main -->
 <!-- node_main&#45;&gt;node_config -->
 <g id="edge1" class="edge">
 <title>node_main-&gt;node_config</title>
-<path fill="none" stroke="#f8bbd0" stroke-width="1.2" d="M1229.4,-952C1125.94,-952 990.46,-952 990.46,-952 990.46,-952 990.46,-1189.12 990.46,-1189.12"/>
-<polygon fill="#f8bbd0" stroke="#f8bbd0" stroke-width="1.2" points="990.46,-1196.12 987.31,-1189.12 990.36,-1194.09 990.36,-1189.12 990.46,-1189.12 990.56,-1189.12 990.56,-1194.09 993.61,-1189.12 990.46,-1196.12"/>
-<text xml:space="preserve" text-anchor="middle" x="1031.24" y="-1102.1" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#e91e63"> loads config</text>
+<path fill="none" stroke="#f8bbd0" stroke-width="1.2" d="M1229.31,-1133C1122.72,-1133 980.96,-1133 980.96,-1133 980.96,-1133 980.96,-1522.57 980.96,-1522.57"/>
+<polygon fill="#f8bbd0" stroke="#f8bbd0" stroke-width="1.2" points="980.96,-1529.57 977.81,-1522.57 980.86,-1527.53 980.86,-1522.57 980.96,-1522.57 981.06,-1522.57 981.06,-1527.53 984.11,-1522.57 980.96,-1529.57"/>
+<text xml:space="preserve" text-anchor="middle" x="1086.24" y="-1337.5" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#e91e63"> loads config</text>
 </g>
 <!-- node_main&#45;&gt;node_locale -->
 <g id="edge2" class="edge">
 <title>node_main-&gt;node_locale</title>
-<path fill="none" stroke="#f8bbd0" stroke-width="1.2" d="M1299.91,-972.52C1299.91,-972.52 1299.91,-1188.9 1299.91,-1188.9"/>
-<polygon fill="#f8bbd0" stroke="#f8bbd0" stroke-width="1.2" points="1299.91,-1195.9 1296.76,-1188.9 1299.81,-1193.86 1299.81,-1188.9 1299.91,-1188.9 1300.01,-1188.9 1300.01,-1193.86 1303.06,-1188.9 1299.91,-1195.9"/>
-<text xml:space="preserve" text-anchor="middle" x="1290.75" y="-1102.1" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#e91e63"> i18n setup</text>
+<path fill="none" stroke="#f8bbd0" stroke-width="1.2" d="M1290.41,-1154.01C1290.41,-1154.01 1290.41,-1522.79 1290.41,-1522.79"/>
+<polygon fill="#f8bbd0" stroke="#f8bbd0" stroke-width="1.2" points="1290.41,-1529.79 1287.26,-1522.79 1290.31,-1527.75 1290.31,-1522.79 1290.41,-1522.79 1290.51,-1522.79 1290.51,-1527.75 1293.56,-1522.79 1290.41,-1529.79"/>
+<text xml:space="preserve" text-anchor="middle" x="1272.75" y="-1337.5" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#e91e63"> i18n setup</text>
 </g>
 <!-- node_main&#45;&gt;node_logger -->
 <g id="edge3" class="edge">
 <title>node_main-&gt;node_logger</title>
-<path fill="none" stroke="#f8bbd0" stroke-width="1.2" d="M1400.78,-972.57C1400.78,-1085.87 1400.78,-1273 1400.78,-1273 1400.78,-1273 1505.32,-1273 1505.32,-1273"/>
-<polygon fill="#f8bbd0" stroke="#f8bbd0" stroke-width="1.2" points="1512.32,-1273 1505.32,-1276.15 1510.29,-1273.1 1505.32,-1273.1 1505.32,-1273 1505.32,-1272.9 1510.29,-1272.9 1505.32,-1269.85 1512.32,-1273"/>
-<text xml:space="preserve" text-anchor="middle" x="1625.5" y="-1102.1" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#e91e63"> logging setup</text>
+<path fill="none" stroke="#f8bbd0" stroke-width="1.2" d="M1388.11,-1154.08C1388.11,-1305.44 1388.11,-1607 1388.11,-1607 1388.11,-1607 1486.54,-1607 1486.54,-1607"/>
+<polygon fill="#f8bbd0" stroke="#f8bbd0" stroke-width="1.2" points="1493.54,-1607 1486.54,-1610.15 1491.5,-1607.1 1486.54,-1607.1 1486.54,-1607 1486.54,-1606.9 1491.5,-1606.9 1486.54,-1603.85 1493.54,-1607"/>
+<text xml:space="preserve" text-anchor="middle" x="1461.5" y="-1337.5" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#e91e63"> logging setup</text>
 </g>
 <!-- node_state -->
 <g id="node6" class="node">
 <title>node_state</title>
-<path fill="#ffffff" stroke="none" stroke-width="1.2" d="M186.28,-574.2C186.28,-574.2 39.72,-574.2 39.72,-574.2 33.72,-574.2 27.72,-568.2 27.72,-562.2 27.72,-562.2 27.72,-442.4 27.72,-442.4 27.72,-436.4 33.72,-430.4 39.72,-430.4 39.72,-430.4 186.28,-430.4 186.28,-430.4 192.28,-430.4 198.28,-436.4 198.28,-442.4 198.28,-442.4 198.28,-562.2 198.28,-562.2 198.28,-568.2 192.28,-574.2 186.28,-574.2"/>
-<polygon fill="#e1f5fe" stroke="none" points="42.12,-444.8 42.12,-559.8 183.88,-559.8 183.88,-444.8 42.12,-444.8"/>
-<polygon fill="#bbdefb" stroke="none" points="42.12,-514.8 42.12,-559.8 183.88,-559.8 183.88,-514.8 42.12,-514.8"/>
-<polygon fill="none" stroke="#b3e5fc" points="42.12,-514.8 42.12,-559.8 183.88,-559.8 183.88,-514.8 42.12,-514.8"/>
-<text xml:space="preserve" text-anchor="start" x="74.69" y="-537.2" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="14.00" fill="#1565c0">APP STATE</text>
-<text xml:space="preserve" text-anchor="start" x="99.13" y="-527.7" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#1976d2">state.py</text>
-<polygon fill="none" stroke="#b3e5fc" points="42.12,-444.8 42.12,-514.8 183.88,-514.8 183.88,-444.8 42.12,-444.8"/>
-<text xml:space="preserve" text-anchor="start" x="60.12" y="-496.6" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#0d47a1">                • Image Paths Storage</text>
-<text xml:space="preserve" text-anchor="start" x="61.24" y="-487" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#0d47a1">                • Current Image Data</text>
-<text xml:space="preserve" text-anchor="start" x="60.89" y="-477.4" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#0d47a1">                • Annotation Records</text>
-<text xml:space="preserve" text-anchor="start" x="64.67" y="-467.8" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#0d47a1">                • Undo/Redo Stack</text>
-<text xml:space="preserve" text-anchor="start" x="53.12" y="-458.2" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#0d47a1">                • Selection State                </text>
+<path fill="#ffffff" stroke="none" stroke-width="1.2" d="M186.28,-755.6C186.28,-755.6 39.72,-755.6 39.72,-755.6 33.72,-755.6 27.72,-749.6 27.72,-743.6 27.72,-743.6 27.72,-623.8 27.72,-623.8 27.72,-617.8 33.72,-611.8 39.72,-611.8 39.72,-611.8 186.28,-611.8 186.28,-611.8 192.28,-611.8 198.28,-617.8 198.28,-623.8 198.28,-623.8 198.28,-743.6 198.28,-743.6 198.28,-749.6 192.28,-755.6 186.28,-755.6"/>
+<polygon fill="#e1f5fe" stroke="none" points="42.12,-626.2 42.12,-741.2 183.88,-741.2 183.88,-626.2 42.12,-626.2"/>
+<polygon fill="#bbdefb" stroke="none" points="42.12,-696.2 42.12,-741.2 183.88,-741.2 183.88,-696.2 42.12,-696.2"/>
+<polygon fill="none" stroke="#b3e5fc" points="42.12,-696.2 42.12,-741.2 183.88,-741.2 183.88,-696.2 42.12,-696.2"/>
+<text xml:space="preserve" text-anchor="start" x="74.69" y="-718.6" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="14.00" fill="#1565c0">APP STATE</text>
+<text xml:space="preserve" text-anchor="start" x="99.13" y="-709.1" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#1976d2">state.py</text>
+<polygon fill="none" stroke="#b3e5fc" points="42.12,-626.2 42.12,-696.2 183.88,-696.2 183.88,-626.2 42.12,-626.2"/>
+<text xml:space="preserve" text-anchor="start" x="60.12" y="-678" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#0d47a1">                • Image Paths Storage</text>
+<text xml:space="preserve" text-anchor="start" x="61.24" y="-668.4" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#0d47a1">                • Current Image Data</text>
+<text xml:space="preserve" text-anchor="start" x="60.89" y="-658.8" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#0d47a1">                • Annotation Records</text>
+<text xml:space="preserve" text-anchor="start" x="64.67" y="-649.2" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#0d47a1">                • Undo/Redo Stack</text>
+<text xml:space="preserve" text-anchor="start" x="53.12" y="-639.6" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#0d47a1">                • Selection State                </text>
 </g>
 <!-- node_main&#45;&gt;node_state -->
 <g id="edge5" class="edge">
 <title>node_main-&gt;node_state</title>
-<path fill="none" stroke="#ffecb3" stroke-width="1.5" d="M1229.24,-930C917.65,-930 84.57,-930 84.57,-930 84.57,-930 84.57,-582.72 84.57,-582.72"/>
-<polygon fill="#ffecb3" stroke="#ffecb3" stroke-width="1.5" points="84.57,-575.72 87.72,-582.71 84.82,-577.39 84.82,-582.72 84.57,-582.72 84.32,-582.72 84.32,-577.39 81.42,-582.72 84.57,-575.72"/>
-<text xml:space="preserve" text-anchor="middle" x="161.99" y="-708.3" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#ff9800"> initializes state</text>
+<path fill="none" stroke="#ffecb3" stroke-width="1.5" d="M1229.24,-1112C917.65,-1112 84.57,-1112 84.57,-1112 84.57,-1112 84.57,-764.22 84.57,-764.22"/>
+<polygon fill="#ffecb3" stroke="#ffecb3" stroke-width="1.5" points="84.57,-757.22 87.72,-764.22 84.82,-758.89 84.82,-764.22 84.57,-764.22 84.32,-764.22 84.32,-758.89 81.42,-764.22 84.57,-757.22"/>
+<text xml:space="preserve" text-anchor="middle" x="159.99" y="-889.7" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#ff9800"> initializes state</text>
 </g>
 <!-- node_main&#45;&gt;node_state -->
 <!-- node_manager -->
 <g id="node7" class="node">
 <title>node_manager</title>
-<path fill="#ffffff" stroke="none" stroke-width="1.2" d="M554.32,-569.4C554.32,-569.4 353.68,-569.4 353.68,-569.4 347.68,-569.4 341.68,-563.4 341.68,-557.4 341.68,-557.4 341.68,-447.2 341.68,-447.2 341.68,-441.2 347.68,-435.2 353.68,-435.2 353.68,-435.2 554.32,-435.2 554.32,-435.2 560.32,-435.2 566.32,-441.2 566.32,-447.2 566.32,-447.2 566.32,-557.4 566.32,-557.4 566.32,-563.4 560.32,-569.4 554.32,-569.4"/>
-<polygon fill="#e1f5fe" stroke="none" points="356.08,-449.6 356.08,-555 551.92,-555 551.92,-449.6 356.08,-449.6"/>
-<polygon fill="#bbdefb" stroke="none" points="356.08,-510 356.08,-555 551.92,-555 551.92,-510 356.08,-510"/>
-<polygon fill="none" stroke="#b3e5fc" points="356.08,-510 356.08,-555 551.92,-555 551.92,-510 356.08,-510"/>
-<text xml:space="preserve" text-anchor="start" x="367.08" y="-532.4" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="14.00" fill="#1565c0">ANNOTATION MANAGER</text>
-<text xml:space="preserve" text-anchor="start" x="431.13" y="-522.9" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#1976d2">managers.py</text>
-<polygon fill="none" stroke="#b3e5fc" points="356.08,-449.6 356.08,-510 551.92,-510 551.92,-449.6 356.08,-449.6"/>
-<text xml:space="preserve" text-anchor="start" x="384.52" y="-491.8" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#0d47a1">                • YOLO Format I/O</text>
-<text xml:space="preserve" text-anchor="start" x="381.85" y="-482.2" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#0d47a1">                • File Path Resolution</text>
-<text xml:space="preserve" text-anchor="start" x="378.63" y="-472.6" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#0d47a1">                • Annotation Validation</text>
-<text xml:space="preserve" text-anchor="start" x="367.08" y="-463" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#0d47a1">                • Data Import/Export                </text>
+<path fill="#ffffff" stroke="none" stroke-width="1.2" d="M554.32,-750.8C554.32,-750.8 353.68,-750.8 353.68,-750.8 347.68,-750.8 341.68,-744.8 341.68,-738.8 341.68,-738.8 341.68,-628.6 341.68,-628.6 341.68,-622.6 347.68,-616.6 353.68,-616.6 353.68,-616.6 554.32,-616.6 554.32,-616.6 560.32,-616.6 566.32,-622.6 566.32,-628.6 566.32,-628.6 566.32,-738.8 566.32,-738.8 566.32,-744.8 560.32,-750.8 554.32,-750.8"/>
+<polygon fill="#e1f5fe" stroke="none" points="356.08,-631 356.08,-736.4 551.92,-736.4 551.92,-631 356.08,-631"/>
+<polygon fill="#bbdefb" stroke="none" points="356.08,-691.4 356.08,-736.4 551.92,-736.4 551.92,-691.4 356.08,-691.4"/>
+<polygon fill="none" stroke="#b3e5fc" points="356.08,-691.4 356.08,-736.4 551.92,-736.4 551.92,-691.4 356.08,-691.4"/>
+<text xml:space="preserve" text-anchor="start" x="367.08" y="-713.8" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="14.00" fill="#1565c0">ANNOTATION MANAGER</text>
+<text xml:space="preserve" text-anchor="start" x="431.13" y="-704.3" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#1976d2">managers.py</text>
+<polygon fill="none" stroke="#b3e5fc" points="356.08,-631 356.08,-691.4 551.92,-691.4 551.92,-631 356.08,-631"/>
+<text xml:space="preserve" text-anchor="start" x="384.52" y="-673.2" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#0d47a1">                • YOLO Format I/O</text>
+<text xml:space="preserve" text-anchor="start" x="381.85" y="-663.6" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#0d47a1">                • File Path Resolution</text>
+<text xml:space="preserve" text-anchor="start" x="378.63" y="-654" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#0d47a1">                • Annotation Validation</text>
+<text xml:space="preserve" text-anchor="start" x="367.08" y="-644.4" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#0d47a1">                • Data Import/Export                </text>
 </g>
 <!-- node_main&#45;&gt;node_manager -->
 <g id="edge8" class="edge">
 <title>node_main-&gt;node_manager</title>
-<path fill="none" stroke="#bbdefb" stroke-width="1.3" d="M1229.14,-888C1010.08,-888 556.91,-888 556.91,-888 556.91,-888 556.91,-577.63 556.91,-577.63"/>
-<polygon fill="#bbdefb" stroke="#bbdefb" stroke-width="1.3" points="556.91,-570.63 560.06,-577.63 557.06,-572.54 557.06,-577.63 556.91,-577.63 556.76,-577.63 556.76,-572.54 553.76,-577.63 556.91,-570.63"/>
-<text xml:space="preserve" text-anchor="middle" x="754.49" y="-708.3" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#1976d2"> uses manager</text>
+<path fill="none" stroke="#bbdefb" stroke-width="1.3" d="M1229.47,-1070C1005.85,-1070 535.66,-1070 535.66,-1070 535.66,-1070 535.66,-759.13 535.66,-759.13"/>
+<polygon fill="#bbdefb" stroke="#bbdefb" stroke-width="1.3" points="535.66,-752.13 538.81,-759.13 535.81,-754.05 535.81,-759.13 535.66,-759.13 535.51,-759.13 535.51,-754.05 532.51,-759.13 535.66,-752.13"/>
+<text xml:space="preserve" text-anchor="middle" x="727.49" y="-889.7" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#1976d2"> uses manager</text>
 </g>
 <!-- node_ui_mgr -->
 <g id="node8" class="node">
 <title>node_ui_mgr</title>
-<path fill="#ffffff" stroke="none" stroke-width="1.2" d="M795.62,-569.4C795.62,-569.4 650.38,-569.4 650.38,-569.4 644.38,-569.4 638.38,-563.4 638.38,-557.4 638.38,-557.4 638.38,-447.2 638.38,-447.2 638.38,-441.2 644.38,-435.2 650.38,-435.2 650.38,-435.2 795.62,-435.2 795.62,-435.2 801.62,-435.2 807.62,-441.2 807.62,-447.2 807.62,-447.2 807.62,-557.4 807.62,-557.4 807.62,-563.4 801.62,-569.4 795.62,-569.4"/>
-<polygon fill="#e8f5e9" stroke="none" points="652.78,-449.6 652.78,-555 793.22,-555 793.22,-449.6 652.78,-449.6"/>
-<polygon fill="#dcedc8" stroke="none" points="652.78,-510 652.78,-555 793.22,-555 793.22,-510 652.78,-510"/>
-<polygon fill="none" stroke="#c8e6c9" points="652.78,-510 652.78,-555 793.22,-555 793.22,-510 652.78,-510"/>
-<text xml:space="preserve" text-anchor="start" x="676.53" y="-532.4" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="14.00" fill="#558b2f">UI MANAGER</text>
-<text xml:space="preserve" text-anchor="start" x="713.87" y="-522.9" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#689f38">ui.py</text>
-<polygon fill="none" stroke="#c8e6c9" points="652.78,-449.6 652.78,-510 793.22,-510 793.22,-449.6 652.78,-449.6"/>
-<text xml:space="preserve" text-anchor="start" x="667.12" y="-491.8" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#33691e">                • Interface Construction</text>
-<text xml:space="preserve" text-anchor="start" x="669.35" y="-482.2" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#33691e">                • Widget Management</text>
-<text xml:space="preserve" text-anchor="start" x="668.23" y="-472.6" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#33691e">                • Layout Configuration</text>
-<text xml:space="preserve" text-anchor="start" x="663.78" y="-463" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#33691e">                • Event Binding                </text>
+<path fill="#ffffff" stroke="none" stroke-width="1.2" d="M795.62,-750.8C795.62,-750.8 650.38,-750.8 650.38,-750.8 644.38,-750.8 638.38,-744.8 638.38,-738.8 638.38,-738.8 638.38,-628.6 638.38,-628.6 638.38,-622.6 644.38,-616.6 650.38,-616.6 650.38,-616.6 795.62,-616.6 795.62,-616.6 801.62,-616.6 807.62,-622.6 807.62,-628.6 807.62,-628.6 807.62,-738.8 807.62,-738.8 807.62,-744.8 801.62,-750.8 795.62,-750.8"/>
+<polygon fill="#e8f5e9" stroke="none" points="652.78,-631 652.78,-736.4 793.22,-736.4 793.22,-631 652.78,-631"/>
+<polygon fill="#dcedc8" stroke="none" points="652.78,-691.4 652.78,-736.4 793.22,-736.4 793.22,-691.4 652.78,-691.4"/>
+<polygon fill="none" stroke="#c8e6c9" points="652.78,-691.4 652.78,-736.4 793.22,-736.4 793.22,-691.4 652.78,-691.4"/>
+<text xml:space="preserve" text-anchor="start" x="676.53" y="-713.8" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="14.00" fill="#558b2f">UI MANAGER</text>
+<text xml:space="preserve" text-anchor="start" x="713.87" y="-704.3" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#689f38">ui.py</text>
+<polygon fill="none" stroke="#c8e6c9" points="652.78,-631 652.78,-691.4 793.22,-691.4 793.22,-631 652.78,-631"/>
+<text xml:space="preserve" text-anchor="start" x="667.12" y="-673.2" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#33691e">                • Interface Construction</text>
+<text xml:space="preserve" text-anchor="start" x="669.35" y="-663.6" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#33691e">                • Widget Management</text>
+<text xml:space="preserve" text-anchor="start" x="668.23" y="-654" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#33691e">                • Layout Configuration</text>
+<text xml:space="preserve" text-anchor="start" x="663.78" y="-644.4" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#33691e">                • Event Binding                </text>
 </g>
 <!-- node_main&#45;&gt;node_ui_mgr -->
 <g id="edge4" class="edge">
 <title>node_main-&gt;node_ui_mgr</title>
-<path fill="none" stroke="#ffecb3" stroke-width="1.5" d="M1229.46,-867C1049.59,-867 723,-867 723,-867 723,-867 723,-578.02 723,-578.02"/>
-<polygon fill="#ffecb3" stroke="#ffecb3" stroke-width="1.5" points="723,-571.02 726.15,-578.02 723.25,-572.69 723.25,-578.02 723,-578.02 722.75,-578.02 722.75,-572.69 719.85,-578.02 723,-571.02"/>
-<text xml:space="preserve" text-anchor="middle" x="1074.49" y="-708.3" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#ff9800"> initializes UI</text>
+<path fill="none" stroke="#ffecb3" stroke-width="1.5" d="M1229.33,-1048C1069.65,-1048 801.16,-1048 801.16,-1048 801.16,-1048 801.16,-759.35 801.16,-759.35"/>
+<polygon fill="#ffecb3" stroke="#ffecb3" stroke-width="1.5" points="801.16,-752.35 804.31,-759.35 801.41,-754.02 801.41,-759.35 801.16,-759.35 800.91,-759.35 800.91,-754.02 798.01,-759.35 801.16,-752.35"/>
+<text xml:space="preserve" text-anchor="middle" x="958.49" y="-889.7" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#ff9800"> initializes UI</text>
 </g>
 <!-- node_analyzer -->
 <g id="node10" class="node">
@@ -220,8 +250,8 @@
 <!-- node_main&#45;&gt;node_analyzer -->
 <g id="edge10" class="edge">
 <title>node_main-&gt;node_analyzer</title>
-<path fill="none" stroke="#e1bee7" stroke-width="1.1" stroke-dasharray="1,5" d="M1229.14,-846C1089.63,-846 873.83,-846 873.83,-846 873.83,-846 873.83,-224.13 873.83,-224.13"/>
-<polygon fill="#e1bee7" stroke="#e1bee7" stroke-width="1.1" points="873.83,-217.13 876.98,-224.13 873.88,-219.29 873.88,-224.13 873.83,-224.13 873.78,-224.13 873.78,-219.29 870.68,-224.13 873.83,-217.13"/>
+<path fill="none" stroke="#e1bee7" stroke-width="1.1" stroke-dasharray="1,5" d="M1229.17,-1027C1093.87,-1027 888.32,-1027 888.32,-1027 888.32,-1027 888.32,-223.9 888.32,-223.9"/>
+<polygon fill="#e1bee7" stroke="#e1bee7" stroke-width="1.1" points="888.32,-216.9 891.47,-223.9 888.37,-219.06 888.37,-223.9 888.32,-223.9 888.27,-223.9 888.27,-219.06 885.17,-223.9 888.32,-216.9"/>
 </g>
 <!-- node_grid -->
 <g id="node11" class="node">
@@ -239,8 +269,8 @@
 <!-- node_main&#45;&gt;node_grid -->
 <g id="edge11" class="edge">
 <title>node_main-&gt;node_grid</title>
-<path fill="none" stroke="#e1bee7" stroke-width="1.1" stroke-dasharray="1,5" d="M1229.4,-825C1204.73,-825 1185.94,-825 1185.94,-825 1185.94,-825 1185.94,-224.07 1185.94,-224.07"/>
-<polygon fill="#e1bee7" stroke="#e1bee7" stroke-width="1.1" points="1185.94,-217.07 1189.09,-224.07 1185.99,-219.23 1185.99,-224.07 1185.94,-224.07 1185.89,-224.07 1185.89,-219.23 1182.79,-224.07 1185.94,-217.07"/>
+<path fill="none" stroke="#e1bee7" stroke-width="1.1" stroke-dasharray="1,5" d="M1229.21,-1006C1202.05,-1006 1180.85,-1006 1180.85,-1006 1180.85,-1006 1180.85,-223.81 1180.85,-223.81"/>
+<polygon fill="#e1bee7" stroke="#e1bee7" stroke-width="1.1" points="1180.85,-216.81 1184,-223.81 1180.9,-218.97 1180.9,-223.81 1180.85,-223.81 1180.8,-223.81 1180.8,-218.97 1177.7,-223.81 1180.85,-216.81"/>
 </g>
 <!-- node_split -->
 <g id="node12" class="node">
@@ -258,8 +288,8 @@
 <!-- node_main&#45;&gt;node_split -->
 <g id="edge12" class="edge">
 <title>node_main-&gt;node_split</title>
-<path fill="none" stroke="#e1bee7" stroke-width="1.1" stroke-dasharray="1,5" d="M1401.48,-803.45C1401.48,-803.45 1401.48,-223.93 1401.48,-223.93"/>
-<polygon fill="#e1bee7" stroke="#e1bee7" stroke-width="1.1" points="1401.48,-216.93 1404.63,-223.93 1401.53,-219.09 1401.53,-223.93 1401.48,-223.93 1401.43,-223.93 1401.43,-219.09 1398.33,-223.93 1401.48,-216.93"/>
+<path fill="none" stroke="#e1bee7" stroke-width="1.1" stroke-dasharray="1,5" d="M1401.48,-984.83C1401.48,-984.83 1401.48,-224.06 1401.48,-224.06"/>
+<polygon fill="#e1bee7" stroke="#e1bee7" stroke-width="1.1" points="1401.48,-217.06 1404.63,-224.06 1401.53,-219.22 1401.53,-224.06 1401.48,-224.06 1401.43,-224.06 1401.43,-219.22 1398.33,-224.06 1401.48,-217.06"/>
 </g>
 <!-- node_newproj -->
 <g id="node13" class="node">
@@ -277,8 +307,8 @@
 <!-- node_main&#45;&gt;node_newproj -->
 <g id="edge13" class="edge">
 <title>node_main-&gt;node_newproj</title>
-<path fill="none" stroke="#e1bee7" stroke-width="1.1" stroke-dasharray="1,5" d="M1460.46,-846C1550.32,-846 1659.87,-846 1659.87,-846 1659.87,-846 1659.87,-224.13 1659.87,-224.13"/>
-<polygon fill="#e1bee7" stroke="#e1bee7" stroke-width="1.1" points="1659.87,-217.13 1663.02,-224.13 1659.92,-219.29 1659.92,-224.13 1659.87,-224.13 1659.82,-224.13 1659.82,-219.29 1656.72,-224.13 1659.87,-217.13"/>
+<path fill="none" stroke="#e1bee7" stroke-width="1.1" stroke-dasharray="1,5" d="M1460.88,-1027C1547.27,-1027 1650.37,-1027 1650.37,-1027 1650.37,-1027 1650.37,-223.9 1650.37,-223.9"/>
+<polygon fill="#e1bee7" stroke="#e1bee7" stroke-width="1.1" points="1650.37,-216.9 1653.52,-223.9 1650.42,-219.06 1650.42,-223.9 1650.37,-223.9 1650.32,-223.9 1650.32,-219.06 1647.22,-223.9 1650.37,-216.9"/>
 </g>
 <!-- node_classmgr -->
 <g id="node14" class="node">
@@ -296,8 +326,8 @@
 <!-- node_main&#45;&gt;node_classmgr -->
 <g id="edge14" class="edge">
 <title>node_main-&gt;node_classmgr</title>
-<path fill="none" stroke="#e1bee7" stroke-width="1.1" stroke-dasharray="1,5" d="M1460.6,-888C1633.42,-888 1939.06,-888 1939.06,-888 1939.06,-888 1939.06,-223.99 1939.06,-223.99"/>
-<polygon fill="#e1bee7" stroke="#e1bee7" stroke-width="1.1" points="1939.06,-216.99 1942.21,-223.99 1939.11,-219.15 1939.11,-223.99 1939.06,-223.99 1939.01,-223.99 1939.01,-219.15 1935.91,-223.99 1939.06,-216.99"/>
+<path fill="none" stroke="#e1bee7" stroke-width="1.1" stroke-dasharray="1,5" d="M1460.9,-1070C1640.85,-1070 1966.99,-1070 1966.99,-1070 1966.99,-1070 1966.99,-223.98 1966.99,-223.98"/>
+<polygon fill="#e1bee7" stroke="#e1bee7" stroke-width="1.1" points="1966.99,-216.98 1970.14,-223.98 1967.04,-219.14 1967.04,-223.98 1966.99,-223.98 1966.94,-223.98 1966.94,-219.14 1963.84,-223.98 1966.99,-216.98"/>
 </g>
 <!-- node_about -->
 <g id="node15" class="node">
@@ -315,83 +345,145 @@
 <!-- node_main&#45;&gt;node_about -->
 <g id="edge15" class="edge">
 <title>node_main-&gt;node_about</title>
-<path fill="none" stroke="#e1bee7" stroke-width="1.1" stroke-dasharray="1,5" d="M1460.61,-930C1708.52,-930 2268.9,-930 2268.9,-930 2268.9,-930 2268.9,-223.84 2268.9,-223.84"/>
-<polygon fill="#e1bee7" stroke="#e1bee7" stroke-width="1.1" points="2268.9,-216.84 2272.05,-223.84 2268.95,-219 2268.95,-223.84 2268.9,-223.84 2268.85,-223.84 2268.85,-219 2265.75,-223.84 2268.9,-216.84"/>
+<path fill="none" stroke="#e1bee7" stroke-width="1.1" stroke-dasharray="1,5" d="M1460.81,-1112C1706.86,-1112 2259.4,-1112 2259.4,-1112 2259.4,-1112 2259.4,-223.8 2259.4,-223.8"/>
+<polygon fill="#e1bee7" stroke="#e1bee7" stroke-width="1.1" points="2259.4,-216.8 2262.55,-223.8 2259.45,-218.96 2259.45,-223.8 2259.4,-223.8 2259.35,-223.8 2259.35,-218.96 2256.25,-223.8 2259.4,-216.8"/>
 </g>
 <!-- node_state&#45;&gt;node_analyzer -->
 <!-- node_manager&#45;&gt;node_state -->
 <g id="edge9" class="edge">
 <title>node_manager-&gt;node_state</title>
-<path fill="none" stroke="#bbdefb" stroke-width="1.3" d="M341.87,-502C341.87,-502 206.75,-502 206.75,-502"/>
-<polygon fill="#bbdefb" stroke="#bbdefb" stroke-width="1.3" points="199.75,-502 206.75,-498.85 201.66,-501.85 206.75,-501.85 206.75,-502 206.75,-502.15 201.66,-502.15 206.75,-505.15 199.75,-502"/>
+<path fill="none" stroke="#bbdefb" stroke-width="1.3" d="M341.87,-684C341.87,-684 206.75,-684 206.75,-684"/>
+<polygon fill="#bbdefb" stroke="#bbdefb" stroke-width="1.3" points="199.75,-684 206.75,-680.85 201.66,-683.85 206.75,-683.85 206.75,-684 206.75,-684.15 201.66,-684.15 206.75,-687.15 199.75,-684"/>
 </g>
 <!-- node_canvas_ctrl -->
 <g id="node9" class="node">
 <title>node_canvas_ctrl</title>
-<path fill="#ffffff" stroke="none" stroke-width="1.2" d="M1151.11,-569.4C1151.11,-569.4 962.89,-569.4 962.89,-569.4 956.89,-569.4 950.89,-563.4 950.89,-557.4 950.89,-557.4 950.89,-447.2 950.89,-447.2 950.89,-441.2 956.89,-435.2 962.89,-435.2 962.89,-435.2 1151.11,-435.2 1151.11,-435.2 1157.11,-435.2 1163.11,-441.2 1163.11,-447.2 1163.11,-447.2 1163.11,-557.4 1163.11,-557.4 1163.11,-563.4 1157.11,-569.4 1151.11,-569.4"/>
-<polygon fill="#e8f5e9" stroke="none" points="965.29,-449.6 965.29,-555 1148.71,-555 1148.71,-449.6 965.29,-449.6"/>
-<polygon fill="#dcedc8" stroke="none" points="965.29,-510 965.29,-555 1148.71,-555 1148.71,-510 965.29,-510"/>
-<polygon fill="none" stroke="#c8e6c9" points="965.29,-510 965.29,-555 1148.71,-555 1148.71,-510 965.29,-510"/>
-<text xml:space="preserve" text-anchor="start" x="976.29" y="-532.4" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="14.00" fill="#558b2f">CANVAS CONTROLLER</text>
-<text xml:space="preserve" text-anchor="start" x="1039.13" y="-522.9" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#689f38">canvas.py</text>
-<polygon fill="none" stroke="#c8e6c9" points="965.29,-449.6 965.29,-510 1148.71,-510 1148.71,-449.6 965.29,-449.6"/>
-<text xml:space="preserve" text-anchor="start" x="983.85" y="-491.8" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#33691e">                • Zoom/Pan Operations</text>
-<text xml:space="preserve" text-anchor="start" x="990.73" y="-482.2" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#33691e">                • Polygon Drawing</text>
-<text xml:space="preserve" text-anchor="start" x="994.07" y="-472.6" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#33691e">                • Selection Tools</text>
-<text xml:space="preserve" text-anchor="start" x="976.29" y="-463" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#33691e">                • Visual Feedback                </text>
+<path fill="#ffffff" stroke="none" stroke-width="1.2" d="M1151.11,-750.8C1151.11,-750.8 962.89,-750.8 962.89,-750.8 956.89,-750.8 950.89,-744.8 950.89,-738.8 950.89,-738.8 950.89,-628.6 950.89,-628.6 950.89,-622.6 956.89,-616.6 962.89,-616.6 962.89,-616.6 1151.11,-616.6 1151.11,-616.6 1157.11,-616.6 1163.11,-622.6 1163.11,-628.6 1163.11,-628.6 1163.11,-738.8 1163.11,-738.8 1163.11,-744.8 1157.11,-750.8 1151.11,-750.8"/>
+<polygon fill="#e8f5e9" stroke="none" points="965.29,-631 965.29,-736.4 1148.71,-736.4 1148.71,-631 965.29,-631"/>
+<polygon fill="#dcedc8" stroke="none" points="965.29,-691.4 965.29,-736.4 1148.71,-736.4 1148.71,-691.4 965.29,-691.4"/>
+<polygon fill="none" stroke="#c8e6c9" points="965.29,-691.4 965.29,-736.4 1148.71,-736.4 1148.71,-691.4 965.29,-691.4"/>
+<text xml:space="preserve" text-anchor="start" x="976.29" y="-713.8" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="14.00" fill="#558b2f">CANVAS CONTROLLER</text>
+<text xml:space="preserve" text-anchor="start" x="1039.13" y="-704.3" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#689f38">canvas.py</text>
+<polygon fill="none" stroke="#c8e6c9" points="965.29,-631 965.29,-691.4 1148.71,-691.4 1148.71,-631 965.29,-631"/>
+<text xml:space="preserve" text-anchor="start" x="983.85" y="-673.2" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#33691e">                • Zoom/Pan Operations</text>
+<text xml:space="preserve" text-anchor="start" x="990.73" y="-663.6" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#33691e">                • Polygon Drawing</text>
+<text xml:space="preserve" text-anchor="start" x="994.07" y="-654" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#33691e">                • Selection Tools</text>
+<text xml:space="preserve" text-anchor="start" x="976.29" y="-644.4" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#33691e">                • Visual Feedback                </text>
 </g>
 <!-- node_ui_mgr&#45;&gt;node_canvas_ctrl -->
 <g id="edge6" class="edge">
 <title>node_ui_mgr-&gt;node_canvas_ctrl</title>
-<path fill="none" stroke="#dcedc8" stroke-width="1.3" d="M807.28,-502C807.28,-502 942.59,-502 942.59,-502"/>
-<polygon fill="#dcedc8" stroke="#dcedc8" stroke-width="1.3" points="949.59,-502 942.59,-505.15 947.68,-502.15 942.59,-502.15 942.59,-502 942.59,-501.85 947.68,-501.85 942.59,-498.85 949.59,-502"/>
+<path fill="none" stroke="#dcedc8" stroke-width="1.3" d="M807.28,-684C807.28,-684 942.59,-684 942.59,-684"/>
+<polygon fill="#dcedc8" stroke="#dcedc8" stroke-width="1.3" points="949.59,-684 942.59,-687.15 947.68,-684.15 942.59,-684.15 942.59,-684 942.59,-683.85 947.68,-683.85 942.59,-680.85 949.59,-684"/>
+</g>
+<!-- node_utils_ui -->
+<g id="node17" class="node">
+<title>node_utils_ui</title>
+<path fill="#ffffff" stroke="none" stroke-width="1.2" d="M854.95,-480.4C854.95,-480.4 699.05,-480.4 699.05,-480.4 693.05,-480.4 687.05,-474.4 687.05,-468.4 687.05,-468.4 687.05,-354.4 687.05,-354.4 687.05,-348.4 693.05,-342.4 699.05,-342.4 699.05,-342.4 854.95,-342.4 854.95,-342.4 860.95,-342.4 866.95,-348.4 866.95,-354.4 866.95,-354.4 866.95,-468.4 866.95,-468.4 866.95,-474.4 860.95,-480.4 854.95,-480.4"/>
+<polygon fill="#fafafa" stroke="none" points="701.45,-356.8 701.45,-466 852.55,-466 852.55,-356.8 701.45,-356.8"/>
+<polygon fill="#f1f1f1" stroke="none" points="701.45,-431.2 701.45,-466 852.55,-466 852.55,-431.2 701.45,-431.2"/>
+<polygon fill="none" stroke="#e0e0e0" points="701.45,-431.2 701.45,-466 852.55,-466 852.55,-431.2 701.45,-431.2"/>
+<text xml:space="preserve" text-anchor="start" x="746.46" y="-445.4" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="14.00" fill="#616161">UI UTILS</text>
+<polygon fill="none" stroke="#e0e0e0" points="701.45,-403.6 701.45,-431.2 852.55,-431.2 852.55,-403.6 701.45,-403.6"/>
+<text xml:space="preserve" text-anchor="start" x="760" y="-415" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#757575">utils_ui.py</text>
+<polygon fill="none" stroke="#e0e0e0" points="701.45,-356.8 701.45,-403.6 852.55,-403.6 852.55,-356.8 701.45,-356.8"/>
+<text xml:space="preserve" text-anchor="start" x="733.45" y="-387.4" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#9e9e9e">                • ScrolledFrame</text>
+<text xml:space="preserve" text-anchor="start" x="732.67" y="-377.8" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#9e9e9e">                • Error Handling</text>
+<text xml:space="preserve" text-anchor="start" x="710.45" y="-368.2" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#9e9e9e">                • Window Centering                </text>
+</g>
+<!-- node_ui_mgr&#45;&gt;node_utils_ui -->
+<g id="edge16" class="edge">
+<title>node_ui_mgr-&gt;node_utils_ui</title>
+<path fill="none" stroke="#bdbdbd" stroke-dasharray="5,2" d="M747.34,-616.74C747.34,-616.74 747.34,-488.22 747.34,-488.22"/>
+<polygon fill="#bdbdbd" stroke="#bdbdbd" points="747.34,-481.22 750.49,-488.22 747.34,-483.5 747.34,-488.22 747.34,-488.22 747.34,-488.22 747.34,-483.5 744.19,-488.22 747.34,-481.22"/>
+<text xml:space="preserve" text-anchor="middle" x="742.87" y="-560.7" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#757575"> uses</text>
 </g>
 <!-- node_canvas_ctrl&#45;&gt;node_state -->
 <g id="edge7" class="edge">
 <title>node_canvas_ctrl-&gt;node_state</title>
-<path fill="none" stroke="#b3e5fc" stroke-width="1.2" stroke-dasharray="5,2" d="M1002.15,-435.28C1002.15,-384.35 1002.15,-323 1002.15,-323 1002.15,-323 84.57,-323 84.57,-323 84.57,-323 84.57,-421.94 84.57,-421.94"/>
-<polygon fill="#b3e5fc" stroke="#b3e5fc" stroke-width="1.2" points="84.57,-428.94 81.42,-421.94 84.47,-426.9 84.47,-421.94 84.57,-421.94 84.67,-421.94 84.67,-426.9 87.72,-421.94 84.57,-428.94"/>
-<text xml:space="preserve" text-anchor="middle" x="835" y="-654.5" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#1976d2"> reads/writes</text>
+<path fill="none" stroke="#b3e5fc" stroke-width="1.2" stroke-dasharray="5,2" d="M1003.47,-616.87C1003.47,-581.78 1003.47,-546 1003.47,-546 1003.47,-546 84.57,-546 84.57,-546 84.57,-546 84.57,-603.56 84.57,-603.56"/>
+<polygon fill="#b3e5fc" stroke="#b3e5fc" stroke-width="1.2" points="84.57,-610.56 81.42,-603.56 84.47,-608.53 84.47,-603.56 84.57,-603.56 84.67,-603.56 84.67,-608.53 87.72,-603.56 84.57,-610.56"/>
+<text xml:space="preserve" text-anchor="middle" x="837" y="-835.9" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#1976d2"> reads/writes</text>
+</g>
+<!-- node_utils -->
+<g id="node16" class="node">
+<title>node_utils</title>
+<path fill="#ffffff" stroke="none" stroke-width="1.2" d="M1096.62,-475.6C1096.62,-475.6 951.38,-475.6 951.38,-475.6 945.38,-475.6 939.38,-469.6 939.38,-463.6 939.38,-463.6 939.38,-359.2 939.38,-359.2 939.38,-353.2 945.38,-347.2 951.38,-347.2 951.38,-347.2 1096.62,-347.2 1096.62,-347.2 1102.62,-347.2 1108.62,-353.2 1108.62,-359.2 1108.62,-359.2 1108.62,-463.6 1108.62,-463.6 1108.62,-469.6 1102.62,-475.6 1096.62,-475.6"/>
+<polygon fill="#fafafa" stroke="none" points="953.78,-361.6 953.78,-461.2 1094.22,-461.2 1094.22,-361.6 953.78,-361.6"/>
+<polygon fill="#f1f1f1" stroke="none" points="953.78,-426.4 953.78,-461.2 1094.22,-461.2 1094.22,-426.4 953.78,-426.4"/>
+<polygon fill="none" stroke="#e0e0e0" points="953.78,-426.4 953.78,-461.2 1094.22,-461.2 1094.22,-426.4 953.78,-426.4"/>
+<text xml:space="preserve" text-anchor="start" x="972.45" y="-440.6" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="14.00" fill="#616161">SYSTEM UTILS</text>
+<polygon fill="none" stroke="#e0e0e0" points="953.78,-398.8 953.78,-426.4 1094.22,-426.4 1094.22,-398.8 953.78,-398.8"/>
+<text xml:space="preserve" text-anchor="start" x="1012.11" y="-410.2" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#757575">utils.py</text>
+<polygon fill="none" stroke="#e0e0e0" points="953.78,-361.6 953.78,-398.8 1094.22,-398.8 1094.22,-361.6 953.78,-361.6"/>
+<text xml:space="preserve" text-anchor="start" x="974.78" y="-382.6" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#9e9e9e">                • Font Management</text>
+<text xml:space="preserve" text-anchor="start" x="962.78" y="-373" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#9e9e9e">                • System Helpers                </text>
+</g>
+<!-- node_canvas_ctrl&#45;&gt;node_utils -->
+<g id="edge17" class="edge">
+<title>node_canvas_ctrl-&gt;node_utils</title>
+<path fill="none" stroke="#bdbdbd" stroke-dasharray="5,2" d="M1056.04,-616.74C1056.04,-616.74 1056.04,-483.51 1056.04,-483.51"/>
+<polygon fill="#bdbdbd" stroke="#bdbdbd" points="1056.04,-476.51 1059.19,-483.51 1056.04,-478.79 1056.04,-483.51 1056.04,-483.51 1056.04,-483.51 1056.04,-478.79 1052.89,-483.51 1056.04,-476.51"/>
+<text xml:space="preserve" text-anchor="middle" x="1045.12" y="-560.7" font-family="Helvetica, Arial, sans-serif" font-size="9.00" fill="#757575"> fonts</text>
 </g>
 <!-- node_analyzer&#45;&gt;node_grid -->
 <!-- node_grid&#45;&gt;node_split -->
 <!-- node_split&#45;&gt;node_newproj -->
 <!-- node_newproj&#45;&gt;node_classmgr -->
 <!-- node_classmgr&#45;&gt;node_about -->
+<!-- node_gen_lang -->
+<g id="node18" class="node">
+<title>node_gen_lang</title>
+<path fill="#ffffff" stroke="none" stroke-width="1.2" d="M638.99,-1399.6C638.99,-1399.6 517.01,-1399.6 517.01,-1399.6 511.01,-1399.6 505.01,-1393.6 505.01,-1387.6 505.01,-1387.6 505.01,-1292.8 505.01,-1292.8 505.01,-1286.8 511.01,-1280.8 517.01,-1280.8 517.01,-1280.8 638.99,-1280.8 638.99,-1280.8 644.99,-1280.8 650.99,-1286.8 650.99,-1292.8 650.99,-1292.8 650.99,-1387.6 650.99,-1387.6 650.99,-1393.6 644.99,-1399.6 638.99,-1399.6"/>
+<polygon fill="#ffccbc" stroke="none" points="519.41,-1295.2 519.41,-1385.2 636.59,-1385.2 636.59,-1295.2 519.41,-1295.2"/>
+<polygon fill="#ffab91" stroke="none" points="519.41,-1350.4 519.41,-1385.2 636.59,-1385.2 636.59,-1350.4 519.41,-1350.4"/>
+<polygon fill="none" stroke="#ffab91" points="519.41,-1350.4 519.41,-1385.2 636.59,-1385.2 636.59,-1350.4 519.41,-1350.4"/>
+<text xml:space="preserve" text-anchor="start" x="528.41" y="-1364.6" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="14.00" fill="#bf360c">BUILD SCRIPT</text>
+<polygon fill="none" stroke="#ffab91" points="519.41,-1322.8 519.41,-1350.4 636.59,-1350.4 636.59,-1322.8 519.41,-1322.8"/>
+<text xml:space="preserve" text-anchor="start" x="541.46" y="-1334.2" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#d84315">generate_languages.py</text>
+<polygon fill="none" stroke="#ffab91" points="519.41,-1295.2 519.41,-1322.8 636.59,-1322.8 636.59,-1295.2 519.41,-1295.2"/>
+<text xml:space="preserve" text-anchor="start" x="542.79" y="-1306.6" font-family="Helvetica, Arial, sans-serif" font-size="8.00" fill="#e64a19">Translation Generator</text>
+</g>
+<!-- node_gen_lang&#45;&gt;node_lang_xml -->
+<g id="edge18" class="edge">
+<title>node_gen_lang-&gt;node_lang_xml</title>
+<path fill="none" stroke="#ff7043" stroke-width="1.2" d="M650.94,-1340C650.94,-1340 786.42,-1340 786.42,-1340"/>
+<polygon fill="#ff7043" stroke="#ff7043" stroke-width="1.2" points="793.42,-1340 786.42,-1343.15 791.38,-1340.1 786.42,-1340.1 786.42,-1340 786.42,-1339.9 791.38,-1339.9 786.42,-1336.85 793.42,-1340"/>
+</g>
 <!-- node_decoration1 -->
-<g id="node16" class="node">
+<g id="node20" class="node">
 <title>node_decoration1</title>
-<ellipse fill="#ffe4ec" stroke="#f8bbd0" stroke-width="1.2" cx="1767" cy="-1272.8" rx="10.8" ry="10.8"/>
+<ellipse fill="#ffe4ec" stroke="#f8bbd0" stroke-width="1.2" cx="1748" cy="-1606.6" rx="10.8" ry="10.8"/>
 </g>
 <!-- cluster_infra -->
-<g id="node19" class="node">
+<g id="node23" class="node">
 <title>cluster_infra</title>
-<path fill="#ffffff" stroke="none" stroke-width="1.2" d="M1937.77,-1295.6C1937.77,-1295.6 1862.23,-1295.6 1862.23,-1295.6 1856.23,-1295.6 1850.23,-1289.6 1850.23,-1283.6 1850.23,-1283.6 1850.23,-1262 1850.23,-1262 1850.23,-1256 1856.23,-1250 1862.23,-1250 1862.23,-1250 1937.77,-1250 1937.77,-1250 1943.77,-1250 1949.77,-1256 1949.77,-1262 1949.77,-1262 1949.77,-1283.6 1949.77,-1283.6 1949.77,-1289.6 1943.77,-1295.6 1937.77,-1295.6"/>
-<text xml:space="preserve" text-anchor="middle" x="1900" y="-1268.6" font-family="Helvetica, Arial, sans-serif" font-size="14.00">cluster_infra</text>
+<path fill="#ffffff" stroke="none" stroke-width="1.2" d="M1918.77,-1629.4C1918.77,-1629.4 1843.23,-1629.4 1843.23,-1629.4 1837.23,-1629.4 1831.23,-1623.4 1831.23,-1617.4 1831.23,-1617.4 1831.23,-1595.8 1831.23,-1595.8 1831.23,-1589.8 1837.23,-1583.8 1843.23,-1583.8 1843.23,-1583.8 1918.77,-1583.8 1918.77,-1583.8 1924.77,-1583.8 1930.77,-1589.8 1930.77,-1595.8 1930.77,-1595.8 1930.77,-1617.4 1930.77,-1617.4 1930.77,-1623.4 1924.77,-1629.4 1918.77,-1629.4"/>
+<text xml:space="preserve" text-anchor="middle" x="1881" y="-1602.4" font-family="Helvetica, Arial, sans-serif" font-size="14.00">cluster_infra</text>
 </g>
 <!-- node_decoration1&#45;&gt;cluster_infra -->
 <!-- node_decoration2 -->
-<g id="node17" class="node">
+<g id="node21" class="node">
 <title>node_decoration2</title>
-<ellipse fill="#e3f2fd" stroke="#bbdefb" stroke-width="1.2" cx="2033" cy="-1272.8" rx="10.8" ry="10.8"/>
+<ellipse fill="#e3f2fd" stroke="#bbdefb" stroke-width="1.2" cx="2014" cy="-1606.6" rx="10.8" ry="10.8"/>
 </g>
 <!-- cluster_model -->
-<g id="node20" class="node">
+<g id="node24" class="node">
 <title>cluster_model</title>
-<path fill="#ffffff" stroke="none" stroke-width="1.2" d="M2212.06,-1295.6C2212.06,-1295.6 2127.94,-1295.6 2127.94,-1295.6 2121.94,-1295.6 2115.94,-1289.6 2115.94,-1283.6 2115.94,-1283.6 2115.94,-1262 2115.94,-1262 2115.94,-1256 2121.94,-1250 2127.94,-1250 2127.94,-1250 2212.06,-1250 2212.06,-1250 2218.06,-1250 2224.06,-1256 2224.06,-1262 2224.06,-1262 2224.06,-1283.6 2224.06,-1283.6 2224.06,-1289.6 2218.06,-1295.6 2212.06,-1295.6"/>
-<text xml:space="preserve" text-anchor="middle" x="2170" y="-1268.6" font-family="Helvetica, Arial, sans-serif" font-size="14.00">cluster_model</text>
+<path fill="#ffffff" stroke="none" stroke-width="1.2" d="M2193.06,-1629.4C2193.06,-1629.4 2108.94,-1629.4 2108.94,-1629.4 2102.94,-1629.4 2096.94,-1623.4 2096.94,-1617.4 2096.94,-1617.4 2096.94,-1595.8 2096.94,-1595.8 2096.94,-1589.8 2102.94,-1583.8 2108.94,-1583.8 2108.94,-1583.8 2193.06,-1583.8 2193.06,-1583.8 2199.06,-1583.8 2205.06,-1589.8 2205.06,-1595.8 2205.06,-1595.8 2205.06,-1617.4 2205.06,-1617.4 2205.06,-1623.4 2199.06,-1629.4 2193.06,-1629.4"/>
+<text xml:space="preserve" text-anchor="middle" x="2151" y="-1602.4" font-family="Helvetica, Arial, sans-serif" font-size="14.00">cluster_model</text>
 </g>
 <!-- node_decoration2&#45;&gt;cluster_model -->
 <!-- node_decoration3 -->
-<g id="node18" class="node">
+<g id="node22" class="node">
 <title>node_decoration3</title>
-<ellipse fill="#fff8e1" stroke="#ffecb3" stroke-width="1.2" cx="2307" cy="-1272.8" rx="10.8" ry="10.8"/>
+<ellipse fill="#fff8e1" stroke="#ffecb3" stroke-width="1.2" cx="2288" cy="-1606.6" rx="10.8" ry="10.8"/>
 </g>
 <!-- cluster_controller -->
-<g id="node21" class="node">
+<g id="node25" class="node">
 <title>cluster_controller</title>
-<path fill="#ffffff" stroke="none" stroke-width="1.2" d="M2505.77,-1295.6C2505.77,-1295.6 2402.23,-1295.6 2402.23,-1295.6 2396.23,-1295.6 2390.23,-1289.6 2390.23,-1283.6 2390.23,-1283.6 2390.23,-1262 2390.23,-1262 2390.23,-1256 2396.23,-1250 2402.23,-1250 2402.23,-1250 2505.77,-1250 2505.77,-1250 2511.77,-1250 2517.77,-1256 2517.77,-1262 2517.77,-1262 2517.77,-1283.6 2517.77,-1283.6 2517.77,-1289.6 2511.77,-1295.6 2505.77,-1295.6"/>
-<text xml:space="preserve" text-anchor="middle" x="2454" y="-1268.6" font-family="Helvetica, Arial, sans-serif" font-size="14.00">cluster_controller</text>
+<path fill="#ffffff" stroke="none" stroke-width="1.2" d="M2486.77,-1629.4C2486.77,-1629.4 2383.23,-1629.4 2383.23,-1629.4 2377.23,-1629.4 2371.23,-1623.4 2371.23,-1617.4 2371.23,-1617.4 2371.23,-1595.8 2371.23,-1595.8 2371.23,-1589.8 2377.23,-1583.8 2383.23,-1583.8 2383.23,-1583.8 2486.77,-1583.8 2486.77,-1583.8 2492.77,-1583.8 2498.77,-1589.8 2498.77,-1595.8 2498.77,-1595.8 2498.77,-1617.4 2498.77,-1617.4 2498.77,-1623.4 2492.77,-1629.4 2486.77,-1629.4"/>
+<text xml:space="preserve" text-anchor="middle" x="2435" y="-1602.4" font-family="Helvetica, Arial, sans-serif" font-size="14.00">cluster_controller</text>
 </g>
 <!-- node_decoration3&#45;&gt;cluster_controller -->
 </g>

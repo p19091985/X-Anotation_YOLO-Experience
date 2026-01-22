@@ -107,6 +107,9 @@ class MainApplication:
         self.app_state.selected_annotation_index = None
         self.canvas_controller.poly_points_buffer = []
         self.canvas_controller.display_image()
+        if self.app_state.is_drawing:
+            mode_txt = 'Polígono' if self.app_state.annotation_mode == 'polygon' else 'Box'
+            self.ui.update_status_bar(f'Modo Desenho: ON ({mode_txt})')
 
     def on_image_select_from_list(self, event):
         sel = self.ui.listbox.curselection()
