@@ -21,7 +21,6 @@ class UIManager:
         self.prop_x = tk.StringVar(value='0')
         self.prop_y = tk.StringVar(value='0')
         self.prop_w = tk.StringVar(value='0')
-        self.prop_w = tk.StringVar(value='0')
         self.prop_h = tk.StringVar(value='0')
         self._translatable_items = []
         self._create_widgets()
@@ -192,8 +191,8 @@ class UIManager:
             e.grid(row=row, column=1, padx=2, pady=2)
             btn_frame = ttk.Frame(parent)
             btn_frame.grid(row=row, column=2, padx=2)
-            ttk.Button(btn_frame, text='◄', width=2, command=cmd_minus).pack(side=tk.LEFT)
-            ttk.Button(btn_frame, text='►', width=2, command=cmd_plus).pack(side=tk.LEFT)
+            ttk.Button(btn_frame, text='◀', width=3, command=cmd_minus).pack(side=tk.LEFT)
+            ttk.Button(btn_frame, text='▶', width=3, command=cmd_plus).pack(side=tk.LEFT)
         create_geo_control(geo_fr, 'X', self.prop_x, lambda: self.app.perform_fine_move(-1, 0), lambda: self.app.perform_fine_move(1, 0), 0)
         create_geo_control(geo_fr, 'Y', self.prop_y, lambda: self.app.perform_fine_move(0, -1), lambda: self.app.perform_fine_move(0, 1), 1)
         create_geo_control(geo_fr, 'W', self.prop_w, lambda: self.app.perform_fine_resize('right', -1), lambda: self.app.perform_fine_resize('right', 1), 2)

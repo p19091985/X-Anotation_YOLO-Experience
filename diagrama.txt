@@ -1,0 +1,320 @@
+digraph YOLO_Complete_Architecture_Pastel {
+    // ============================================================
+    // CONFIGURAÇÕES GLOBAIS - ESTILO PASTEL
+    // ============================================================
+    graph [
+        fontname="Helvetica, Arial, sans-serif", fontsize=14,
+        splines=ortho,
+        rankdir=TB,
+        nodesep=1.0,
+        ranksep=1.2,
+        bgcolor="#FAFAFA",
+        pad=1.0,
+        compound=true,
+        newrank=true,
+        label=<<br/><font point-size="18" color="#7A8B8B"><b>YOLO ANNOTATION TOOL</b></font><br/><font point-size="10" color="#9CA3AF">Architecture Diagram - Pastel Color Theme</font><br/><br/>>
+    ];
+
+    node [
+        fontname="Helvetica, Arial, sans-serif",
+        shape=plaintext,
+        style="filled,rounded",
+        fillcolor="#FFFFFF",
+        color="#A0AEC0",
+        penwidth=1.2,
+        margin=0.2
+    ];
+
+    edge [
+        fontname="Helvetica, Arial, sans-serif", fontsize=9,
+        color="#B0BEC5",
+        penwidth=1.3,
+        arrowhead=vee,
+        arrowsize=0.8
+    ];
+
+    // ============================================================
+    // LEGENDA - ESTILO PASTEL
+    // ============================================================
+    subgraph cluster_legend {
+        label=<<font color="#7A8B8B"><b>LEGEND</b></font>>;
+        style="filled,rounded"; color="#CBD5E1"; bgcolor="#F7FAFC";
+        margin=15; penwidth=1.5;
+
+        Legend_Key [label=<
+            <table border="0" cellborder="0" cellspacing="8" cellpadding="3">
+                <tr>
+                    <td bgcolor="#FFE4EC" border="1" color="#F8BBD0" width="25" height="12"></td>
+                    <td align="left"><font point-size="9" color="#7A8B8B">Infrastructure Layer</font></td>
+                </tr>
+                <tr>
+                    <td bgcolor="#E3F2FD" border="1" color="#BBDEFB" width="25"></td>
+                    <td align="left"><font point-size="9" color="#7A8B8B">Model &amp; Data Layer</font></td>
+                </tr>
+                <tr>
+                    <td bgcolor="#FFF8E1" border="1" color="#FFECB3" width="25"></td>
+                    <td align="left"><font point-size="9" color="#7A8B8B">Controller Layer</font></td>
+                </tr>
+                <tr>
+                    <td bgcolor="#F1F8E9" border="1" color="#DCEDC8" width="25"></td>
+                    <td align="left"><font point-size="9" color="#7A8B8B">View / UI Layer</font></td>
+                </tr>
+            </table>
+        >];
+    }
+
+    // ============================================================
+    // CAMADA 1: INFRAESTRUTURA (Rosa Pastel)
+    // ============================================================
+    subgraph cluster_infra {
+        label=<<b><font color="#E91E63">INFRASTRUCTURE LAYER</font></b>>;
+        style="filled,rounded"; color="#F8BBD0"; bgcolor="#FFF0F5";
+        margin=20; fontcolor="#C2185B"; penwidth=1.5;
+
+        node_config [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="10" bgcolor="#FFE4EC" color="#F8BBD0">
+                <tr><td align="center" bgcolor="#FCE4EC"><b><font color="#C2185B">config.py</font></b></td></tr>
+                <tr><td align="center"><font point-size="9" color="#E91E63">CONFIGURATION MANAGEMENT</font></td></tr>
+                <tr><td align="left"><font point-size="8" color="#7B1FA2">
+                • Application Settings<br/>
+                • Path Definitions<br/>
+                • System Parameters
+                </font></td></tr>
+            </table>
+        >];
+
+        node_locale [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="10" bgcolor="#FFE4EC" color="#F8BBD0">
+                <tr><td align="center" bgcolor="#FCE4EC"><b><font color="#C2185B">localization.py</font></b></td></tr>
+                <tr><td align="center"><font point-size="9" color="#E91E63">INTERNATIONALIZATION</font></td></tr>
+                <tr><td align="left"><font point-size="8" color="#7B1FA2">
+                • Multi-language Support<br/>
+                • XML Translation Files<br/>
+                • Dynamic Text Loading
+                </font></td></tr>
+            </table>
+        >];
+
+        node_logger [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="10" bgcolor="#FFE4EC" color="#F8BBD0">
+                <tr><td align="center" bgcolor="#FCE4EC"><b><font color="#C2185B">logger_config.py</font></b></td></tr>
+                <tr><td align="center"><font point-size="9" color="#E91E63">LOGGING SYSTEM</font></td></tr>
+                <tr><td align="left"><font point-size="8" color="#7B1FA2">
+                • Log Formatting<br/>
+                • File/Console Handlers<br/>
+                • Error Tracking
+                </font></td></tr>
+            </table>
+        >];
+    }
+
+    // ============================================================
+    // CAMADA 2: CONTROLADOR PRINCIPAL (Amarelo Pastel)
+    // ============================================================
+    subgraph cluster_controller {
+        label=<<b><font color="#FF8F00">MAIN CONTROLLER</font></b>>;
+        style="filled,rounded"; bgcolor="#FFF8E1"; color="#FFECB3"; penwidth=1.5; margin=25;
+        fontcolor="#FF6F00";
+
+        node_main [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="12" bgcolor="#FFF3E0" color="#FFE0B2">
+                <tr><td align="center" bgcolor="#FFECB3"><font point-size="13" color="#FF6F00"><b>MAIN APPLICATION</b></font><br/><font point-size="10" color="#FF8F00">main.py</font></td></tr>
+                <tr><td align="center"><font point-size="9" color="#FF9800">APPLICATION LIFECYCLE MANAGEMENT</font></td></tr>
+                <tr><td align="left"><font point-size="8" color="#EF6C00">
+                • Component Initialization<br/>
+                • Inter-layer Coordination<br/>
+                • Event Orchestration
+                </font></td></tr>
+            </table>
+        >];
+    }
+
+    // ============================================================
+    // CAMADA 3: MODELO E LÓGICA (Azul Pastel)
+    // ============================================================
+    subgraph cluster_model {
+        label=<<b><font color="#1976D2">MODEL &amp; LOGIC LAYER</font></b>>;
+        style="filled,rounded"; bgcolor="#E3F2FD"; color="#BBDEFB"; margin=20;
+        fontcolor="#1565C0"; penwidth=1.5;
+
+        node_state [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="10" bgcolor="#E1F5FE" color="#B3E5FC">
+                <tr><td align="center" bgcolor="#BBDEFB"><b><font color="#1565C0">APP STATE</font></b><br/><font point-size="9" color="#1976D2">state.py</font></td></tr>
+                <tr><td align="left"><font point-size="8" color="#0D47A1">
+                • Image Paths Storage<br/>
+                • Current Image Data<br/>
+                • Annotation Records<br/>
+                • Undo/Redo Stack<br/>
+                • Selection State
+                </font></td></tr>
+            </table>
+        >];
+
+        node_manager [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="10" bgcolor="#E1F5FE" color="#B3E5FC">
+                <tr><td align="center" bgcolor="#BBDEFB"><b><font color="#1565C0">ANNOTATION MANAGER</font></b><br/><font point-size="9" color="#1976D2">managers.py</font></td></tr>
+                <tr><td align="left"><font point-size="8" color="#0D47A1">
+                • YOLO Format I/O<br/>
+                • File Path Resolution<br/>
+                • Annotation Validation<br/>
+                • Data Import/Export
+                </font></td></tr>
+            </table>
+        >];
+    }
+
+    // ============================================================
+    // CAMADA 3: UI CORE (Verde Pastel)
+    // ============================================================
+    subgraph cluster_ui_core {
+        label=<<b><font color="#689F38">UI CORE LAYER</font></b>>;
+        style="filled,rounded"; bgcolor="#F1F8E9"; color="#DCEDC8"; margin=20;
+        fontcolor="#558B2F"; penwidth=1.5;
+
+        node_ui_mgr [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="10" bgcolor="#E8F5E9" color="#C8E6C9">
+                <tr><td align="center" bgcolor="#DCEDC8"><b><font color="#558B2F">UI MANAGER</font></b><br/><font point-size="9" color="#689F38">ui.py</font></td></tr>
+                <tr><td align="left"><font point-size="8" color="#33691E">
+                • Interface Construction<br/>
+                • Widget Management<br/>
+                • Layout Configuration<br/>
+                • Event Binding
+                </font></td></tr>
+            </table>
+        >];
+
+        node_canvas_ctrl [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="10" bgcolor="#E8F5E9" color="#C8E6C9">
+                <tr><td align="center" bgcolor="#DCEDC8"><b><font color="#558B2F">CANVAS CONTROLLER</font></b><br/><font point-size="9" color="#689F38">canvas.py</font></td></tr>
+                <tr><td align="left"><font point-size="8" color="#33691E">
+                • Zoom/Pan Operations<br/>
+                • Polygon Drawing<br/>
+                • Selection Tools<br/>
+                • Visual Feedback
+                </font></td></tr>
+            </table>
+        >];
+    }
+
+    // ============================================================
+    // CAMADA 4: MÓDULOS E JANELAS (Lavanda Pastel)
+    // ============================================================
+    subgraph cluster_windows {
+        label=<<b><font color="#9575CD">TOOL MODULES</font></b>>;
+        style="filled,rounded"; bgcolor="#F3E5F5"; color="#E1BEE7"; margin=25;
+        fontcolor="#7B1FA2"; penwidth=1.5;
+
+        node_analyzer [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="8" bgcolor="#F3E5F5" color="#E1BEE7">
+                <tr><td align="center" bgcolor="#E1BEE7"><b><font color="#7B1FA2">ANALYZER</font></b></td></tr>
+                <tr><td align="center"><font point-size="8" color="#9575CD">analisador_dataset.py</font></td></tr>
+                <tr><td align="center"><font point-size="8" color="#BA68C8">Dataset Analysis Tools</font></td></tr>
+            </table>
+        >];
+
+        node_grid [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="8" bgcolor="#F3E5F5" color="#E1BEE7">
+                <tr><td align="center" bgcolor="#E1BEE7"><b><font color="#7B1FA2">GRID VIEWER</font></b></td></tr>
+                <tr><td align="center"><font point-size="8" color="#9575CD">visualizador_grid.py</font></td></tr>
+                <tr><td align="center"><font point-size="8" color="#BA68C8">Batch Image Viewer</font></td></tr>
+            </table>
+        >];
+
+        node_split [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="8" bgcolor="#F3E5F5" color="#E1BEE7">
+                <tr><td align="center" bgcolor="#E1BEE7"><b><font color="#7B1FA2">SPLIT WIZARD</font></b></td></tr>
+                <tr><td align="center"><font point-size="8" color="#9575CD">window_split_wizard.py</font></td></tr>
+                <tr><td align="center"><font point-size="8" color="#BA68C8">Dataset Splitting</font></td></tr>
+            </table>
+        >];
+
+        node_newproj [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="8" bgcolor="#F3E5F5" color="#E1BEE7">
+                <tr><td align="center" bgcolor="#E1BEE7"><b><font color="#7B1FA2">NEW PROJECT</font></b></td></tr>
+                <tr><td align="center"><font point-size="8" color="#9575CD">window_new_project.py</font></td></tr>
+                <tr><td align="center"><font point-size="8" color="#BA68C8">Project Setup Wizard</font></td></tr>
+            </table>
+        >];
+
+        node_classmgr [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="8" bgcolor="#F3E5F5" color="#E1BEE7">
+                <tr><td align="center" bgcolor="#E1BEE7"><b><font color="#7B1FA2">CLASS MANAGER</font></b></td></tr>
+                <tr><td align="center"><font point-size="8" color="#9575CD">window_class_manager.py</font></td></tr>
+                <tr><td align="center"><font point-size="8" color="#BA68C8">Class Management</font></td></tr>
+            </table>
+        >];
+
+        node_about [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="8" bgcolor="#F3E5F5" color="#E1BEE7">
+                <tr><td align="center" bgcolor="#E1BEE7"><b><font color="#7B1FA2">ABOUT</font></b></td></tr>
+                <tr><td align="center"><font point-size="8" color="#9575CD">window_about.py</font></td></tr>
+                <tr><td align="center"><font point-size="8" color="#BA68C8">Application Information</font></td></tr>
+            </table>
+        >];
+    }
+
+    // ============================================================
+    // CONEXÕES - ESTILO PASTEL
+    // ============================================================
+
+    // 1. INFRAESTRUTURA -> MAIN
+    edge [color="#F8BBD0", style="solid", penwidth=1.2, arrowsize=0.7]
+    node_main -> node_config [label=" loads config", fontcolor="#E91E63"];
+    node_main -> node_locale [label=" i18n setup", fontcolor="#E91E63"];
+    node_main -> node_logger [label=" logging setup", fontcolor="#E91E63"];
+
+    // 2. FLUXO PRINCIPAL
+    edge [color="#FFECB3", style="solid", penwidth=1.5]
+    node_main -> node_ui_mgr [label=" initializes UI", fontcolor="#FF9800"];
+    node_main -> node_state [label=" initializes state", fontcolor="#FF9800"];
+
+    // 3. GERENCIADORES E CONTROLE
+    edge [color="#DCEDC8", style="solid", penwidth=1.3]
+    node_ui_mgr -> node_canvas_ctrl [label=" creates", fontcolor="#689F38"];
+
+    edge [color="#B3E5FC", style="dashed", penwidth=1.2]
+    node_canvas_ctrl -> node_state [label=" reads/writes", fontcolor="#1976D2"];
+
+    edge [color="#BBDEFB", style="solid", penwidth=1.3]
+    node_main -> node_manager [label=" uses manager", fontcolor="#1976D2"];
+    node_manager -> node_state [label=" updates data", fontcolor="#1976D2"];
+
+    // 4. ABERTURA DE MÓDULOS
+    edge [color="#E1BEE7", style="dotted", penwidth=1.1]
+    node_main -> node_analyzer;
+    node_main -> node_grid;
+    node_main -> node_split;
+    node_main -> node_newproj;
+    node_main -> node_classmgr;
+    node_main -> node_about;
+
+    // ============================================================
+    // LAYOUT E HIERARQUIA
+    // ============================================================
+
+    // Forçar ordem horizontal
+    node_config -> node_locale -> node_logger [style=invis];
+    node_analyzer -> node_grid -> node_split -> node_newproj -> node_classmgr -> node_about [style=invis];
+
+    // Definição de ranks
+    {rank=same; node_config; node_locale; node_logger}
+    {rank=same; node_state; node_manager; node_ui_mgr; node_canvas_ctrl}
+    {rank=same; node_analyzer; node_grid; node_split; node_newproj; node_classmgr; node_about}
+
+    // Conexões invisíveis para estruturação
+    edge [style=invis]
+    node_logger -> node_main [minlen=2];
+    node_main -> node_state [minlen=2];
+    node_state -> node_analyzer [minlen=2];
+
+    // Elementos decorativos pastel
+    node_decoration1 [shape=circle, style=filled, fillcolor="#FFE4EC", color="#F8BBD0", width=0.3, height=0.3, label="", fixedsize=true]
+    node_decoration2 [shape=circle, style=filled, fillcolor="#E3F2FD", color="#BBDEFB", width=0.3, height=0.3, label="", fixedsize=true]
+    node_decoration3 [shape=circle, style=filled, fillcolor="#FFF8E1", color="#FFECB3", width=0.3, height=0.3, label="", fixedsize=true]
+
+    // Posicionamento das decorações
+    edge [style=invis]
+    node_decoration1 -> cluster_infra [minlen=0.5]
+    node_decoration2 -> cluster_model [minlen=0.5]
+    node_decoration3 -> cluster_controller [minlen=0.5]
+}
