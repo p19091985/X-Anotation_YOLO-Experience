@@ -131,6 +131,9 @@ MyProject/
 
 ### 🔧 Architecture
 
+![Architecture Diagram](img.svg)
+
+
 The project follows a clean, modular Model-View-Controller (MVC) adaptation:
 
 *   **`main.py`**: Application entry point and controller orchestrator.
@@ -264,6 +267,9 @@ MyProject/
 ```
 
 ### 🔧 Arquitetura
+
+![Diagrama de Arquitetura](img.svg)
+
 
 O projeto segue uma adaptação limpa e modular de Model-View-Controller (MVC):
 

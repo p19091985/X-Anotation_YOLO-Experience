@@ -107,6 +107,9 @@ class MainApplication:
         self.app_state.selected_annotation_index = None
         self.canvas_controller.poly_points_buffer = []
         self.canvas_controller.display_image()
+        if self.app_state.is_drawing:
+            mode_txt = 'Polígono' if self.app_state.annotation_mode == 'polygon' else 'Box'
+            self.ui.update_status_bar(f'Modo Desenho: ON ({mode_txt})')
 
     def on_image_select_from_list(self, event):
         sel = self.ui.listbox.curselection()
@@ -168,7 +171,7 @@ class MainApplication:
         self.app_state.undo_stack = []
         if self.app_state.is_drawing:
             self.toggle_drawing_mode(force_state=False)
-        self.ui.dir_label.config(text=f'{localization.tr('COL_FOLDER')}: {os.path.basename(self.app_state.base_directory)}')
+        self.ui.dir_label.config(text=f"{localization.tr('COL_FOLDER')}: {os.path.basename(self.app_state.base_directory)}")
         self._load_class_names()
         valid = ('.png', '.jpg', '.jpeg', '.bmp')
         self.app_state.image_paths = []
@@ -187,7 +190,7 @@ class MainApplication:
             self.canvas_controller.displayed_photo = None
             self.ui.canvas.delete('all')
             self.app_state.current_image_index = -1
-            self.ui.dir_label.config(text=f'{localization.tr('COL_FOLDER')}: {os.path.basename(self.app_state.base_directory)} (Empty)')
+            self.ui.dir_label.config(text=f"{localization.tr('COL_FOLDER')}: {os.path.basename(self.app_state.base_directory)} (Empty)")
             self.ui.status_label.config(text='--')
             self.ui.annotation_listbox.delete(0, tk.END)
             self.ui.add_box_check.config(state='disabled')
@@ -377,6 +380,23 @@ class MainApplication:
         if os.path.exists(p):
             with open(p, 'r') as f:
                 self.app_state.class_names = [x.strip() for x in f if x.strip()]
+        else:
+            for yaml_file in ['data.yaml', 'dataset.yaml', 'config.yaml']:
+                yaml_path = os.path.join(self.app_state.base_directory, yaml_file)
+                if os.path.exists(yaml_path):
+                    try:
+                        with open(yaml_path, 'r', encoding='utf-8') as f:
+                            data = yaml.safe_load(f)
+                            if data and 'names' in data:
+                                names = data['names']
+                                if isinstance(names, dict):
+                                    self.app_state.class_names = [str(names[k]) for k in sorted(names.keys())]
+                                elif isinstance(names, list):
+                                    self.app_state.class_names = [str(n) for n in names]
+                        if self.app_state.class_names:
+                            break
+                    except Exception as e:
+                        logger.error(f"Erro ao carregar classes de {yaml_file}: {e}")
         self.ui.update_class_selector()
 
     def _ask_for_class_id(self):

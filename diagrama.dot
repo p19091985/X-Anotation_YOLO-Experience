@@ -254,6 +254,63 @@ digraph YOLO_Complete_Architecture_Pastel {
     }
 
     // ============================================================
+    // CAMADA 5: UTILITÁRIOS (Cinza Pastel)
+    // ============================================================
+    subgraph cluster_utils {
+        label=<<b><font color="#757575">UTILITIES LAYER</font></b>>;
+        style="filled,rounded"; bgcolor="#F5F5F5"; color="#BDBDBD"; margin=20;
+        fontcolor="#616161"; penwidth=1.5;
+
+        node_utils [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="8" bgcolor="#FAFAFA" color="#E0E0E0">
+                <tr><td align="center" bgcolor="#F1F1F1"><b><font color="#616161">SYSTEM UTILS</font></b></td></tr>
+                <tr><td align="center"><font point-size="8" color="#757575">utils.py</font></td></tr>
+                <tr><td align="left"><font point-size="8" color="#9E9E9E">
+                • Font Management<br/>
+                • System Helpers
+                </font></td></tr>
+            </table>
+        >];
+
+        node_utils_ui [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="8" bgcolor="#FAFAFA" color="#E0E0E0">
+                <tr><td align="center" bgcolor="#F1F1F1"><b><font color="#616161">UI UTILS</font></b></td></tr>
+                <tr><td align="center"><font point-size="8" color="#757575">utils_ui.py</font></td></tr>
+                <tr><td align="left"><font point-size="8" color="#9E9E9E">
+                • ScrolledFrame<br/>
+                • Error Handling<br/>
+                • Window Centering
+                </font></td></tr>
+            </table>
+        >];
+    }
+
+    // ============================================================
+    // CAMADA 6: BUILD & RECURSOS (Laranja Pastel)
+    // ============================================================
+    subgraph cluster_build {
+        label=<<b><font color="#FF7043">BUILD &amp; RESOURCES</font></b>>;
+        style="filled,rounded"; bgcolor="#FFCCBC"; color="#FFAB91"; margin=20;
+        fontcolor="#D84315"; penwidth=1.5;
+
+        node_gen_lang [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="8" bgcolor="#FFCCBC" color="#FFAB91">
+                <tr><td align="center" bgcolor="#FFAB91"><b><font color="#BF360C">BUILD SCRIPT</font></b></td></tr>
+                <tr><td align="center"><font point-size="8" color="#D84315">generate_languages.py</font></td></tr>
+                <tr><td align="center"><font point-size="8" color="#E64A19">Translation Generator</font></td></tr>
+            </table>
+        >];
+
+        node_lang_xml [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="8" bgcolor="#FFCCBC" color="#FFAB91">
+                <tr><td align="center" bgcolor="#FFAB91"><b><font color="#BF360C">RESOURCE</font></b></td></tr>
+                <tr><td align="center"><font point-size="8" color="#D84315">languages.xml</font></td></tr>
+                <tr><td align="center"><font point-size="8" color="#E64A19">Localization Data</font></td></tr>
+            </table>
+        >];
+    }
+
+    // ============================================================
     // CONEXÕES - ESTILO PASTEL
     // ============================================================
 
@@ -288,6 +345,15 @@ digraph YOLO_Complete_Architecture_Pastel {
     node_main -> node_classmgr;
     node_main -> node_about;
 
+    // 5. UTILITÁRIOS E RECURSOS
+    edge [color="#BDBDBD", style="dashed", penwidth=1.0];
+    node_ui_mgr -> node_utils_ui [label=" uses", fontcolor="#757575"];
+    node_canvas_ctrl -> node_utils [label=" fonts", fontcolor="#757575"];
+
+    edge [color="#FF7043", style="bold", penwidth=1.2];
+    node_gen_lang -> node_lang_xml [label=" generates", fontcolor="#BF360C"];
+    node_locale -> node_lang_xml [label=" reads", fontcolor="#BF360C"];
+
     // ============================================================
     // LAYOUT E HIERARQUIA
     // ============================================================
@@ -300,6 +366,8 @@ digraph YOLO_Complete_Architecture_Pastel {
     {rank=same; node_config; node_locale; node_logger}
     {rank=same; node_state; node_manager; node_ui_mgr; node_canvas_ctrl}
     {rank=same; node_analyzer; node_grid; node_split; node_newproj; node_classmgr; node_about}
+    {rank=same; node_utils; node_utils_ui}
+    {rank=same; node_gen_lang; node_lang_xml}
 
     // Conexões invisíveis para estruturação
     edge [style=invis]

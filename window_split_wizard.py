@@ -36,7 +36,7 @@ class SplitWizard(tk.Toplevel):
         lbl_frame.pack(fill=tk.X, pady=(10, 0))
         ttk.Label(lbl_frame, text=localization.tr('LBL_TRAIN'), font=Config.FONTS['main_bold'], foreground='#007bff').pack(side=tk.LEFT)
         ttk.Label(lbl_frame, text=localization.tr('LBL_VAL'), font=Config.FONTS['main_bold'], foreground='#ffc107').pack(side=tk.RIGHT)
-        self.scale = ttk.Scale(left_panel, from_=1, to=99, variable=self.train_pct, command=self._on_scale_change)
+        self.scale = ttk.Scale(left_panel, from_=0, to=100, variable=self.train_pct, command=self._on_scale_change)
         self.scale.pack(fill=tk.X, pady=5)
         info_frame = ttk.Frame(left_panel)
         info_frame.pack(fill=tk.X, pady=5)
