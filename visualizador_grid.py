@@ -15,12 +15,15 @@ class GridViewerWindow:
     def __init__(self, parent, app_controller):
         self.top = tk.Toplevel(parent)
         self.top.title(localization.tr('TITLE_GRID_VIEWER'))
-        try:
-            self.top.state('zoomed')
-        except:
-            w = self.top.winfo_screenwidth()
-            h = self.top.winfo_screenheight()
-            self.top.geometry(f'{w}x{h}')
+        screen_w = self.top.winfo_screenwidth()
+        screen_h = self.top.winfo_screenheight()
+        width = int(screen_w * 0.85)
+        height = int(screen_h * 0.85)
+        x = (screen_w - width) // 2
+        y = (screen_h - height) // 2
+        self.top.geometry(f'{width}x{height}+{x}+{y}')
+        self.top.minsize(900, 600)
+        self.top.transient(parent)
         self.app = app_controller
         self.items_options = [8, 16, 24, 40]
         self.items_per_page = 8
@@ -70,25 +73,35 @@ class GridViewerWindow:
 
     def _recalc_layout_metrics(self):
         screen_w = self.main_container.winfo_width()
-        screen_h = self.main_container.winfo_height() - 25
+        screen_h = self.main_container.winfo_height() - 40
         if screen_w < 100 or screen_h < 100:
             return
         n_items = self.items_per_page
-        best_card_size = 0
         best_cols = 4
-        gap = 10
-        text_space = 110
-        for c in range(1, n_items + 1):
-            r = math.ceil(n_items / c)
-            w_avail = (screen_w - c * gap) // c
-            h_avail = (screen_h - r * gap) // r - text_space
+        best_card_size = 0
+        gap = 8
+        text_space = 70
+
+        if n_items <= 8:
+            candidates = [4]
+        elif n_items <= 16:
+            candidates = [4]
+        elif n_items <= 24:
+            candidates = [4, 6]
+        else:
+            candidates = [5, 6, 8, 10]
+
+        for cols in candidates:
+            rows = math.ceil(n_items / cols)
+            w_avail = (screen_w - (cols + 1) * gap) // cols
+            h_avail = (screen_h - (rows + 1) * gap) // rows - text_space
             possible_size = min(w_avail, h_avail)
             if possible_size > best_card_size:
                 best_card_size = possible_size
-                best_cols = c
+                best_cols = cols
         self.cols_count = best_cols
-        self.card_size = max(120, best_card_size)
-        self.font_scale = max(10, int(self.card_size / 22))
+        self.card_size = max(80, int(best_card_size * 0.92))
+        self.font_scale = max(8, int(self.card_size / 22))
 
     def _calculate_total_pages(self):
         total_imgs = len(self.app.app_state.image_paths)
@@ -133,10 +146,12 @@ class GridViewerWindow:
                 self.items_per_page = new_val
                 self.current_page = 0
                 self._calculate_total_pages()
+                self.top.update_idletasks()
                 self._recalc_layout_metrics()
                 self._load_current_page()
-        except:
-            pass
+                self.top.focus_set()
+        except Exception as exc:
+            logger.error(f'Erro ao atualizar grade: {exc}')
 
     def _load_current_page(self):
         if self.is_loading:
@@ -238,7 +253,7 @@ class GridViewerWindow:
                                 self._draw_grid_label(draw, x1, y1, cls_name, color, font_small)
                 try:
                     rel_path = os.path.relpath(path, base_dir)
-                except:
+                except Exception:
                     rel_path = os.path.basename(path)
                 prepared_cards.append({'pil': thumb_img, 'path': path, 'display_name': rel_path, 'index': start_idx + idx, 'res': f'{orig_w}x{orig_h}', 'fmt': fmt, 'size': f'{size_kb:.0f} KB', 'ann_count': ann_count})
             except Exception as e:
@@ -258,7 +273,15 @@ class GridViewerWindow:
             self.current_page_refs.append(tk_img)
             img_lbl = ttk.Label(card_frame, image=tk_img, cursor='hand2')
             img_lbl.pack()
-            ttk.Label(card_frame, text=card['display_name'], font=('Segoe UI', ui_font_bd, 'bold'), anchor='center').pack(fill=tk.X)
+            wrap_len = max(60, self.card_size - 12)
+            ttk.Label(
+                card_frame,
+                text=card['display_name'],
+                font=('Segoe UI', ui_font_bd, 'bold'),
+                anchor='center',
+                justify='center',
+                wraplength=wrap_len
+            ).pack(fill=tk.X)
             meta_frame = ttk.Frame(card_frame)
             meta_frame.pack(fill=tk.X)
             center_meta = ttk.Frame(meta_frame)

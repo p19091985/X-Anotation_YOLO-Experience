@@ -1,5 +1,5 @@
 import xml.etree.ElementTree as ET
-import os
+from pathlib import Path
 
 class LocalizationManager:
     _instance = None
@@ -14,7 +14,8 @@ class LocalizationManager:
 
     def load_languages(self):
         try:
-            tree = ET.parse('languages.xml')
+            xml_path = Path(__file__).resolve().with_name('languages.xml')
+            tree = ET.parse(xml_path)
             root = tree.getroot()
             for lang in root.findall('language'):
                 code = lang.get('code')
@@ -24,7 +25,6 @@ class LocalizationManager:
                     key = string.get('key')
                     value = string.text
                     strings[key] = value
-                self.languages[code] = {'name': name, 'strings': strings}
                 self.languages[code] = {'name': name, 'strings': strings}
         except Exception as e:
             print(f'Error loading languages: {e}')

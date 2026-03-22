@@ -1,4 +1,4 @@
-<?xml version="1.0" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <languages>
     <language code="af_ZA" name="Afrikaans">
         <string key="NEW_PROJECT">✨ Nuut</string>
@@ -152,7 +152,7 @@ Struktuur (Trein/Val/Toets) gegenereer.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">KLASSE</string>
-        <string key="TITLE_ABOUT">Oor X-annotasie</string>
+        <string key="TITLE_ABOUT">ℹ️ Oor</string>
         <string key="LBL_AUTHOR">Skrywer:</string>
         <string key="LBL_EMAIL">E-pos:</string>
         <string key="LBL_VERSION">Weergawe:</string>
@@ -204,7 +204,7 @@ Ontwerp om die skepping, redigering en ontleding van rekenaarvisie-datastelle te
         <string key="DIALOG_EDIT_CLASS_TITLE">Redakto klasën</string>
         <string key="DIALOG_EDIT_CLASS_MSG">Emri i ri:</string>
         <string key="DIALOG_CONFIRM_TITLE">Konfirmo</string>
-        <string key="MSG_REMOVE_CLASS_BODY">Të hiqet klasa &quot;{}&quot;?</string>
+        <string key="MSG_REMOVE_CLASS_BODY">Të hiqet klasa "{}"?</string>
         <string key="DIALOG_CLEAR_TITLE">E qartë</string>
         <string key="MSG_CLEAR_ALL_BODY">Të hiqen TË GJITHA klasat?</string>
         <string key="MSG_WARN_TITLE">Paralajmërim</string>
@@ -313,7 +313,7 @@ Struktura (Tren/Val/Test) e krijuar.</string>
         <string key="COL_RES">BRE</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">KLASAT</string>
-        <string key="TITLE_ABOUT">Rreth X-Anotation</string>
+        <string key="TITLE_ABOUT">ℹ️ Rreth</string>
         <string key="LBL_AUTHOR">Autori:</string>
         <string key="LBL_EMAIL">Email:</string>
         <string key="LBL_VERSION">Versioni:</string>
@@ -474,7 +474,7 @@ Projektuar për të lehtësuar krijimin, redaktimin dhe analizën e grupeve të 
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">ክፍሎች</string>
-        <string key="TITLE_ABOUT">ስለ X- Annotation</string>
+        <string key="TITLE_ABOUT">ℹ️ ስለ</string>
         <string key="LBL_AUTHOR">ደራሲ፡</string>
         <string key="LBL_EMAIL">ኢሜይል፡-</string>
         <string key="LBL_VERSION">ስሪት፡</string>
@@ -526,7 +526,7 @@ Projektuar për të lehtësuar krijimin, redaktimin dhe analizën e grupeve të 
         <string key="DIALOG_EDIT_CLASS_TITLE">تحرير الفصل</string>
         <string key="DIALOG_EDIT_CLASS_MSG">الاسم الجديد:</string>
         <string key="DIALOG_CONFIRM_TITLE">يتأكد</string>
-        <string key="MSG_REMOVE_CLASS_BODY">هل تريد إزالة الفئة &quot;{}&quot;؟</string>
+        <string key="MSG_REMOVE_CLASS_BODY">هل تريد إزالة الفئة "{}"؟</string>
         <string key="DIALOG_CLEAR_TITLE">واضح</string>
         <string key="MSG_CLEAR_ALL_BODY">هل تريد إزالة جميع الفئات؟</string>
         <string key="MSG_WARN_TITLE">تحذير</string>
@@ -635,7 +635,7 @@ Projektuar për të lehtësuar krijimin, redaktimin dhe analizën e grupeve të 
         <string key="COL_RES">الدقة</string>
         <string key="COL_ANNS">أنس</string>
         <string key="COL_CLASSES">فصول</string>
-        <string key="TITLE_ABOUT">حول X-التعليق التوضيحي</string>
+        <string key="TITLE_ABOUT">ℹ️ نبذة</string>
         <string key="LBL_AUTHOR">مؤلف:</string>
         <string key="LBL_EMAIL">بريد إلكتروني:</string>
         <string key="LBL_VERSION">إصدار:</string>
@@ -796,7 +796,7 @@ Projektuar për të lehtësuar krijimin, redaktimin dhe analizën e grupeve të 
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">ԴԱՍԵՐ</string>
-        <string key="TITLE_ABOUT">X-Annotation-ի մասին</string>
+        <string key="TITLE_ABOUT">ℹ️ Մոտ</string>
         <string key="LBL_AUTHOR">Հեղինակ:</string>
         <string key="LBL_EMAIL">Էլ.</string>
         <string key="LBL_VERSION">Տարբերակ:</string>
@@ -957,7 +957,7 @@ Projektuar për të lehtësuar krijimin, redaktimin dhe analizën e grupeve të 
         <string key="COL_RES">Res</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">শ্ৰেণীসমূহ</string>
-        <string key="TITLE_ABOUT">X-Notnation ৰ বিষয়ে</string>
+        <string key="TITLE_ABOUT">ধীশৰ বিষয়ে</string>
         <string key="LBL_AUTHOR">লিখক:</string>
         <string key="LBL_EMAIL">ইমেইল:</string>
         <string key="LBL_VERSION">সংস্কৰণ:</string>
@@ -1118,7 +1118,7 @@ Struktur (Qatar/Val/Test) yaradıldı.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">DERSLER</string>
-        <string key="TITLE_ABOUT">X-Annotasiya haqqında</string>
+        <string key="TITLE_ABOUT">ℹ️ Haqqında</string>
         <string key="LBL_AUTHOR">Müəllif:</string>
         <string key="LBL_EMAIL">E-poçt:</string>
         <string key="LBL_VERSION">Versiya:</string>
@@ -1170,7 +1170,7 @@ Kompüter görmə məlumat dəstlərinin yaradılmasını, redaktəsini və təh
         <string key="DIALOG_EDIT_CLASS_TITLE">Рэдагаваць клас</string>
         <string key="DIALOG_EDIT_CLASS_MSG">Новая назва:</string>
         <string key="DIALOG_CONFIRM_TITLE">Пацвердзіць</string>
-        <string key="MSG_REMOVE_CLASS_BODY">Выдаліць клас &quot;{}&quot;?</string>
+        <string key="MSG_REMOVE_CLASS_BODY">Выдаліць клас "{}"?</string>
         <string key="DIALOG_CLEAR_TITLE">Ясна</string>
         <string key="MSG_CLEAR_ALL_BODY">Выдаліць УСЕ класы?</string>
         <string key="MSG_WARN_TITLE">Папярэджанне</string>
@@ -1181,7 +1181,7 @@ Kompüter görmə məlumat dəstlərinin yaradılmasını, redaktəsini və təh
         <string key="MSG_ERR_EXISTS_BODY">Папка '{}' тут ужо існуе.
 Выберыце іншую назву або месца.</string>
         <string key="MSG_SUCCESS_TITLE">Поспех</string>
-        <string key="MSG_SUCCESS_BODY">Праект &quot;{}&quot; паспяхова створаны!
+        <string key="MSG_SUCCESS_BODY">Праект "{}" паспяхова створаны!
 
 Створана структура (Train/Val/Test).</string>
         <string key="MSG_ERR_CRITICAL_TITLE">Крытычная памылка</string>
@@ -1279,7 +1279,7 @@ Kompüter görmə məlumat dəstlərinin yaradılmasını, redaktəsini və təh
         <string key="COL_RES">РЭС</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">КЛАСЫ</string>
-        <string key="TITLE_ABOUT">Пра X-Annotation</string>
+        <string key="TITLE_ABOUT">ℹ️ Аб</string>
         <string key="LBL_AUTHOR">Аўтар:</string>
         <string key="LBL_EMAIL">электронная пошта:</string>
         <string key="LBL_VERSION">Версія:</string>
@@ -1440,7 +1440,7 @@ Kompüter görmə məlumat dəstlərinin yaradılmasını, redaktəsini və təh
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">এএনএনএস</string>
         <string key="COL_CLASSES">ক্লাস</string>
-        <string key="TITLE_ABOUT">এক্স-টীকা সম্পর্কে</string>
+        <string key="TITLE_ABOUT">ℹ️ সম্পর্কে</string>
         <string key="LBL_AUTHOR">লেখক:</string>
         <string key="LBL_EMAIL">ইমেইল:</string>
         <string key="LBL_VERSION">সংস্করণ:</string>
@@ -1601,7 +1601,7 @@ Kompüter görmə məlumat dəstlərinin yaradılmasını, redaktəsini və təh
         <string key="COL_RES">रेस के बा .</string>
         <string key="COL_ANNS">एनएनएस के बा .</string>
         <string key="COL_CLASSES">कक्षा के बा .</string>
-        <string key="TITLE_ABOUT">एक्स-एनोटेशन के बारे में</string>
+        <string key="TITLE_ABOUT">ℹ️ के बारे में</string>
         <string key="LBL_AUTHOR">लेखक:</string>
         <string key="LBL_EMAIL">ईमेल कइल गइल बा:</string>
         <string key="LBL_VERSION">संस्करण:</string>
@@ -1762,7 +1762,7 @@ Struktura (Vlak/Val/Test) generirana.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">CLASSES</string>
-        <string key="TITLE_ABOUT">O X-napomeni</string>
+        <string key="TITLE_ABOUT">ℹ️ O</string>
         <string key="LBL_AUTHOR">Autor:</string>
         <string key="LBL_EMAIL">Email:</string>
         <string key="LBL_VERSION">verzija:</string>
@@ -1923,7 +1923,7 @@ Dizajniran da olakša kreiranje, uređivanje i analizu skupova podataka kompjute
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">КЛАСОВЕ</string>
-        <string key="TITLE_ABOUT">Относно X-анотацията</string>
+        <string key="TITLE_ABOUT">ℹ️ Относно</string>
         <string key="LBL_AUTHOR">Автор:</string>
         <string key="LBL_EMAIL">Имейл:</string>
         <string key="LBL_VERSION">Версия:</string>
@@ -2084,7 +2084,7 @@ Structure (ရထား/Val/Test) ထုတ်ပေးသည်။</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">အတန်းများ</string>
-        <string key="TITLE_ABOUT">X-Annotation အကြောင်း</string>
+        <string key="TITLE_ABOUT">ℹ️ အကြောင်း</string>
         <string key="LBL_AUTHOR">ရေးသားသူ-</string>
         <string key="LBL_EMAIL">အီးမေးလ်-</string>
         <string key="LBL_VERSION">ဗားရှင်း-</string>
@@ -2245,7 +2245,7 @@ Structure (ရထား/Val/Test) ထုတ်ပေးသည်။</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">人工神经网络系统</string>
         <string key="COL_CLASSES">课程</string>
-        <string key="TITLE_ABOUT">关于 X 注释</string>
+        <string key="TITLE_ABOUT">ℹ️关于</string>
         <string key="LBL_AUTHOR">作者：</string>
         <string key="LBL_EMAIL">电子邮件：</string>
         <string key="LBL_VERSION">版本：</string>
@@ -2406,7 +2406,7 @@ Generirana struktura (Train/Val/Test).</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">KLASE</string>
-        <string key="TITLE_ABOUT">O X-komentarima</string>
+        <string key="TITLE_ABOUT">ℹ️ O</string>
         <string key="LBL_AUTHOR">Autor:</string>
         <string key="LBL_EMAIL">Email:</string>
         <string key="LBL_VERSION">Verzija:</string>
@@ -2567,7 +2567,7 @@ Struktura (Vlak/Val/Test) vytvořena.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">TŘÍDY</string>
-        <string key="TITLE_ABOUT">O X-Anotaci</string>
+        <string key="TITLE_ABOUT">ℹ️ O</string>
         <string key="LBL_AUTHOR">Autor:</string>
         <string key="LBL_EMAIL">E-mail:</string>
         <string key="LBL_VERSION">Verze:</string>
@@ -2728,7 +2728,7 @@ Struktur (Tog/Val/Test) genereret.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">KLASSER</string>
-        <string key="TITLE_ABOUT">Om X-annotation</string>
+        <string key="TITLE_ABOUT">ℹ️ Omkring</string>
         <string key="LBL_AUTHOR">Forfatter:</string>
         <string key="LBL_EMAIL">E-mail:</string>
         <string key="LBL_VERSION">Version:</string>
@@ -2889,7 +2889,7 @@ Structuur (Train/Val/Test) gegenereerd.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">LESSEN</string>
-        <string key="TITLE_ABOUT">Over X-annotatie</string>
+        <string key="TITLE_ABOUT">ℹ️Over</string>
         <string key="LBL_AUTHOR">Auteur:</string>
         <string key="LBL_EMAIL">E-mail:</string>
         <string key="LBL_VERSION">Versie:</string>
@@ -3052,7 +3052,7 @@ Structure (Train/Val/Test) generated.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">CLASSES</string>
-        <string key="TITLE_ABOUT">About X-Annotation</string>
+        <string key="TITLE_ABOUT">ℹ️ About</string>
         <string key="LBL_AUTHOR">Author:</string>
         <string key="LBL_EMAIL">Email:</string>
         <string key="LBL_VERSION">Version:</string>
@@ -3215,7 +3215,7 @@ Structure (Train/Val/Test) generated.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">CLASSES</string>
-        <string key="TITLE_ABOUT">About X-Annotation</string>
+        <string key="TITLE_ABOUT">ℹ️ About</string>
         <string key="LBL_AUTHOR">Author:</string>
         <string key="LBL_EMAIL">Email:</string>
         <string key="LBL_VERSION">Version:</string>
@@ -3376,7 +3376,7 @@ Estructura (Tren/Val/Prueba) generada.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANA</string>
         <string key="COL_CLASSES">CLASES</string>
-        <string key="TITLE_ABOUT">Acerca de la anotación X</string>
+        <string key="TITLE_ABOUT">ℹ️ Acerca de</string>
         <string key="LBL_AUTHOR">Autor:</string>
         <string key="LBL_EMAIL">Correo electrónico:</string>
         <string key="LBL_VERSION">Versión:</string>
@@ -3537,7 +3537,7 @@ Struktuur (rong/val/test) loodud.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">KLASSID</string>
-        <string key="TITLE_ABOUT">X-Annotatsiooni kohta</string>
+        <string key="TITLE_ABOUT">ℹ️ Umbes</string>
         <string key="LBL_AUTHOR">Autor:</string>
         <string key="LBL_EMAIL">E-post:</string>
         <string key="LBL_VERSION">Versioon:</string>
@@ -3700,7 +3700,7 @@ Structure (Train/Val/Test) generated.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">CLASSES</string>
-        <string key="TITLE_ABOUT">About X-Annotation</string>
+        <string key="TITLE_ABOUT">ℹ️ About</string>
         <string key="LBL_AUTHOR">Author:</string>
         <string key="LBL_EMAIL">Email:</string>
         <string key="LBL_VERSION">Version:</string>
@@ -3861,7 +3861,7 @@ Rakenne (Train/Val/Test) luotu.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">LUOKAT</string>
-        <string key="TITLE_ABOUT">Tietoja X-Annotationista</string>
+        <string key="TITLE_ABOUT">ℹ️ Tietoja</string>
         <string key="LBL_AUTHOR">Tekijä:</string>
         <string key="LBL_EMAIL">Sähköposti:</string>
         <string key="LBL_VERSION">Versio:</string>
@@ -4022,7 +4022,7 @@ Structure (Train/Val/Test) générée.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNE</string>
         <string key="COL_CLASSES">COURS</string>
-        <string key="TITLE_ABOUT">À propos de l'annotation X</string>
+        <string key="TITLE_ABOUT">ℹ️ À propos</string>
         <string key="LBL_AUTHOR">Auteur:</string>
         <string key="LBL_EMAIL">E-mail:</string>
         <string key="LBL_VERSION">Version:</string>
@@ -4185,7 +4185,7 @@ Structure (Train/Val/Test) generated.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">CLASSES</string>
-        <string key="TITLE_ABOUT">About X-Annotation</string>
+        <string key="TITLE_ABOUT">ℹ️ About</string>
         <string key="LBL_AUTHOR">Author:</string>
         <string key="LBL_EMAIL">Email:</string>
         <string key="LBL_VERSION">Version:</string>
@@ -4346,7 +4346,7 @@ Designed to facilitate the creation, editing, and analysis of computer vision da
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">კლასები</string>
-        <string key="TITLE_ABOUT">X-ანოტაციის შესახებ</string>
+        <string key="TITLE_ABOUT">ℹ️ შესახებ</string>
         <string key="LBL_AUTHOR">ავტორი:</string>
         <string key="LBL_EMAIL">ელფოსტა:</string>
         <string key="LBL_VERSION">ვერსია:</string>
@@ -4507,7 +4507,7 @@ Struktur (Train/Val/Test) generiert.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">KLASSEN</string>
-        <string key="TITLE_ABOUT">Über X-Annotation</string>
+        <string key="TITLE_ABOUT">ℹ️ Ungefähr</string>
         <string key="LBL_AUTHOR">Autor:</string>
         <string key="LBL_EMAIL">E-Mail:</string>
         <string key="LBL_VERSION">Version:</string>
@@ -4555,11 +4555,11 @@ Entwickelt, um die Erstellung, Bearbeitung und Analyse von Computer-Vision-Daten
         <string key="DIALOG_NEW_CLASS_TITLE">Νέα Τάξη</string>
         <string key="DIALOG_NEW_CLASS_MSG">Εισαγάγετε το όνομα της τάξης:</string>
         <string key="MSG_DUPLICATE_TITLE">Αντίγραφο</string>
-        <string key="MSG_DUPLICATE_BODY">Η κλάση &quot;{}&quot; υπάρχει ήδη.</string>
+        <string key="MSG_DUPLICATE_BODY">Η κλάση "{}" υπάρχει ήδη.</string>
         <string key="DIALOG_EDIT_CLASS_TITLE">Επεξεργασία τάξης</string>
         <string key="DIALOG_EDIT_CLASS_MSG">Νέο όνομα:</string>
         <string key="DIALOG_CONFIRM_TITLE">Επιβεβαιώνω</string>
-        <string key="MSG_REMOVE_CLASS_BODY">Να καταργηθεί η τάξη &quot;{}&quot;;</string>
+        <string key="MSG_REMOVE_CLASS_BODY">Να καταργηθεί η τάξη "{}";</string>
         <string key="DIALOG_CLEAR_TITLE">Σαφής</string>
         <string key="MSG_CLEAR_ALL_BODY">Κατάργηση ΟΛΩΝ των τάξεων;</string>
         <string key="MSG_WARN_TITLE">Προειδοποίηση</string>
@@ -4567,7 +4567,7 @@ Entwickelt, um die Erstellung, Bearbeitung und Analyse von Computer-Vision-Daten
         <string key="MSG_REQ_PATH">Επιλέξτε το φάκελο προορισμού.</string>
         <string key="MSG_REQ_CLASS">Απαιτείται τουλάχιστον μία τάξη.</string>
         <string key="MSG_ERR_EXISTS_TITLE">Σφάλμα</string>
-        <string key="MSG_ERR_EXISTS_BODY">Ο φάκελος &quot;{}&quot; υπάρχει ήδη εδώ.
+        <string key="MSG_ERR_EXISTS_BODY">Ο φάκελος "{}" υπάρχει ήδη εδώ.
 Επιλέξτε άλλο όνομα ή τοποθεσία.</string>
         <string key="MSG_SUCCESS_TITLE">Επιτυχία</string>
         <string key="MSG_SUCCESS_BODY">Το έργο '{}' δημιουργήθηκε με επιτυχία!
@@ -4668,7 +4668,7 @@ Entwickelt, um die Erstellung, Bearbeitung und Analyse von Computer-Vision-Daten
         <string key="COL_RES">ΑΠΕ</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">ΤΑΞΕΙΣ</string>
-        <string key="TITLE_ABOUT">Σχετικά με το X-Annotation</string>
+        <string key="TITLE_ABOUT">ℹ️ Σχετικά</string>
         <string key="LBL_AUTHOR">Συγγραφέας:</string>
         <string key="LBL_EMAIL">E-mail:</string>
         <string key="LBL_VERSION">Εκδοχή:</string>
@@ -4829,7 +4829,7 @@ Entwickelt, um die Erstellung, Bearbeitung und Analyse von Computer-Vision-Daten
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">વર્ગો</string>
-        <string key="TITLE_ABOUT">એક્સ-એનોટેશન વિશે</string>
+        <string key="TITLE_ABOUT">ℹ️ વિશે</string>
         <string key="LBL_AUTHOR">લેખક:</string>
         <string key="LBL_EMAIL">ઈમેલ:</string>
         <string key="LBL_VERSION">સંસ્કરણ:</string>
@@ -4990,7 +4990,7 @@ Tsarin (Train/Val/Test) da aka samar.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">AZUMIN</string>
-        <string key="TITLE_ABOUT">Game da X-Annotation</string>
+        <string key="TITLE_ABOUT">ℹ️ About</string>
         <string key="LBL_AUTHOR">Marubuci:</string>
         <string key="LBL_EMAIL">Imel:</string>
         <string key="LBL_VERSION">Siga:</string>
@@ -5153,7 +5153,7 @@ Structure (Train/Val/Test) generated.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">CLASSES</string>
-        <string key="TITLE_ABOUT">About X-Annotation</string>
+        <string key="TITLE_ABOUT">ℹ️ About</string>
         <string key="LBL_AUTHOR">Author:</string>
         <string key="LBL_EMAIL">Email:</string>
         <string key="LBL_VERSION">Version:</string>
@@ -5314,7 +5314,7 @@ Designed to facilitate the creation, editing, and analysis of computer vision da
         <string key="COL_RES">आर ई</string>
         <string key="COL_ANNS">एएनएस</string>
         <string key="COL_CLASSES">कक्षाओं</string>
-        <string key="TITLE_ABOUT">एक्स-एनोटेशन के बारे में</string>
+        <string key="TITLE_ABOUT">ℹ️ के बारे में</string>
         <string key="LBL_AUTHOR">लेखक:</string>
         <string key="LBL_EMAIL">ईमेल:</string>
         <string key="LBL_VERSION">संस्करण:</string>
@@ -5475,7 +5475,7 @@ Struktúra (Train/Val/Test) létrehozva.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">OSZTÁLYOK</string>
-        <string key="TITLE_ABOUT">Az X-Annotation-ról</string>
+        <string key="TITLE_ABOUT">ℹ️ Körülbelül</string>
         <string key="LBL_AUTHOR">Szerző:</string>
         <string key="LBL_EMAIL">Email:</string>
         <string key="LBL_VERSION">Változat:</string>
@@ -5636,7 +5636,7 @@ Uppbygging (Lest/Val/Próf) búin til.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">BEKKAR</string>
-        <string key="TITLE_ABOUT">Um X-skýring</string>
+        <string key="TITLE_ABOUT">ℹ️ Um</string>
         <string key="LBL_AUTHOR">Höfundur:</string>
         <string key="LBL_EMAIL">Netfang:</string>
         <string key="LBL_VERSION">Útgáfa:</string>
@@ -5797,7 +5797,7 @@ Ihe owuwu (Train/Val/Ule) emepụtara.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">Klas</string>
-        <string key="TITLE_ABOUT">Banyere X-Annotation</string>
+        <string key="TITLE_ABOUT">ℹ️ Banyere</string>
         <string key="LBL_AUTHOR">Odee:</string>
         <string key="LBL_EMAIL">Email:</string>
         <string key="LBL_VERSION">Ụdị:</string>
@@ -5958,7 +5958,7 @@ Struktur (Kereta/Val/Uji) dihasilkan.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANS</string>
         <string key="COL_CLASSES">KELAS</string>
-        <string key="TITLE_ABOUT">Tentang X-Anotasi</string>
+        <string key="TITLE_ABOUT">ℹ️ Tentang</string>
         <string key="LBL_AUTHOR">Pengarang:</string>
         <string key="LBL_EMAIL">E-mail:</string>
         <string key="LBL_VERSION">Versi:</string>
@@ -6119,7 +6119,7 @@ Struttura (Treno/Val/Test) generata.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">CLASSI</string>
-        <string key="TITLE_ABOUT">Informazioni sull'annotazione X</string>
+        <string key="TITLE_ABOUT">ℹ️ A proposito</string>
         <string key="LBL_AUTHOR">Autore:</string>
         <string key="LBL_EMAIL">E-mail:</string>
         <string key="LBL_VERSION">Versione:</string>
@@ -6280,7 +6280,7 @@ Progettato per facilitare la creazione, la modifica e l'analisi di set di dati d
         <string key="COL_RES">レス</string>
         <string key="COL_ANNS">アンズ</string>
         <string key="COL_CLASSES">クラス</string>
-        <string key="TITLE_ABOUT">X-アノテーションについて</string>
+        <string key="TITLE_ABOUT">ℹ️について</string>
         <string key="LBL_AUTHOR">著者：</string>
         <string key="LBL_EMAIL">電子メール:</string>
         <string key="LBL_VERSION">バージョン:</string>
@@ -6443,7 +6443,7 @@ Structure (Train/Val/Test) generated.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">CLASSES</string>
-        <string key="TITLE_ABOUT">About X-Annotation</string>
+        <string key="TITLE_ABOUT">ℹ️ About</string>
         <string key="LBL_AUTHOR">Author:</string>
         <string key="LBL_EMAIL">Email:</string>
         <string key="LBL_VERSION">Version:</string>
@@ -6604,7 +6604,7 @@ Designed to facilitate the creation, editing, and analysis of computer vision da
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">ತರಗತಿಗಳು</string>
-        <string key="TITLE_ABOUT">ಎಕ್ಸ್-ಅನೋಟೇಶನ್ ಬಗ್ಗೆ</string>
+        <string key="TITLE_ABOUT">ℹ️ ಬಗ್ಗೆ</string>
         <string key="LBL_AUTHOR">ಲೇಖಕ:</string>
         <string key="LBL_EMAIL">ಇಮೇಲ್:</string>
         <string key="LBL_VERSION">ಆವೃತ್ತಿ:</string>
@@ -6656,7 +6656,7 @@ Designed to facilitate the creation, editing, and analysis of computer vision da
         <string key="DIALOG_EDIT_CLASS_TITLE">Классты өңдеу</string>
         <string key="DIALOG_EDIT_CLASS_MSG">Жаңа атау:</string>
         <string key="DIALOG_CONFIRM_TITLE">Растау</string>
-        <string key="MSG_REMOVE_CLASS_BODY">&quot;{}&quot; сыныбы жойылсын ба?</string>
+        <string key="MSG_REMOVE_CLASS_BODY">"{}" сыныбы жойылсын ба?</string>
         <string key="DIALOG_CLEAR_TITLE">Таза</string>
         <string key="MSG_CLEAR_ALL_BODY">БАРЛЫҚ сыныптарды жою қажет пе?</string>
         <string key="MSG_WARN_TITLE">Ескерту</string>
@@ -6765,7 +6765,7 @@ Designed to facilitate the creation, editing, and analysis of computer vision da
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">САБАҚТАР</string>
-        <string key="TITLE_ABOUT">X-аннотация туралы</string>
+        <string key="TITLE_ABOUT">ℹ️ туралы</string>
         <string key="LBL_AUTHOR">Авторы:</string>
         <string key="LBL_EMAIL">Электрондық пошта:</string>
         <string key="LBL_VERSION">Нұсқа:</string>
@@ -6926,7 +6926,7 @@ Designed to facilitate the creation, editing, and analysis of computer vision da
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">ថ្នាក់</string>
-        <string key="TITLE_ABOUT">អំពី X-Annotation</string>
+        <string key="TITLE_ABOUT">ℹ️ អំពី</string>
         <string key="LBL_AUTHOR">អ្នកនិពន្ធ៖</string>
         <string key="LBL_EMAIL">អ៊ីមែល៖</string>
         <string key="LBL_VERSION">កំណែ៖</string>
@@ -7087,7 +7087,7 @@ Imiterere (Gariyamoshi / Agaciro / Ikizamini) byakozwe.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">AMASOMO</string>
-        <string key="TITLE_ABOUT">Ibyerekeye X-Ibisobanuro</string>
+        <string key="TITLE_ABOUT">ℹ️ Ibyerekeye</string>
         <string key="LBL_AUTHOR">Umwanditsi:</string>
         <string key="LBL_EMAIL">Imeri:</string>
         <string key="LBL_VERSION">Inyandiko:</string>
@@ -7248,7 +7248,7 @@ Yashizweho kugirango yorohereze kurema, guhindura, no gusesengura imibare yamaku
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">앤스</string>
         <string key="COL_CLASSES">수업</string>
-        <string key="TITLE_ABOUT">X-주석 정보</string>
+        <string key="TITLE_ABOUT">ℹ️ 소개</string>
         <string key="LBL_AUTHOR">작가:</string>
         <string key="LBL_EMAIL">이메일:</string>
         <string key="LBL_VERSION">버전:</string>
@@ -7409,7 +7409,7 @@ Structure (Trên / Val / Test) hatî çêkirin.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">CLASES</string>
-        <string key="TITLE_ABOUT">Der barê X-Annotation</string>
+        <string key="TITLE_ABOUT">ℹ️ Derbarê</string>
         <string key="LBL_AUTHOR">Nivîskar:</string>
         <string key="LBL_EMAIL">Email:</string>
         <string key="LBL_VERSION">Awa:</string>
@@ -7570,7 +7570,7 @@ Ji bo hêsankirina afirandin, guherandin û analîzkirina danehevên dîtina kom
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">КЛАССТАР</string>
-        <string key="TITLE_ABOUT">X-Аннотация жөнүндө</string>
+        <string key="TITLE_ABOUT">ℹ️ Жөнүндө</string>
         <string key="LBL_AUTHOR">Author:</string>
         <string key="LBL_EMAIL">Электрондук почта:</string>
         <string key="LBL_VERSION">Версия:</string>
@@ -7731,7 +7731,7 @@ Ji bo hêsankirina afirandin, guherandin û analîzkirina danehevên dîtina kom
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">ຫ້ອງຮຽນ</string>
-        <string key="TITLE_ABOUT">ກ່ຽວກັບ X-Annotation</string>
+        <string key="TITLE_ABOUT">ℹ️ກ່ຽວກັບ</string>
         <string key="LBL_AUTHOR">ຜູ້ຂຽນ:</string>
         <string key="LBL_EMAIL">ອີເມວ:</string>
         <string key="LBL_VERSION">ລຸ້ນ:</string>
@@ -7892,7 +7892,7 @@ Izveidota struktūra (vilciens/val/tests).</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">KLASES</string>
-        <string key="TITLE_ABOUT">Par X-Annotation</string>
+        <string key="TITLE_ABOUT">ℹ️ Par</string>
         <string key="LBL_AUTHOR">Autors:</string>
         <string key="LBL_EMAIL">E-pasts:</string>
         <string key="LBL_VERSION">Versija:</string>
@@ -8053,7 +8053,7 @@ Structure (train/val/test) oyo esalemi.</string>
         <string key="COL_RES">Res .</string>
         <string key="COL_ANNS">Ba Annens .</string>
         <string key="COL_CLASSES">Ba kelasi .</string>
-        <string key="TITLE_ABOUT">Na ntina na x-annotation .</string>
+        <string key="TITLE_ABOUT">L .</string>
         <string key="LBL_AUTHOR">Mokomi:</string>
         <string key="LBL_EMAIL">Email:</string>
         <string key="LBL_VERSION">Ya:</string>
@@ -8214,7 +8214,7 @@ Sukurta struktūra (traukinys/val/testas).</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">KLASĖS</string>
-        <string key="TITLE_ABOUT">Apie X anotaciją</string>
+        <string key="TITLE_ABOUT">ℹ️ Apie</string>
         <string key="LBL_AUTHOR">Autorius:</string>
         <string key="LBL_EMAIL">El. paštas:</string>
         <string key="LBL_VERSION">Versija:</string>
@@ -8375,7 +8375,7 @@ Sukurta palengvinti kompiuterinio vaizdo duomenų rinkinių kūrimą, redagavim�
         <string key="COL_RES">ОИЕ</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">КЛАСИ</string>
-        <string key="TITLE_ABOUT">За X-Anotation</string>
+        <string key="TITLE_ABOUT">ℹ️ За</string>
         <string key="LBL_AUTHOR">Автор:</string>
         <string key="LBL_EMAIL">Е-пошта:</string>
         <string key="LBL_VERSION">Верзија:</string>
@@ -8697,7 +8697,7 @@ Struktur (Kereta api/Val/Ujian) dihasilkan.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">KELAS</string>
-        <string key="TITLE_ABOUT">Mengenai X-Anotasi</string>
+        <string key="TITLE_ABOUT">ℹ️ Mengenai</string>
         <string key="LBL_AUTHOR">Pengarang:</string>
         <string key="LBL_EMAIL">e-mel:</string>
         <string key="LBL_VERSION">Versi:</string>
@@ -8858,7 +8858,7 @@ Direka bentuk untuk memudahkan penciptaan, penyuntingan dan analisis set data pe
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">എഎൻഎസ്</string>
         <string key="COL_CLASSES">ക്ലാസുകൾ</string>
-        <string key="TITLE_ABOUT">എക്സ്-അനോട്ടേഷനെ കുറിച്ച്</string>
+        <string key="TITLE_ABOUT">ℹ️ കുറിച്ച്</string>
         <string key="LBL_AUTHOR">രചയിതാവ്:</string>
         <string key="LBL_EMAIL">ഇമെയിൽ:</string>
         <string key="LBL_VERSION">പതിപ്പ്:</string>
@@ -9019,7 +9019,7 @@ Direka bentuk untuk memudahkan penciptaan, penyuntingan dan analisis set data pe
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">वर्ग</string>
-        <string key="TITLE_ABOUT">X- भाष्य बद्दल</string>
+        <string key="TITLE_ABOUT">ℹ️ बद्दल</string>
         <string key="LBL_AUTHOR">लेखक:</string>
         <string key="LBL_EMAIL">ईमेल:</string>
         <string key="LBL_VERSION">आवृत्ती:</string>
@@ -9180,7 +9180,7 @@ Direka bentuk untuk memudahkan penciptaan, penyuntingan dan analisis set data pe
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">АНГИ</string>
-        <string key="TITLE_ABOUT">X-Аннотацийн тухай</string>
+        <string key="TITLE_ABOUT">ℹ️ Тухай</string>
         <string key="LBL_AUTHOR">Зохиогч:</string>
         <string key="LBL_EMAIL">Имэйл:</string>
         <string key="LBL_VERSION">Хувилбар:</string>
@@ -9343,7 +9343,7 @@ Structure (Train/Val/Test) generated.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">CLASSES</string>
-        <string key="TITLE_ABOUT">About X-Annotation</string>
+        <string key="TITLE_ABOUT">ℹ️ About</string>
         <string key="LBL_AUTHOR">Author:</string>
         <string key="LBL_EMAIL">Email:</string>
         <string key="LBL_VERSION">Version:</string>
@@ -9504,7 +9504,7 @@ Designed to facilitate the creation, editing, and analysis of computer vision da
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">कक्षाहरू</string>
-        <string key="TITLE_ABOUT">X-एनोटेशनको बारेमा</string>
+        <string key="TITLE_ABOUT">ℹ️ बारेमा</string>
         <string key="LBL_AUTHOR">लेखक:</string>
         <string key="LBL_EMAIL">इमेल:</string>
         <string key="LBL_VERSION">संस्करण:</string>
@@ -9665,7 +9665,7 @@ Struktur (tog/val/test) generert.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">KLASSER</string>
-        <string key="TITLE_ABOUT">Om X-merknad</string>
+        <string key="TITLE_ABOUT">ℹ️ Omtrent</string>
         <string key="LBL_AUTHOR">Forfatter:</string>
         <string key="LBL_EMAIL">E-post:</string>
         <string key="LBL_VERSION">Versjon:</string>
@@ -9826,7 +9826,7 @@ Designet for å lette oppretting, redigering og analyse av datasett for datasyn.
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">କ୍ଲାସ୍</string>
-        <string key="TITLE_ABOUT">X- ଟିପ୍ପଣୀ ବିଷୟରେ |</string>
+        <string key="TITLE_ABOUT">ℹ️ ବିଷୟରେ</string>
         <string key="LBL_AUTHOR">ଲେଖକ:</string>
         <string key="LBL_EMAIL">ଇମେଲ୍:</string>
         <string key="LBL_VERSION">ସଂସ୍କରଣ:</string>
@@ -9987,7 +9987,7 @@ Caasaa (baabura/gatii/qormaata) kan uumame.</string>
         <string key="COL_RES">RES .</string>
         <string key="COL_ANNS">Anns .</string>
         <string key="COL_CLASSES">Barnoota .</string>
-        <string key="TITLE_ABOUT">Waa'ee X-Annotation .</string>
+        <string key="TITLE_ABOUT">Waa'ee .</string>
         <string key="LBL_AUTHOR">Barreessaa:</string>
         <string key="LBL_EMAIL">Imeelii:</string>
         <string key="LBL_VERSION">Gosa:</string>
@@ -10148,7 +10148,7 @@ Kuusaa deetaa mul’ata kompiitaraa uumuu, gulaaluu fi xiinxaluuf haala mijeessu
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">ټولګي</string>
-        <string key="TITLE_ABOUT">د ایکس تشریح په اړه</string>
+        <string key="TITLE_ABOUT">ℹ️ په اړه</string>
         <string key="LBL_AUTHOR">لیکوال:</string>
         <string key="LBL_EMAIL">بریښنالیک:</string>
         <string key="LBL_VERSION">نسخه:</string>
@@ -10196,11 +10196,11 @@ Kuusaa deetaa mul’ata kompiitaraa uumuu, gulaaluu fi xiinxaluuf haala mijeessu
         <string key="DIALOG_NEW_CLASS_TITLE">کلاس جدید</string>
         <string key="DIALOG_NEW_CLASS_MSG">نام کلاس را وارد کنید:</string>
         <string key="MSG_DUPLICATE_TITLE">تکراری</string>
-        <string key="MSG_DUPLICATE_BODY">کلاس &quot;{}&quot; از قبل وجود دارد.</string>
+        <string key="MSG_DUPLICATE_BODY">کلاس "{}" از قبل وجود دارد.</string>
         <string key="DIALOG_EDIT_CLASS_TITLE">ویرایش کلاس</string>
         <string key="DIALOG_EDIT_CLASS_MSG">نام جدید:</string>
         <string key="DIALOG_CONFIRM_TITLE">تایید کنید</string>
-        <string key="MSG_REMOVE_CLASS_BODY">کلاس &quot;{}&quot; حذف شود؟</string>
+        <string key="MSG_REMOVE_CLASS_BODY">کلاس "{}" حذف شود؟</string>
         <string key="DIALOG_CLEAR_TITLE">پاک کردن</string>
         <string key="MSG_CLEAR_ALL_BODY">همه کلاس‌ها حذف شوند؟</string>
         <string key="MSG_WARN_TITLE">هشدار</string>
@@ -10208,10 +10208,10 @@ Kuusaa deetaa mul’ata kompiitaraa uumuu, gulaaluu fi xiinxaluuf haala mijeessu
         <string key="MSG_REQ_PATH">پوشه مقصد را انتخاب کنید.</string>
         <string key="MSG_REQ_CLASS">حداقل یک کلاس مورد نیاز است.</string>
         <string key="MSG_ERR_EXISTS_TITLE">خطا</string>
-        <string key="MSG_ERR_EXISTS_BODY">پوشه &quot;{}&quot; از قبل در اینجا وجود دارد.
+        <string key="MSG_ERR_EXISTS_BODY">پوشه "{}" از قبل در اینجا وجود دارد.
 نام یا مکان دیگری را انتخاب کنید.</string>
         <string key="MSG_SUCCESS_TITLE">موفقیت</string>
-        <string key="MSG_SUCCESS_BODY">پروژه &quot;{}&quot; با موفقیت ایجاد شد!
+        <string key="MSG_SUCCESS_BODY">پروژه "{}" با موفقیت ایجاد شد!
 
 ساختار (قطار/Val/Test) ایجاد شده است.</string>
         <string key="MSG_ERR_CRITICAL_TITLE">خطای بحرانی</string>
@@ -10309,7 +10309,7 @@ Kuusaa deetaa mul’ata kompiitaraa uumuu, gulaaluu fi xiinxaluuf haala mijeessu
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">کلاس ها</string>
-        <string key="TITLE_ABOUT">درباره X-Annotation</string>
+        <string key="TITLE_ABOUT">ℹ️ درباره</string>
         <string key="LBL_AUTHOR">نویسنده:</string>
         <string key="LBL_EMAIL">ایمیل:</string>
         <string key="LBL_VERSION">نسخه:</string>
@@ -10470,7 +10470,7 @@ Wygenerowano strukturę (pociąg/Val/Test).</string>
         <string key="COL_RES">OZE</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">ZAJĘCIA</string>
-        <string key="TITLE_ABOUT">Informacje o adnotacji X</string>
+        <string key="TITLE_ABOUT">ℹ️ O</string>
         <string key="LBL_AUTHOR">Autor:</string>
         <string key="LBL_EMAIL">E-mail:</string>
         <string key="LBL_VERSION">Wersja:</string>
@@ -10794,7 +10794,7 @@ Desenvolvida para facilitar a criação, edição e análise de datasets de vis�
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">ਕਲਾਸਾਂ</string>
-        <string key="TITLE_ABOUT">ਐਕਸ-ਐਨੋਟੇਸ਼ਨ ਬਾਰੇ</string>
+        <string key="TITLE_ABOUT">ℹ️ ਬਾਰੇ</string>
         <string key="LBL_AUTHOR">ਲੇਖਕ:</string>
         <string key="LBL_EMAIL">ਈਮੇਲ:</string>
         <string key="LBL_VERSION">ਸੰਸਕਰਣ:</string>
@@ -10955,7 +10955,7 @@ Structura (Tren/Val/Test) generată.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">CLASURI</string>
-        <string key="TITLE_ABOUT">Despre X-Adnotation</string>
+        <string key="TITLE_ABOUT">ℹ️ Despre</string>
         <string key="LBL_AUTHOR">Autor:</string>
         <string key="LBL_EMAIL">E-mail:</string>
         <string key="LBL_VERSION">Versiune:</string>
@@ -11116,7 +11116,7 @@ Conceput pentru a facilita crearea, editarea și analiza seturilor de date de vi
         <string key="COL_RES">ВИЭ</string>
         <string key="COL_ANNS">АННС</string>
         <string key="COL_CLASSES">КЛАССЫ</string>
-        <string key="TITLE_ABOUT">О X-аннотации</string>
+        <string key="TITLE_ABOUT">ℹ️ О</string>
         <string key="LBL_AUTHOR">Автор:</string>
         <string key="LBL_EMAIL">Электронная почта:</string>
         <string key="LBL_VERSION">Версия:</string>
@@ -11277,7 +11277,7 @@ Conceput pentru a facilita crearea, editarea și analiza seturilor de date de vi
         <string key="COL_RES">РЕС</string>
         <string key="COL_ANNS">АННС</string>
         <string key="COL_CLASSES">ЧАСОВИ</string>
-        <string key="TITLE_ABOUT">О Кс-напомени</string>
+        <string key="TITLE_ABOUT">ℹ Абоут</string>
         <string key="LBL_AUTHOR">Аутор:</string>
         <string key="LBL_EMAIL">Емаил:</string>
         <string key="LBL_VERSION">верзија:</string>
@@ -11438,7 +11438,7 @@ Conceput pentru a facilita crearea, editarea și analiza seturilor de date de vi
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">اين اين ايس</string>
         <string key="COL_CLASSES">ڪلاسز</string>
-        <string key="TITLE_ABOUT">X-Annotation بابت</string>
+        <string key="TITLE_ABOUT">ℹ️ بابت</string>
         <string key="LBL_AUTHOR">ليکڪ:</string>
         <string key="LBL_EMAIL">اي ميل:</string>
         <string key="LBL_VERSION">نسخو:</string>
@@ -11599,7 +11599,7 @@ Conceput pentru a facilita crearea, editarea și analiza seturilor de date de vi
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">පන්ති</string>
-        <string key="TITLE_ABOUT">X-ඇනෝටේෂන් ගැන</string>
+        <string key="TITLE_ABOUT">ℹ️ ගැන</string>
         <string key="LBL_AUTHOR">කර්තෘ:</string>
         <string key="LBL_EMAIL">විද්‍යුත් තැපෑල:</string>
         <string key="LBL_VERSION">අනුවාදය:</string>
@@ -11760,7 +11760,7 @@ Vytvorená štruktúra (Vlak/Val/Test).</string>
         <string key="COL_RES">OZE</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">TRIEDY</string>
-        <string key="TITLE_ABOUT">O X-Anotácii</string>
+        <string key="TITLE_ABOUT">ℹ️ O</string>
         <string key="LBL_AUTHOR">autor:</string>
         <string key="LBL_EMAIL">Email:</string>
         <string key="LBL_VERSION">Verzia:</string>
@@ -11921,7 +11921,7 @@ Ustvarjena struktura (Train/Val/Test).</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">RAZREDI</string>
-        <string key="TITLE_ABOUT">O X-Annotation</string>
+        <string key="TITLE_ABOUT">ℹ️ O</string>
         <string key="LBL_AUTHOR">Avtor:</string>
         <string key="LBL_EMAIL">E-pošta:</string>
         <string key="LBL_VERSION">Različica:</string>
@@ -12082,7 +12082,7 @@ Qaab dhismeedka (Tareen/Val/Test) la sameeyay.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">FASALKA</string>
-        <string key="TITLE_ABOUT">Ku saabsan X-Annotation</string>
+        <string key="TITLE_ABOUT">ℹ️ Ku saabsan</string>
         <string key="LBL_AUTHOR">Qore:</string>
         <string key="LBL_EMAIL">Iimayl:</string>
         <string key="LBL_VERSION">Nooca:</string>
@@ -12243,7 +12243,7 @@ Sebopeho (Terene / Val / Test) e hlahisitsoeng.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">LIEKETSENG</string>
-        <string key="TITLE_ABOUT">Mabapi le X-Annotation</string>
+        <string key="TITLE_ABOUT">ℹ️ Mabapi le</string>
         <string key="LBL_AUTHOR">Sengoli:</string>
         <string key="LBL_EMAIL">Lengolo-tsoibila:</string>
         <string key="LBL_VERSION">Mofuta:</string>
@@ -12404,7 +12404,7 @@ Muundo (Treni/Val/Jaribio) umetolewa.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">MADARASA</string>
-        <string key="TITLE_ABOUT">Kuhusu X-Annotation</string>
+        <string key="TITLE_ABOUT">ℹ️ Kuhusu</string>
         <string key="LBL_AUTHOR">Mwandishi:</string>
         <string key="LBL_EMAIL">Barua pepe:</string>
         <string key="LBL_VERSION">Toleo:</string>
@@ -12567,7 +12567,7 @@ Structure (Train/Val/Test) generated.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">CLASSES</string>
-        <string key="TITLE_ABOUT">About X-Annotation</string>
+        <string key="TITLE_ABOUT">ℹ️ About</string>
         <string key="LBL_AUTHOR">Author:</string>
         <string key="LBL_EMAIL">Email:</string>
         <string key="LBL_VERSION">Version:</string>
@@ -12728,7 +12728,7 @@ Struktur (Tåg/Val/Test) genererad.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">KLASSER</string>
-        <string key="TITLE_ABOUT">Om X-anteckning</string>
+        <string key="TITLE_ABOUT">ℹ️ Om</string>
         <string key="LBL_AUTHOR">Författare:</string>
         <string key="LBL_EMAIL">E-post:</string>
         <string key="LBL_VERSION">Version:</string>
@@ -12889,7 +12889,7 @@ Designad för att underlätta skapandet, redigeringen och analysen av datauppsä
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">АННС</string>
         <string key="COL_CLASSES">СИНФХО</string>
-        <string key="TITLE_ABOUT">Дар бораи X-Annotation</string>
+        <string key="TITLE_ABOUT">ℹ️ Дар бораи</string>
         <string key="LBL_AUTHOR">Муаллиф:</string>
         <string key="LBL_EMAIL">Почтаи электронӣ:</string>
         <string key="LBL_VERSION">Версия:</string>
@@ -13050,7 +13050,7 @@ Designad för att underlätta skapandet, redigeringen och analysen av datauppsä
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">வகுப்புகள்</string>
-        <string key="TITLE_ABOUT">எக்ஸ்-குறிப்பு பற்றி</string>
+        <string key="TITLE_ABOUT">ℹ️ பற்றி</string>
         <string key="LBL_AUTHOR">ஆசிரியர்:</string>
         <string key="LBL_EMAIL">மின்னஞ்சல்:</string>
         <string key="LBL_VERSION">பதிப்பு:</string>
@@ -13211,7 +13211,7 @@ Designad för att underlätta skapandet, redigeringen och analysen av datauppsä
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">తరగతులు</string>
-        <string key="TITLE_ABOUT">X-ఉల్లేఖన గురించి</string>
+        <string key="TITLE_ABOUT">ℹ️ గురించి</string>
         <string key="LBL_AUTHOR">రచయిత:</string>
         <string key="LBL_EMAIL">ఇమెయిల్:</string>
         <string key="LBL_VERSION">వెర్షన్:</string>
@@ -13372,7 +13372,7 @@ Designad för att underlätta skapandet, redigeringen och analysen av datauppsä
         <string key="COL_RES">เรส</string>
         <string key="COL_ANNS">แอนส์</string>
         <string key="COL_CLASSES">ชั้นเรียน</string>
-        <string key="TITLE_ABOUT">เกี่ยวกับ X-Annotation</string>
+        <string key="TITLE_ABOUT">ℹ️ เกี่ยวกับ</string>
         <string key="LBL_AUTHOR">ผู้เขียน:</string>
         <string key="LBL_EMAIL">อีเมล:</string>
         <string key="LBL_VERSION">เวอร์ชัน:</string>
@@ -13533,7 +13533,7 @@ Designad för att underlätta skapandet, redigeringen och analysen av datauppsä
         <string key="COL_RES">res</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">ክፍልታት</string>
-        <string key="TITLE_ABOUT">ብዛዕባ X-annotation</string>
+        <string key="TITLE_ABOUT">ℹ️ ብዛዕባ .</string>
         <string key="LBL_AUTHOR">ጸሓፊ፥</string>
         <string key="LBL_EMAIL">ኢመይል፡</string>
         <string key="LBL_VERSION">ሕታም፥</string>
@@ -13694,7 +13694,7 @@ Xivumbeko (xitimela/Val/test) xi tumbuluxiwile.</string>
         <string key="COL_RES">Res .</string>
         <string key="COL_ANNS">Anns .</string>
         <string key="COL_CLASSES">Titlilasi .</string>
-        <string key="TITLE_ABOUT">Malunghana na X-Annotation .</string>
+        <string key="TITLE_ABOUT">F️ Malunghana na .</string>
         <string key="LBL_AUTHOR">Mutsari:</string>
         <string key="LBL_EMAIL">Imeyili:</string>
         <string key="LBL_VERSION">Nkandziyiso:</string>
@@ -13857,7 +13857,7 @@ Structure (Train/Val/Test) generated.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">CLASSES</string>
-        <string key="TITLE_ABOUT">About X-Annotation</string>
+        <string key="TITLE_ABOUT">ℹ️ About</string>
         <string key="LBL_AUTHOR">Author:</string>
         <string key="LBL_EMAIL">Email:</string>
         <string key="LBL_VERSION">Version:</string>
@@ -14018,7 +14018,7 @@ Yapı (Eğitim/Val/Test) oluşturuldu.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">SINIFLAR</string>
-        <string key="TITLE_ABOUT">X-Ek Açıklama Hakkında</string>
+        <string key="TITLE_ABOUT">ℹ️ Hakkında</string>
         <string key="LBL_AUTHOR">Yazar:</string>
         <string key="LBL_EMAIL">E-posta:</string>
         <string key="LBL_VERSION">Sürüm:</string>
@@ -14179,7 +14179,7 @@ Gurluşy (Otly / Wal / Synag) döredildi.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">KLASS</string>
-        <string key="TITLE_ABOUT">X-Annotasiýa hakda</string>
+        <string key="TITLE_ABOUT">ℹ️ hakda</string>
         <string key="LBL_AUTHOR">Awtory:</string>
         <string key="LBL_EMAIL">E-poçta:</string>
         <string key="LBL_VERSION">Wersiýa:</string>
@@ -14231,7 +14231,7 @@ Kompýuter görmek maglumat bazalaryny döretmegi, redaktirlemegi we derňemegi 
         <string key="DIALOG_EDIT_CLASS_TITLE">Редагувати клас</string>
         <string key="DIALOG_EDIT_CLASS_MSG">Нова назва:</string>
         <string key="DIALOG_CONFIRM_TITLE">Підтвердити</string>
-        <string key="MSG_REMOVE_CLASS_BODY">Видалити клас &quot;{}&quot;?</string>
+        <string key="MSG_REMOVE_CLASS_BODY">Видалити клас "{}"?</string>
         <string key="DIALOG_CLEAR_TITLE">ясно</string>
         <string key="MSG_CLEAR_ALL_BODY">Видалити ВСІ класи?</string>
         <string key="MSG_WARN_TITLE">УВАГА</string>
@@ -14242,7 +14242,7 @@ Kompýuter görmek maglumat bazalaryny döretmegi, redaktirlemegi we derňemegi 
         <string key="MSG_ERR_EXISTS_BODY">Папка '{}' вже існує тут.
 Виберіть інше ім'я або місце.</string>
         <string key="MSG_SUCCESS_TITLE">Успіх</string>
-        <string key="MSG_SUCCESS_BODY">Проект &quot;{}&quot; успішно створено!
+        <string key="MSG_SUCCESS_BODY">Проект "{}" успішно створено!
 
 Згенерована структура (Train/Val/Test).</string>
         <string key="MSG_ERR_CRITICAL_TITLE">Критична помилка</string>
@@ -14340,7 +14340,7 @@ Kompýuter görmek maglumat bazalaryny döretmegi, redaktirlemegi we derňemegi 
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">КЛАСИ</string>
-        <string key="TITLE_ABOUT">Про X-анотацію</string>
+        <string key="TITLE_ABOUT">ℹ️ Про</string>
         <string key="LBL_AUTHOR">Автор:</string>
         <string key="LBL_EMAIL">Електронна пошта:</string>
         <string key="LBL_VERSION">Версія:</string>
@@ -14501,7 +14501,7 @@ Kompýuter görmek maglumat bazalaryny döretmegi, redaktirlemegi we derňemegi 
         <string key="COL_RES">ریس</string>
         <string key="COL_ANNS">اینس</string>
         <string key="COL_CLASSES">کلاس</string>
-        <string key="TITLE_ABOUT">X-annotation کے بارے میں</string>
+        <string key="TITLE_ABOUT">ℹ کے بارے میں</string>
         <string key="LBL_AUTHOR">مصنف:</string>
         <string key="LBL_EMAIL">ای میل:</string>
         <string key="LBL_VERSION">ورژن:</string>
@@ -14662,7 +14662,7 @@ Kompýuter görmek maglumat bazalaryny döretmegi, redaktirlemegi we derňemegi 
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">CLASSES</string>
-        <string key="TITLE_ABOUT">X- ئىزاھات ھەققىدە</string>
+        <string key="TITLE_ABOUT">ℹ️ About</string>
         <string key="LBL_AUTHOR">ئاپتور:</string>
         <string key="LBL_EMAIL">ئېلخەت:</string>
         <string key="LBL_VERSION">نەشرى:</string>
@@ -14710,7 +14710,7 @@ Kompýuter görmek maglumat bazalaryny döretmegi, redaktirlemegi we derňemegi 
         <string key="DIALOG_NEW_CLASS_TITLE">Yangi sinf</string>
         <string key="DIALOG_NEW_CLASS_MSG">Sinf nomini kiriting:</string>
         <string key="MSG_DUPLICATE_TITLE">Dublikat</string>
-        <string key="MSG_DUPLICATE_BODY">&quot;{}&quot; klassi allaqachon mavjud.</string>
+        <string key="MSG_DUPLICATE_BODY">"{}" klassi allaqachon mavjud.</string>
         <string key="DIALOG_EDIT_CLASS_TITLE">Sinfni tahrirlash</string>
         <string key="DIALOG_EDIT_CLASS_MSG">Yangi nom:</string>
         <string key="DIALOG_CONFIRM_TITLE">Tasdiqlang</string>
@@ -14823,7 +14823,7 @@ Struktura (poezd/Val/Test) yaratildi.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">SINFLAR</string>
-        <string key="TITLE_ABOUT">X-annotatsiya haqida</string>
+        <string key="TITLE_ABOUT">ℹ️ Haqida</string>
         <string key="LBL_AUTHOR">Muallif:</string>
         <string key="LBL_EMAIL">Email:</string>
         <string key="LBL_VERSION">Versiya:</string>
@@ -14986,7 +14986,7 @@ Structure (Train/Val/Test) generated.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">CLASSES</string>
-        <string key="TITLE_ABOUT">About X-Annotation</string>
+        <string key="TITLE_ABOUT">ℹ️ About</string>
         <string key="LBL_AUTHOR">Author:</string>
         <string key="LBL_EMAIL">Email:</string>
         <string key="LBL_VERSION">Version:</string>
@@ -15147,7 +15147,7 @@ Cấu trúc (Train/Val/Test) được tạo.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">LỚP</string>
-        <string key="TITLE_ABOUT">Giới thiệu về chú thích X</string>
+        <string key="TITLE_ABOUT">ℹ️ Giới thiệu</string>
         <string key="LBL_AUTHOR">Tác giả:</string>
         <string key="LBL_EMAIL">E-mail:</string>
         <string key="LBL_VERSION">Phiên bản:</string>
@@ -15310,7 +15310,7 @@ Structure (Train/Val/Test) generated.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">CLASSES</string>
-        <string key="TITLE_ABOUT">About X-Annotation</string>
+        <string key="TITLE_ABOUT">ℹ️ About</string>
         <string key="LBL_AUTHOR">Author:</string>
         <string key="LBL_EMAIL">Email:</string>
         <string key="LBL_VERSION">Version:</string>
@@ -15471,7 +15471,7 @@ Ulwakhiwo (Uloliwe/iVal/Uvavanyo) lwenziwe.</string>
         <string key="COL_RES">I-RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">IIklasi</string>
-        <string key="TITLE_ABOUT">Malunga ne-X-Annotation</string>
+        <string key="TITLE_ABOUT">ℹ️ Malunga</string>
         <string key="LBL_AUTHOR">Umbhali:</string>
         <string key="LBL_EMAIL">I-imeyile:</string>
         <string key="LBL_VERSION">Inguqulelo:</string>
@@ -15632,7 +15632,7 @@ Igbekale (Reluwe / Val / Igbeyewo) ti ipilẹṣẹ.</string>
         <string key="COL_RES">RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">Awọn kilasi</string>
-        <string key="TITLE_ABOUT">Nipa X-Asọye</string>
+        <string key="TITLE_ABOUT">ℹ️ Nipa</string>
         <string key="LBL_AUTHOR">Onkọwe:</string>
         <string key="LBL_EMAIL">Imeeli:</string>
         <string key="LBL_VERSION">Ẹya:</string>
@@ -15793,7 +15793,7 @@ Isakhiwo (Isitimela/Val/Test) esikhiqiziwe.</string>
         <string key="COL_RES">I-RES</string>
         <string key="COL_ANNS">ANNS</string>
         <string key="COL_CLASSES">AMAKILASI</string>
-        <string key="TITLE_ABOUT">Mayelana ne-X-Annotation</string>
+        <string key="TITLE_ABOUT">ℹ️ Mayelana</string>
         <string key="LBL_AUTHOR">Umbhali:</string>
         <string key="LBL_EMAIL">I-imeyili:</string>
         <string key="LBL_VERSION">Inguqulo:</string>

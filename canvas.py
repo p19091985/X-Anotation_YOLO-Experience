@@ -36,6 +36,9 @@ class CanvasController:
             self.font = ImageFont.truetype(font_path, size=Config.FONT_SIZE) if font_path else ImageFont.load_default()
         except IOError:
             self.font = ImageFont.load_default()
+        self.on_zoom_changed = None
+        self._suppress_resize_reset: bool = False
+        self.pan_mode: bool = False
 
     def _get_color_for_class(self, class_id: int) -> str:
         if not Config.CLASS_COLORS:
@@ -54,6 +57,7 @@ class CanvasController:
         self.zoom_level = min(scale_w, scale_h) * 0.95
         self.pan_offset = (0.0, 0.0)
         self.last_render_params = None
+        self._notify_zoom_change()
 
     def world_to_canvas(self, wx: float, wy: float) -> Tuple[float, float]:
         canvas_w = self.canvas.winfo_width()
@@ -76,6 +80,8 @@ class CanvasController:
     def display_image(self) -> None:
         self.canvas.delete('all')
         if not self.app_state.current_pil_image:
+            if hasattr(self.ui, 'update_scrollbars'):
+                self.ui.update_scrollbars()
             return
         final_w = int(self.app_state.original_image_size[0] * self.zoom_level)
         final_h = int(self.app_state.original_image_size[1] * self.zoom_level)
@@ -130,6 +136,11 @@ class CanvasController:
                 self.canvas.create_line(flat, fill=Config.NEW_BOX_COLOR, width=2, tags='temp_poly')
             for cp in c_points:
                 self.canvas.create_oval(cp[0] - 2, cp[1] - 2, cp[0] + 2, cp[1] + 2, fill='white', tags='temp_poly')
+        if hasattr(self.ui, 'update_scrollbars'):
+            self._suppress_resize_reset = True
+            self.ui.update_scrollbars()
+            self.canvas.update_idletasks()
+            self._suppress_resize_reset = False
 
     def _draw_label(self, x, y, class_id, color, item_index, is_selected=False):
         label_text = str(class_id)
@@ -193,8 +204,33 @@ class CanvasController:
         self.is_interacting = True
         factor = 1.1 if event.delta > 0 or event.num == 4 else 0.9
         self.zoom_level *= factor
+        self.zoom_level = max(Config.MIN_ZOOM_LEVEL, min(self.zoom_level, Config.MAX_ZOOM_LEVEL))
+        self._notify_zoom_change()
         self.display_image()
         self.canvas.after(200, self._finish_interaction)
+
+    def on_ctrl_zoom(self, event: tk.Event) -> None:
+        self.is_interacting = True
+        factor = 1.15 if event.delta > 0 or event.num == 4 else (1 / 1.15)
+        self.zoom_level *= factor
+        self.zoom_level = max(Config.MIN_ZOOM_LEVEL, min(self.zoom_level, Config.MAX_ZOOM_LEVEL))
+        self._notify_zoom_change()
+        self.display_image()
+        self.canvas.after(200, self._finish_interaction)
+
+    def set_zoom(self, percent: int) -> None:
+        self.zoom_level = max(Config.MIN_ZOOM_LEVEL, min(percent / 100.0, Config.MAX_ZOOM_LEVEL))
+        self.pan_offset = (0.0, 0.0)
+        self.last_render_params = None
+        self._notify_zoom_change()
+        self.display_image()
+
+    def get_zoom_percent(self) -> int:
+        return round(self.zoom_level * 100)
+
+    def _notify_zoom_change(self) -> None:
+        if callable(self.on_zoom_changed):
+            self.on_zoom_changed(self.get_zoom_percent())
 
     def on_pan_start(self, event: tk.Event) -> None:
         self.is_interacting = True
@@ -218,6 +254,9 @@ class CanvasController:
         self.display_image()
 
     def on_canvas_press(self, event: tk.Event, on_update_callback: callable) -> None:
+        if self.pan_mode:
+            self.on_pan_start(event)
+            return
         wx, wy = self.canvas_to_world(event.x, event.y)
         if self.app_state.is_drawing:
             if self.app_state.annotation_mode == 'box':
@@ -252,6 +291,9 @@ class CanvasController:
             on_update_callback(deselect_all=True)
 
     def on_canvas_drag(self, event: tk.Event) -> None:
+        if self.pan_mode and self.pan_start_pos:
+            self.on_pan_move(event)
+            return
         self.is_interacting = True
         if self.app_state.is_drawing and self.app_state.annotation_mode == 'box' and self.temp_rect:
             x1, y1 = self.draw_start_pos
@@ -311,6 +353,9 @@ class CanvasController:
             self.display_image()
 
     def on_canvas_release(self, event: tk.Event, on_update_callback: callable) -> None:
+        if self.pan_mode and self.pan_start_pos:
+            self.on_pan_end(event)
+            return
         self.is_interacting = False
         self.active_handle = None
         if self.app_state.is_drawing and self.app_state.annotation_mode == 'box' and self.draw_start_pos:
@@ -352,7 +397,9 @@ class CanvasController:
         if self.action_mode or self.pan_start_pos:
             return
         cursor = 'crosshair' if self.app_state.is_drawing else ''
-        if not cursor:
+        if self.pan_mode:
+            cursor = 'fleur'
+        elif not cursor:
             item, _, _ = self.get_item_at(event.x, event.y)
             if item == 'handle':
                 cursor = 'sizing' if self.app_state.annotation_mode == 'box' else 'hand2'
@@ -361,6 +408,8 @@ class CanvasController:
         self.canvas.config(cursor=cursor)
 
     def on_canvas_resize(self, event: tk.Event) -> None:
+        if self._suppress_resize_reset:
+            return
         if self.app_state.current_image_index != -1:
             self.reset_view()
             self.display_image()

@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox, simpledialog
+from pathlib import Path
 from PIL import Image
 import os, json, yaml, logging, copy
 from typing import List, Tuple, Optional
@@ -14,9 +15,9 @@ from window_class_manager import ClassManagerWindow
 from window_new_project import NewProjectWindow
 from window_split_wizard import SplitWizard
 from visualizador_grid import GridViewerWindow
-from visualizador_grid import GridViewerWindow
 from analisador_dataset import DatasetAnalyzerWindow
 from window_about import AboutWindow
+from utils_ui import maximize_window
 logger_config.setup_logging()
 logger = logging.getLogger(__name__)
 
@@ -29,18 +30,15 @@ class MainApplication:
         self.ann_manager = AnnotationManager()
         self.root.title(Config.APP_NAME)
         self.root.minsize(1024, 700)
-        w, h = (self.root.winfo_screenwidth(), self.root.winfo_screenheight())
-        try:
-            self.root.state('zoomed')
-        except:
-            self.root.geometry(f'{w}x{h}+0+0')
+        maximize_window(self.root)
         self.ui_theme_name = Config.STYLE_THEME
         self._set_theme()
         self._load_config()
         self.ui = UIManager(root, self)
         self.canvas_controller = CanvasController(self.ui.canvas, self.app_state, self.ui)
+        self.canvas_controller.on_zoom_changed = self.ui.sync_zoom_display
         self._bind_events()
-        self.ui.update_status_bar('Pronto. Segmentation Mode Ativado.')
+        self.ui.update_status_bar('Pronto.')
 
     def _set_theme(self):
         style = ttk.Style()
@@ -54,21 +52,49 @@ class MainApplication:
     def _load_config(self):
         try:
             with open(Config.CONFIG_FILE_PATH, 'r') as f:
-                c = json.load(f)
-            self.app_state.base_directory = c.get('last_directory', '')
-            lang = c.get('language', 'pt_BR')
+                config_data = json.load(f)
+            self.app_state.base_directory = self._resolve_saved_directory(config_data.get('last_directory', ''))
+            lang = config_data.get('language', 'pt_BR')
             localization.set_language(lang)
             if self.app_state.base_directory and os.path.exists(self.app_state.base_directory):
                 self.root.after(100, self._load_directory_contents)
-        except:
-            pass
+        except Exception:
+            self.app_state.base_directory = ''
 
     def _save_config(self):
         try:
             with open(Config.CONFIG_FILE_PATH, 'w') as f:
-                json.dump({'last_directory': self.app_state.base_directory, 'theme': 'default', 'language': localization.get_current_language()}, f)
-        except:
-            pass
+                json.dump(
+                    {
+                        'last_directory': self._serialize_directory(self.app_state.base_directory),
+                        'theme': 'default',
+                        'language': localization.get_current_language(),
+                    },
+                    f
+                )
+        except Exception:
+            logger.exception('Falha ao salvar configuracao local.')
+
+    def _resolve_saved_directory(self, raw_path: str) -> str:
+        if not raw_path:
+            return ''
+        path = Path(raw_path)
+        candidates = [path]
+        if not path.is_absolute():
+            candidates.insert(0, Path.cwd() / path)
+        for candidate in candidates:
+            if candidate.exists():
+                return str(candidate.resolve())
+        return ''
+
+    def _serialize_directory(self, directory: str) -> str:
+        if not directory:
+            return ''
+        resolved = Path(directory).resolve()
+        try:
+            return str(resolved.relative_to(Path.cwd()))
+        except ValueError:
+            return str(resolved)
 
     def save_current_theme(self):
         self._save_config()
@@ -85,6 +111,11 @@ class MainApplication:
         self.ui.canvas.bind('<ButtonPress-3>', lambda e: self.canvas_controller.on_right_click(e, self.process_canvas_update))
         self.ui.canvas.bind('<Motion>', self.canvas_controller.on_mouse_hover)
         self.ui.canvas.bind('<MouseWheel>', self.canvas_controller.on_zoom)
+        self.ui.canvas.bind('<Control-MouseWheel>', self.canvas_controller.on_ctrl_zoom)
+        self.ui.canvas.bind('<Button-4>', self.canvas_controller.on_zoom)
+        self.ui.canvas.bind('<Button-5>', self.canvas_controller.on_zoom)
+        self.ui.canvas.bind('<Control-Button-4>', self.canvas_controller.on_ctrl_zoom)
+        self.ui.canvas.bind('<Control-Button-5>', self.canvas_controller.on_ctrl_zoom)
         self.ui.canvas.bind('<ButtonPress-2>', self.canvas_controller.on_pan_start)
         self.ui.canvas.bind('<B2-Motion>', self.canvas_controller.on_pan_move)
         self.ui.canvas.bind('<ButtonRelease-2>', self.canvas_controller.on_pan_end)
@@ -95,6 +126,8 @@ class MainApplication:
         self.root.bind('<Delete>', self.delete_current_item)
         self.root.bind('<d>', self.toggle_drawing_mode_event)
         self.root.bind('<D>', self.toggle_drawing_mode_event)
+        self.root.bind('<p>', lambda e: self.ui.set_pan_mode())
+        self.root.bind('<P>', lambda e: self.ui.set_pan_mode())
         self.root.bind('<Control-z>', self.undo)
         self.root.protocol('WM_DELETE_WINDOW', self.on_close)
 
@@ -368,6 +401,8 @@ class MainApplication:
         if force_state is not None:
             self.ui.drawing_mode_var.set(force_state)
         self.app_state.is_drawing = self.ui.drawing_mode_var.get()
+        if self.app_state.is_drawing and self.canvas_controller.pan_mode:
+            self.ui.set_pan_mode(False)
         self.deselect_all()
         mode_txt = 'Polígono' if self.app_state.annotation_mode == 'polygon' else 'Box'
         status = f'Modo Desenho: ON ({mode_txt})' if self.app_state.is_drawing else 'Modo de Navegação'
@@ -378,10 +413,10 @@ class MainApplication:
         self.app_state.class_names = []
         p = os.path.join(self.app_state.base_directory, 'classes.txt')
         if os.path.exists(p):
-            with open(p, 'r') as f:
+            with open(p, 'r', encoding='utf-8') as f:
                 self.app_state.class_names = [x.strip() for x in f if x.strip()]
         else:
-            for yaml_file in ['data.yaml', 'dataset.yaml', 'config.yaml']:
+            for yaml_file in Config.SUPPORTED_DATA_FILES:
                 yaml_path = os.path.join(self.app_state.base_directory, yaml_file)
                 if os.path.exists(yaml_path):
                     try:
@@ -438,8 +473,26 @@ class MainApplication:
 
     def _on_classes_updated(self, l):
         self.app_state.class_names = l
-        with open(os.path.join(self.app_state.base_directory, 'classes.txt'), 'w') as f:
+        with open(os.path.join(self.app_state.base_directory, 'classes.txt'), 'w', encoding='utf-8') as f:
             f.write('\n'.join(l))
+        for yaml_file in Config.SUPPORTED_DATA_FILES:
+            yaml_path = os.path.join(self.app_state.base_directory, yaml_file)
+            if not os.path.exists(yaml_path):
+                continue
+            try:
+                with open(yaml_path, 'r', encoding='utf-8') as f:
+                    data = yaml.safe_load(f) or {}
+                if not isinstance(data, dict):
+                    continue
+                data['nc'] = len(l)
+                if isinstance(data.get('names'), dict):
+                    data['names'] = {idx: name for idx, name in enumerate(l)}
+                else:
+                    data['names'] = l
+                with open(yaml_path, 'w', encoding='utf-8') as f:
+                    yaml.dump(data, f, sort_keys=False, allow_unicode=True)
+            except Exception as exc:
+                logger.error(f'Erro ao atualizar {yaml_file}: {exc}')
         self.ui.update_class_selector()
         self.show_image_at_index(self.app_state.current_image_index)
 
@@ -469,7 +522,8 @@ class MainApplication:
         DatasetAnalyzerWindow(self.root, self.app_state.base_directory, self.app_state.class_names)
 
     def select_directory(self):
-        p = filedialog.askdirectory()
+        initial_dir = self.app_state.base_directory or str(Path.cwd())
+        p = filedialog.askdirectory(initialdir=initial_dir)
         if p:
             self.app_state.base_directory = p
             self._load_directory_contents()

@@ -25,8 +25,6 @@ def center_window(window, parent):
     parent_height = parent.winfo_height()
     x = parent_x + parent_width // 2 - width // 2
     y = parent_y + parent_height // 2 - height // 2
-    x = max(0, x)
-    y = max(0, y)
     window.geometry(f'+{x}+{y}')
 
 def maximize_window(window):
@@ -36,8 +34,11 @@ def maximize_window(window):
         else:
             window.attributes('-zoomed', True)
     except Exception:
-        w, h = (window.winfo_screenwidth(), window.winfo_screenheight())
-        window.geometry(f'{w}x{h}+0+0')
+        try:
+            window.state('zoomed')
+        except Exception:
+            w, h = (window.winfo_screenwidth(), window.winfo_screenheight())
+            window.geometry(f'{w}x{h}+0+0')
 
 class ScrolledFrame(ttk.Frame):
 
@@ -63,4 +64,65 @@ class ScrolledFrame(ttk.Frame):
     def _on_canvas_configure(self, event):
         if self.canvas.winfo_width() > self.interior.winfo_reqwidth():
             self.canvas.itemconfig(self.canvas_window, width=self.canvas.winfo_width())
-    pass
+
+class ToolTip:
+
+    def __init__(self, widget, text=''):
+        self.widget = widget
+        self.text = text
+        self.tip_window = None
+        self.after_id = None
+        self.widget.bind('<Enter>', self.enter, add='+')
+        self.widget.bind('<Leave>', self.leave, add='+')
+        self.widget.bind('<ButtonPress>', self.leave, add='+')
+
+    def update_text(self, text):
+        self.text = text or ''
+        if self.tip_window and not self.text:
+            self.hide_tip()
+
+    def enter(self, event=None):
+        if not self.text:
+            return
+        self.unschedule()
+        self.after_id = self.widget.after(400, self.show_tip)
+
+    def leave(self, event=None):
+        self.unschedule()
+        self.hide_tip()
+
+    def unschedule(self):
+        if self.after_id:
+            self.widget.after_cancel(self.after_id)
+            self.after_id = None
+
+    def show_tip(self):
+        if self.tip_window or not self.text:
+            return
+        x = self.widget.winfo_rootx() + 16
+        y = self.widget.winfo_rooty() + self.widget.winfo_height() + 8
+        self.tip_window = tip = tk.Toplevel(self.widget)
+        tip.wm_overrideredirect(True)
+        tip.wm_geometry(f'+{x}+{y}')
+        try:
+            tip.attributes('-topmost', True)
+        except Exception:
+            pass
+        label = tk.Label(
+            tip,
+            text=self.text,
+            justify='left',
+            background='#FFF7D6',
+            foreground='black',
+            relief='solid',
+            borderwidth=1,
+            wraplength=320,
+            padx=6,
+            pady=4
+        )
+        label.pack()
+
+    def hide_tip(self):
+        if self.tip_window:
+            self.tip_window.destroy()
+            self.tip_window = None

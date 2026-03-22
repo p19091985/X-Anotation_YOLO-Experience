@@ -1,7 +1,14 @@
 import platform
 
 class Config:
-    APP_NAME = 'X-Annotation YOLO Ultimate (v7.0)'
+    APP_NAME = 'Marinho - YOLO Template'
+    APP_AUTHOR = 'Equipe Marinho'
+    APP_CONTACT = 'contato@marinho.example'
+    APP_VERSION = 'Template'
+    APP_DESCRIPTION = (
+        'Template reutilizavel para anotacao, revisao e organizacao de datasets YOLO. '
+        'Use esta base para derivar novos sistemas sem acoplamento a um cliente especifico.'
+    )
     DEFAULT_GEOMETRY = '1440x900'
     MIN_GEOMETRY = '1024x600'
     STYLE_THEME = 'clam'
@@ -20,4 +27,18 @@ class Config:
     MIN_BOX_SIZE_TO_SHOW_LABEL = 0
     AUTO_DISABLE_DRAW_MODE = False
     CONFIG_FILE_PATH = 'yolo_editor_config.json'
+    SUPPORTED_DATA_FILES = ('data.yaml', 'dataset.yaml', 'config.yaml')
+    MIN_ZOOM_LEVEL = 0.02
+    MAX_ZOOM_LEVEL = 20.0
+    ZOOM_PRESETS = (5, 10, 25, 33, 50, 75, 100, 150, 200, 300, 400, 600, 800, 1000, 1500, 2000)
+    FEATURE_SHOW_NEW_PROJECT = True
+    FEATURE_SHOW_OPEN_PROJECT = True
+    FEATURE_SHOW_GRID_VIEW = True
+    FEATURE_SHOW_ANALYZER = True
+    FEATURE_SHOW_SPLIT = True
+    FEATURE_SHOW_ABOUT = True
+    FEATURE_SHOW_LANGUAGE_SELECTOR = True
+    FEATURE_SHOW_DIRECTORY_LABEL = True
+    FEATURE_ENABLE_POLYGON = True
+    FEATURE_ENABLE_TOOLTIPS = True
     CLASS_COLORS = ['#FF3B30', '#4CD964', '#FFCC00', '#5856D6', '#FF9500', '#5AC8FA', '#007AFF', '#FF2D55', '#8E8E93', '#E5E5EA', '#A2845E', '#FF375F', '#BF5AF2', '#64D2FF', '#0A84FF']
