@@ -8,7 +8,7 @@ import localization
 import logger_config
 from config import Config
 from state import AppState
-from managers import AnnotationManager, DatasetUtils
+from managers import AnnotationManager, ClassCatalogManager, DatasetUtils
 from canvas import CanvasController
 from ui import UIManager
 from window_class_manager import ClassManagerWindow
@@ -469,12 +469,45 @@ class MainApplication:
         self._load_directory_contents()
 
     def open_class_manager(self):
-        ClassManagerWindow(self.root, self.app_state.class_names, self._on_classes_updated)
+        if not self.app_state.base_directory:
+            messagebox.showwarning(localization.tr('MSG_WARN_TITLE'), 'Abra um dataset.', parent=self.root)
+            return
+        usage_counts = ClassCatalogManager.count_class_usage(
+            self.app_state.base_directory,
+            len(self.app_state.class_names)
+        )
+        ClassManagerWindow(self.root, self.app_state.class_names, self._on_classes_updated, usage_counts)
 
-    def _on_classes_updated(self, l):
-        self.app_state.class_names = l
+    def _on_classes_updated(self, payload):
+        old_classes = list(self.app_state.class_names)
+        if isinstance(payload, dict):
+            class_names = list(payload.get('classes', []))
+            class_id_map = {
+                int(old_id): int(new_id)
+                for old_id, new_id in (payload.get('id_map') or {}).items()
+            }
+        else:
+            class_names = list(payload)
+            class_id_map = {
+                idx: idx
+                for idx in range(min(len(old_classes), len(class_names)))
+            }
+
+        deleted_ids = set(range(len(old_classes))) - set(class_id_map)
+        try:
+            ClassCatalogManager.remap_annotation_class_ids(
+                self.app_state.base_directory,
+                class_id_map,
+                deleted_ids=deleted_ids
+            )
+        except ValueError as exc:
+            messagebox.showwarning(localization.tr('MSG_WARN_TITLE'), str(exc), parent=self.root)
+            return
+
+        self.app_state.class_names = class_names
         with open(os.path.join(self.app_state.base_directory, 'classes.txt'), 'w', encoding='utf-8') as f:
-            f.write('\n'.join(l))
+            f.write('\n'.join(class_names))
+        yaml_updated = False
         for yaml_file in Config.SUPPORTED_DATA_FILES:
             yaml_path = os.path.join(self.app_state.base_directory, yaml_file)
             if not os.path.exists(yaml_path):
@@ -484,15 +517,24 @@ class MainApplication:
                     data = yaml.safe_load(f) or {}
                 if not isinstance(data, dict):
                     continue
-                data['nc'] = len(l)
+                data['nc'] = len(class_names)
                 if isinstance(data.get('names'), dict):
-                    data['names'] = {idx: name for idx, name in enumerate(l)}
+                    data['names'] = {idx: name for idx, name in enumerate(class_names)}
                 else:
-                    data['names'] = l
+                    data['names'] = class_names
                 with open(yaml_path, 'w', encoding='utf-8') as f:
                     yaml.dump(data, f, sort_keys=False, allow_unicode=True)
+                yaml_updated = True
             except Exception as exc:
                 logger.error(f'Erro ao atualizar {yaml_file}: {exc}')
+        if not yaml_updated:
+            yaml_path = os.path.join(self.app_state.base_directory, 'data.yaml')
+            data = {
+                'nc': len(class_names),
+                'names': {idx: name for idx, name in enumerate(class_names)},
+            }
+            with open(yaml_path, 'w', encoding='utf-8') as f:
+                yaml.dump(data, f, sort_keys=False, allow_unicode=True)
         self.ui.update_class_selector()
         self.show_image_at_index(self.app_state.current_image_index)
 

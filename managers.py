@@ -100,6 +100,95 @@ class AnnotationManager:
             parts.append(f'{nx:.6f} {ny:.6f}')
         return ' '.join(parts)
 
+
+class ClassCatalogManager:
+    IMAGE_EXTENSIONS = ('.jpg', '.jpeg', '.png', '.bmp', '.tiff', '.webp')
+
+    @staticmethod
+    def iter_annotation_files(base_dir: str) -> List[str]:
+        annotation_files = set()
+        for root, _, files in os.walk(base_dir):
+            image_stems = {
+                os.path.splitext(file_name)[0]
+                for file_name in files
+                if file_name.lower().endswith(ClassCatalogManager.IMAGE_EXTENSIONS)
+            }
+            is_labels_dir = os.path.basename(root).casefold() == 'labels'
+            for file_name in files:
+                if not file_name.lower().endswith('.txt') or file_name == 'classes.txt':
+                    continue
+                stem = os.path.splitext(file_name)[0]
+                if is_labels_dir or stem in image_stems:
+                    annotation_files.add(os.path.join(root, file_name))
+        return sorted(annotation_files)
+
+    @staticmethod
+    def _extract_used_class_ids(label_path: str) -> List[int]:
+        class_ids = set()
+        with open(label_path, 'r', encoding='utf-8') as handle:
+            for line in handle:
+                stripped = line.strip()
+                if not stripped:
+                    continue
+                parts = stripped.split()
+                if len(parts) < 5:
+                    continue
+                try:
+                    class_ids.add(int(parts[0]))
+                except ValueError:
+                    continue
+        return sorted(class_ids)
+
+    @staticmethod
+    def count_class_usage(base_dir: str, class_count: int) -> List[int]:
+        usage = [0] * max(class_count, 0)
+        if class_count <= 0 or not base_dir or not os.path.isdir(base_dir):
+            return usage
+        for label_path in ClassCatalogManager.iter_annotation_files(base_dir):
+            for class_id in ClassCatalogManager._extract_used_class_ids(label_path):
+                if 0 <= class_id < class_count:
+                    usage[class_id] += 1
+        return usage
+
+    @staticmethod
+    def remap_annotation_class_ids(base_dir: str, class_id_map: Dict[int, int], deleted_ids=None) -> None:
+        if not base_dir or not os.path.isdir(base_dir):
+            return
+        deleted_ids = set(deleted_ids or [])
+        pending_updates = []
+        for label_path in ClassCatalogManager.iter_annotation_files(base_dir):
+            changed = False
+            updated_lines = []
+            with open(label_path, 'r', encoding='utf-8') as handle:
+                for raw_line in handle:
+                    stripped = raw_line.strip()
+                    if not stripped:
+                        updated_lines.append(raw_line if raw_line.endswith('\n') else raw_line + '\n')
+                        continue
+                    parts = stripped.split()
+                    if len(parts) < 5:
+                        updated_lines.append(raw_line if raw_line.endswith('\n') else raw_line + '\n')
+                        continue
+                    try:
+                        class_id = int(parts[0])
+                    except ValueError:
+                        updated_lines.append(raw_line if raw_line.endswith('\n') else raw_line + '\n')
+                        continue
+                    if class_id in deleted_ids:
+                        raise ValueError(f'Classe em uso detectada em {label_path}: {class_id}')
+                    new_class_id = class_id_map.get(class_id, class_id)
+                    if new_class_id != class_id:
+                        parts[0] = str(new_class_id)
+                        updated_lines.append(' '.join(parts) + '\n')
+                        changed = True
+                    else:
+                        updated_lines.append(raw_line if raw_line.endswith('\n') else raw_line + '\n')
+            if changed:
+                pending_updates.append((label_path, updated_lines))
+        for label_path, updated_lines in pending_updates:
+            with open(label_path, 'w', encoding='utf-8') as handle:
+                handle.writelines(updated_lines)
+
 class DatasetUtils:
 
     @staticmethod

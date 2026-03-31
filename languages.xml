@@ -10512,6 +10512,7 @@ Zaprojektowany, aby ułatwić tworzenie, edycję i analizę zbiorów danych z za
         <string key="BTN_CLEAR_ALL">🧹 Limpar Tudo</string>
         <string key="COL_ID">ID</string>
         <string key="COL_CLASS_NAME">Nome da Classe</string>
+        <string key="COL_IMAGE_USAGE">Imagens</string>
         <string key="BTN_CANCEL">Cancelar</string>
         <string key="BTN_CREATE_YOLO">🚀 CRIAR ESTRUTURA YOLO</string>
         <string key="DIALOG_DIR_TITLE">Selecione o diretório pai do projeto</string>
@@ -10523,6 +10524,8 @@ Zaprojektowany, aby ułatwić tworzenie, edycję i analizę zbiorów danych z za
         <string key="DIALOG_EDIT_CLASS_MSG">Novo nome:</string>
         <string key="DIALOG_CONFIRM_TITLE">Confirmar</string>
         <string key="MSG_REMOVE_CLASS_BODY">Remover a classe '{}'?</string>
+        <string key="MSG_CLASS_IN_USE_TITLE">Atenção</string>
+        <string key="MSG_CLASS_IN_USE_BODY">A classe '{}' não pode ser excluída porque já está usada em {} imagem(ns).</string>
         <string key="DIALOG_CLEAR_TITLE">Limpar</string>
         <string key="MSG_CLEAR_ALL_BODY">Remover TODAS as classes?</string>
         <string key="MSG_WARN_TITLE">Atenção</string>

@@ -47,7 +47,11 @@ class DatasetAnalyzerWindow:
     def _create_layout(self):
         header = ttk.Frame(self.top, padding=10)
         header.pack(fill=tk.X)
-        ttk.Label(header, text=f'{localization.tr('LBL_DETAILED_TECH')} {os.path.basename(self.base_dir)}', font=('Impact', 14)).pack(side=tk.LEFT, padx=5)
+        ttk.Label(
+            header,
+            text=f"{localization.tr('LBL_DETAILED_TECH')} {os.path.basename(self.base_dir)}",
+            font=('Impact', 14)
+        ).pack(side=tk.LEFT, padx=5)
         self.lbl_status = ttk.Label(header, text=localization.tr('LBL_STATUS_INIT'), foreground='orange')
         self.lbl_status.pack(side=tk.RIGHT, padx=10)
         self.notebook = ttk.Notebook(self.top)

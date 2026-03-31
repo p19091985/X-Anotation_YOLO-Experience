@@ -8,6 +8,7 @@ import yaml
 import localization as localization_module
 from config import Config
 from main import MainApplication
+from managers import ClassCatalogManager
 from window_new_project import NewProjectWindow
 from window_split_wizard import SplitWizard
 
@@ -55,7 +56,7 @@ def test_repository_metadata_is_generic():
     files_to_check = [
         Path('README.md'),
         Path('generate_languages.py'),
-        Path('tests/macro/runner.py'),
+        Path('teste/macro/runner.py'),
     ]
     forbidden = ('X-Annotation', 'X-Anotation', 'Patrik', 'Unisenai', 'Docol', 'dataset-geral-01')
     for file_path in files_to_check:
@@ -116,6 +117,51 @@ def test_on_classes_updated_refreshes_classes_txt_and_yaml(tmp_path):
     yaml_data = yaml.safe_load((base_dir / 'data.yaml').read_text(encoding='utf-8'))
     assert yaml_data['nc'] == 2
     assert yaml_data['names'] == {0: 'foo', 1: 'bar'}
+    assert callbacks['selector_updated'] is True
+    assert callbacks['index'] == -1
+
+
+def test_class_catalog_counts_usage_and_remaps_ids(tmp_path):
+    base_dir = tmp_path / 'dataset'
+    labels_dir = base_dir / 'train' / 'labels'
+    labels_dir.mkdir(parents=True)
+    label_a = labels_dir / 'img_a.txt'
+    label_b = labels_dir / 'img_b.txt'
+    label_a.write_text('0 0.5 0.5 0.2 0.2\n2 0.3 0.3 0.1 0.1\n', encoding='utf-8')
+    label_b.write_text('2 0.4 0.4 0.2 0.2\n', encoding='utf-8')
+
+    usage = ClassCatalogManager.count_class_usage(str(base_dir), 4)
+
+    assert usage == [1, 0, 2, 0]
+
+    ClassCatalogManager.remap_annotation_class_ids(str(base_dir), {0: 0, 2: 1}, deleted_ids={3})
+
+    assert label_a.read_text(encoding='utf-8') == '0 0.5 0.5 0.2 0.2\n1 0.3 0.3 0.1 0.1\n'
+    assert label_b.read_text(encoding='utf-8') == '1 0.4 0.4 0.2 0.2\n'
+
+
+def test_on_classes_updated_remaps_annotation_ids_when_unused_class_is_removed(tmp_path):
+    base_dir = tmp_path / 'dataset'
+    labels_dir = base_dir / 'train' / 'labels'
+    labels_dir.mkdir(parents=True)
+    (base_dir / 'classes.txt').write_text('foo\nbar\nbaz', encoding='utf-8')
+    (base_dir / 'data.yaml').write_text('nc: 3\nnames:\n  0: foo\n  1: bar\n  2: baz\n', encoding='utf-8')
+    (labels_dir / 'img.txt').write_text('0 0.5 0.5 0.2 0.2\n2 0.3 0.3 0.1 0.1\n', encoding='utf-8')
+
+    callbacks = {'selector_updated': False, 'index': None}
+
+    app = MainApplication.__new__(MainApplication)
+    app.app_state = SimpleNamespace(base_directory=str(base_dir), class_names=['foo', 'bar', 'baz'], current_image_index=-1)
+    app.ui = SimpleNamespace(update_class_selector=lambda: callbacks.__setitem__('selector_updated', True))
+    app.show_image_at_index = lambda index: callbacks.__setitem__('index', index)
+
+    app._on_classes_updated({'classes': ['foo', 'baz'], 'id_map': {0: 0, 2: 1}})
+
+    assert (base_dir / 'classes.txt').read_text(encoding='utf-8') == 'foo\nbaz'
+    yaml_data = yaml.safe_load((base_dir / 'data.yaml').read_text(encoding='utf-8'))
+    assert yaml_data['nc'] == 2
+    assert yaml_data['names'] == {0: 'foo', 1: 'baz'}
+    assert (labels_dir / 'img.txt').read_text(encoding='utf-8') == '0 0.5 0.5 0.2 0.2\n1 0.3 0.3 0.1 0.1\n'
     assert callbacks['selector_updated'] is True
     assert callbacks['index'] == -1
 

@@ -136,6 +136,11 @@ class UIManager:
         if Config.FEATURE_SHOW_OPEN_PROJECT:
             btn_open.pack(side=tk.LEFT, padx=(0, 5))
 
+        btn_manage_top = ttk.Button(top_frame, command=self.app.open_class_manager)
+        self._register_translation(btn_manage_top, 'MANAGE_CLASSES')
+        self._register_tooltip(btn_manage_top, 'TIP_MANAGE_CLASSES', 'Adiciona, renomeia ou remove classes do projeto.')
+        btn_manage_top.pack(side=tk.LEFT, padx=(0, 5))
+
         btn_refresh = ttk.Button(top_frame, text='R', width=3, command=self.app.refresh_directory)
         btn_refresh.pack(side=tk.LEFT, padx=(0, 5))
         self._register_tooltip(btn_refresh, 'TIP_REFRESH_DIRECTORY', 'Recarrega o diretorio atual para refletir alteracoes externas.')
