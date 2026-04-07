@@ -197,8 +197,7 @@ class DatasetUtils:
         all_files = []
         valid_ext = ('.jpg', '.jpeg', '.png', '.bmp', '.tiff')
         for r, d, f in os.walk(base_dir):
-            if 'labels' in r:
-                continue
+            d[:] = [directory for directory in d if directory.casefold() != 'labels']
             for file in f:
                 if file.lower().endswith(valid_ext):
                     img_path = os.path.join(r, file)

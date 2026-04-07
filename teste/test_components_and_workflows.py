@@ -320,3 +320,45 @@ def test_main_open_class_manager_passes_usage_counts(monkeypatch, tmp_path):
     assert captured['class_names'] == ['cat', 'dog']
     assert captured['usage_counts'] == [5, 0]
     assert captured['callback'] == app._on_classes_updated
+
+
+def test_main_load_directory_contents_accepts_base_dir_with_labels_in_name(tmp_path):
+    base_dir = tmp_path / 'final_labels'
+    image_dir = base_dir / 'train' / 'images'
+    labels_dir = base_dir / 'train' / 'labels'
+    image_dir.mkdir(parents=True)
+    labels_dir.mkdir(parents=True)
+    (image_dir / 'img1.jpg').write_text('img', encoding='utf-8')
+    (labels_dir / 'img1.txt').write_text('0 0.5 0.5 0.2 0.2\n', encoding='utf-8')
+
+    class DummyWidget:
+        def __init__(self):
+            self.calls = []
+
+        def config(self, **kwargs):
+            self.calls.append(kwargs)
+
+    app = MainApplication.__new__(MainApplication)
+    app.app_state = SimpleNamespace(
+        base_directory=str(base_dir),
+        current_image_index=-1,
+        data_is_safe_to_save=True,
+        annotations=['old'],
+        undo_stack=['old'],
+        is_drawing=False,
+        image_paths=[]
+    )
+    app.ui = SimpleNamespace(
+        dir_label=DummyWidget(),
+        add_box_check=DummyWidget(),
+        refresh_image_list=lambda: None,
+    )
+    app._load_class_names = lambda: None
+    shown_indexes = []
+    app.show_image_at_index = lambda index: shown_indexes.append(index)
+
+    app._load_directory_contents()
+
+    assert app.app_state.image_paths == [str(image_dir / 'img1.jpg')]
+    assert shown_indexes == [0]
+    assert app.ui.add_box_check.calls[-1] == {'state': 'normal'}

@@ -210,9 +210,8 @@ class DatasetAnalyzerWindow:
             self.stats['integrity']['lbls_no_img'] = []
             all_images_bases = set()
             all_labels_bases = set()
-            for r, _, files in os.walk(self.base_dir):
-                if 'labels' in r:
-                    continue
+            for r, dirs, files in os.walk(self.base_dir):
+                dirs[:] = [directory for directory in dirs if directory.casefold() != 'labels']
                 path_lower = r.lower()
                 split_cat = 'uncategorized'
                 if 'train' in path_lower:

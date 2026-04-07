@@ -208,9 +208,8 @@ class MainApplication:
         self._load_class_names()
         valid = ('.png', '.jpg', '.jpeg', '.bmp')
         self.app_state.image_paths = []
-        for r, _, files in os.walk(self.app_state.base_directory):
-            if 'labels' in r:
-                continue
+        for r, dirs, files in os.walk(self.app_state.base_directory):
+            dirs[:] = [directory for directory in dirs if directory.casefold() != 'labels']
             for f in sorted(files):
                 if f.lower().endswith(valid):
                     self.app_state.image_paths.append(os.path.join(r, f))

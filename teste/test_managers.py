@@ -92,3 +92,17 @@ def test_dataset_utils_split_dataset_raises_when_no_images_exist(tmp_path):
 
     with pytest.raises(FileNotFoundError):
         DatasetUtils.split_dataset(str(base_dir), train_ratio=0.8, val_ratio=0.2, test_ratio=0.0, shuffle=False)
+
+
+def test_dataset_utils_split_dataset_accepts_base_dir_with_labels_in_name(monkeypatch, tmp_path):
+    base_dir = tmp_path / 'final_labels'
+    base_dir.mkdir()
+    (base_dir / 'img1.jpg').write_text('img', encoding='utf-8')
+    (base_dir / 'img1.txt').write_text('0 0.5 0.5 0.2 0.2\n', encoding='utf-8')
+
+    monkeypatch.setattr('managers.random.shuffle', lambda items: None)
+
+    DatasetUtils.split_dataset(str(base_dir), train_ratio=1.0, val_ratio=0.0, test_ratio=0.0, shuffle=True)
+
+    assert (base_dir / 'train' / 'images' / 'img1.jpg').exists()
+    assert (base_dir / 'train' / 'labels' / 'img1.txt').exists()
