@@ -3,7 +3,7 @@ import platform
 class Config:
     APP_NAME = 'X-Anotation_YOLO-Experience'
     APP_AUTHOR = 'Equipe X-Anotation_YOLO-Experience'
-    APP_CONTACT = 'contato@marinho.example'
+    APP_CONTACT = 'patrik.lima.pereira@gmail.com'
     APP_VERSION = 'Template'
     APP_DESCRIPTION = (
         'Template reutilizavel para anotacao, revisao e organizacao de datasets YOLO. '
