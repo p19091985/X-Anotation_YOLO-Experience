@@ -20,7 +20,7 @@ class MacroRunner(tk.Tk):
 
     def __init__(self):
         super().__init__()
-        self.title('Marinho Macro Runner V2')
+        self.title('X-Anotation_YOLO-Experience Macro Runner V2')
         self.geometry('800x600')
         self.app_window = None
         self.app_instance = None

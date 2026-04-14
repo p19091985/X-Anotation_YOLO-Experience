@@ -1,4 +1,4 @@
-<h1 align="center">🎯 Marinho — YOLO Template</h1>
+<h1 align="center">🎯 X-Anotation_YOLO-Experience</h1>
 
 <p align="center"><strong>A reusable Tkinter-based workspace for annotating, reviewing, splitting, and analyzing YOLO datasets.</strong></p>
 
@@ -338,7 +338,7 @@ This repository is distributed under the **MIT License**. See [`LICENSE.txt`](LI
 
 ---
 
-<p align="center"><strong>Marinho is a reusable YOLO tooling base: annotate, review, split, analyze, and derive without rebuilding the whole stack.</strong></p>
+<p align="center"><strong>X-Anotation_YOLO-Experience is a reusable YOLO tooling base: annotate, review, split, analyze, and derive without rebuilding the whole stack.</strong></p>
 
 ---
 
@@ -667,4 +667,4 @@ Este repositório é distribuído sob a **MIT License**. Veja [`LICENSE.txt`](LI
 
 ---
 
-<p align="center"><strong>Marinho é uma base reutilizável para ferramentas YOLO: anotar, revisar, dividir, analisar e derivar sem reconstruir toda a stack.</strong></p>
+<p align="center"><strong>X-Anotation_YOLO-Experience é uma base reutilizável para ferramentas YOLO: anotar, revisar, dividir, analisar e derivar sem reconstruir toda a stack.</strong></p>

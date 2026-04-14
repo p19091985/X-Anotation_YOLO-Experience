@@ -36,7 +36,7 @@ class DummyLabel:
 
 
 def test_config_exposes_generic_template_defaults():
-    assert 'Marinho' in Config.APP_NAME
+    assert Config.APP_NAME == 'X-Anotation_YOLO-Experience'
     assert Config.FEATURE_SHOW_GRID_VIEW is True
     assert Config.FEATURE_ENABLE_TOOLTIPS is True
     assert 100 in Config.ZOOM_PRESETS
@@ -58,7 +58,7 @@ def test_repository_metadata_is_generic():
         Path('generate_languages.py'),
         Path('tests/macro/runner.py'),
     ]
-    forbidden = ('X-Annotation', 'X-Anotation', 'Patrik', 'Unisenai', 'Docol', 'dataset-geral-01')
+    forbidden = ('Marinho', 'Patrik', 'Unisenai', 'Docol', 'dataset-geral-01')
     for file_path in files_to_check:
         content = file_path.read_text(encoding='utf-8')
         for token in forbidden:
@@ -68,7 +68,7 @@ def test_repository_metadata_is_generic():
 def test_languages_xml_about_titles_are_generic():
     tree = ET.parse('languages.xml')
     root = tree.getroot()
-    forbidden = ('X-Annotation', 'X-Anotation', 'Patrik', 'Docol')
+    forbidden = ('Marinho', 'Patrik', 'Docol')
     for title_node in root.findall(".//string[@key='TITLE_ABOUT']"):
         text = title_node.text or ''
         for token in forbidden:

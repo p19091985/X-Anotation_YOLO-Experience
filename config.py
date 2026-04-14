@@ -1,8 +1,8 @@
 import platform
 
 class Config:
-    APP_NAME = 'Marinho - YOLO Template'
-    APP_AUTHOR = 'Equipe Marinho'
+    APP_NAME = 'X-Anotation_YOLO-Experience'
+    APP_AUTHOR = 'Equipe X-Anotation_YOLO-Experience'
     APP_CONTACT = 'contato@marinho.example'
     APP_VERSION = 'Template'
     APP_DESCRIPTION = (
