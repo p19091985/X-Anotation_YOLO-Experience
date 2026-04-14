@@ -3066,6 +3066,10 @@ Designed to facilitate the creation, editing, and analysis of computer vision da
         <string key="OPEN_PROJECT">📂 Open</string>
         <string key="GRID_VIEW">🔍 Grid</string>
         <string key="ANALYZER">📊 Stats</string>
+        <string key="REMOVE_UNLABELED">🗑 No Label</string>
+        <string key="TIP_REMOVE_UNLABELED">Remove images that do not have an associated .txt label file.</string>
+        <string key="REDUCE_DATASET">✂ Dataset Tools</string>
+        <string key="TIP_REDUCE_DATASET">Opens a window to create a filtered or reduced copy of the current dataset.</string>
         <string key="SPLIT">⚖️ Split</string>
         <string key="ABOUT">ℹ️ About</string>
         <string key="DRAW_MODE">Enable Draw Mode (D)</string>
@@ -10484,6 +10488,10 @@ Zaprojektowany, aby ułatwić tworzenie, edycję i analizę zbiorów danych z za
         <string key="OPEN_PROJECT">📂 Abrir</string>
         <string key="GRID_VIEW">🔍 Grade</string>
         <string key="ANALYZER">📊 Análise</string>
+        <string key="REMOVE_UNLABELED">🗑 Sem Label</string>
+        <string key="TIP_REMOVE_UNLABELED">Remove imagens que nao possuem arquivo .txt de label associado.</string>
+        <string key="REDUCE_DATASET">✂ Ajustar Dataset</string>
+        <string key="TIP_REDUCE_DATASET">Abre uma janela para criar uma copia filtrada ou reduzida do dataset atual.</string>
         <string key="SPLIT">⚖️ Divisão</string>
         <string key="ABOUT">Sobre</string>
         <string key="DRAW_MODE">Ativar Modo Desenho (D)</string>

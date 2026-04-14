@@ -7,9 +7,10 @@ import main as main_module
 import utils_ui
 import window_class_manager as class_manager_module
 import window_new_project as new_project_module
-from main import MainApplication
+from main import DatasetCopyOptions, MainApplication
+from managers import AnnotationManager
 from state import AppState
-from teste.helpers import DummyEntry, DummyFrame, DummyVar, FakeTree
+from tests.helpers import DummyEntry, DummyFrame, DummyVar, FakeTree
 from window_class_manager import ClassManagerWindow
 from window_new_project import NewProjectWindow
 from window_split_wizard import SplitWizard
@@ -245,6 +246,235 @@ def test_main_load_class_names_from_yaml_when_classes_file_is_missing(tmp_path):
 
     assert app.app_state.class_names == ['cat', 'dog']
     assert calls == ['updated']
+
+
+def test_remove_images_without_labels_creates_filtered_copy_without_changing_original(monkeypatch, tmp_path):
+    base_dir = tmp_path / 'dataset'
+    image_dir = base_dir / 'images'
+    label_dir = base_dir / 'labels'
+    image_dir.mkdir(parents=True)
+    label_dir.mkdir()
+    unlabeled_image = image_dir / 'missing.jpg'
+    labeled_image = image_dir / 'labeled.jpg'
+    empty_label_image = image_dir / 'empty.jpg'
+    unlabeled_image.write_text('img', encoding='utf-8')
+    labeled_image.write_text('img', encoding='utf-8')
+    empty_label_image.write_text('img', encoding='utf-8')
+    (label_dir / 'labeled.txt').write_text('0 0.5 0.5 0.2 0.2\n', encoding='utf-8')
+    (label_dir / 'empty.txt').write_text('', encoding='utf-8')
+
+    app = MainApplication.__new__(MainApplication)
+    app.root = object()
+    app.ann_manager = AnnotationManager()
+    app.app_state = AppState()
+    app.app_state.base_directory = str(base_dir)
+    app.app_state.image_paths = [str(unlabeled_image), str(labeled_image), str(empty_label_image)]
+    app._ask_remove_unlabeled_cleanup_options = lambda missing, empty: False
+
+    infos = []
+    monkeypatch.setattr(main_module.messagebox, 'showinfo', lambda title, body, parent=None: infos.append((title, body)))
+
+    app.remove_images_without_labels()
+
+    filtered_dir = tmp_path / 'dataset_copia_sem_label'
+    assert filtered_dir.exists()
+    assert unlabeled_image.exists()
+    assert labeled_image.exists()
+    assert empty_label_image.exists()
+    assert (label_dir / 'empty.txt').exists()
+    assert not (filtered_dir / 'images' / 'missing.jpg').exists()
+    assert (filtered_dir / 'images' / 'labeled.jpg').exists()
+    assert (filtered_dir / 'labels' / 'labeled.txt').exists()
+    assert (filtered_dir / 'images' / 'empty.jpg').exists()
+    assert (filtered_dir / 'labels' / 'empty.txt').exists()
+    assert infos
+
+
+def test_remove_images_without_labels_can_include_empty_label_files(monkeypatch, tmp_path):
+    base_dir = tmp_path / 'dataset'
+    image_dir = base_dir / 'images'
+    label_dir = base_dir / 'labels'
+    image_dir.mkdir(parents=True)
+    label_dir.mkdir()
+    unlabeled_image = image_dir / 'missing.jpg'
+    labeled_image = image_dir / 'labeled.jpg'
+    empty_label_image = image_dir / 'empty.jpg'
+    unlabeled_image.write_text('img', encoding='utf-8')
+    labeled_image.write_text('img', encoding='utf-8')
+    empty_label_image.write_text('img', encoding='utf-8')
+    (label_dir / 'labeled.txt').write_text('0 0.5 0.5 0.2 0.2\n', encoding='utf-8')
+    empty_label = label_dir / 'empty.txt'
+    empty_label.write_text('  \n', encoding='utf-8')
+
+    app = MainApplication.__new__(MainApplication)
+    app.root = object()
+    app.ann_manager = AnnotationManager()
+    app.app_state = AppState()
+    app.app_state.base_directory = str(base_dir)
+    app.app_state.image_paths = [str(unlabeled_image), str(labeled_image), str(empty_label_image)]
+    app._ask_remove_unlabeled_cleanup_options = lambda missing, empty: True
+
+    monkeypatch.setattr(main_module.messagebox, 'showinfo', lambda *args, **kwargs: None)
+
+    app.remove_images_without_labels()
+
+    filtered_dir = tmp_path / 'dataset_copia_sem_label_sem_vazio'
+    assert filtered_dir.exists()
+    assert unlabeled_image.exists()
+    assert empty_label_image.exists()
+    assert empty_label.exists()
+    assert labeled_image.exists()
+    assert (label_dir / 'labeled.txt').exists()
+    assert not (filtered_dir / 'images' / 'missing.jpg').exists()
+    assert not (filtered_dir / 'images' / 'empty.jpg').exists()
+    assert not (filtered_dir / 'labels' / 'empty.txt').exists()
+    assert (filtered_dir / 'images' / 'labeled.jpg').exists()
+    assert (filtered_dir / 'labels' / 'labeled.txt').exists()
+
+
+def test_remove_images_without_labels_saves_current_annotated_image_before_scan(monkeypatch, tmp_path):
+    base_dir = tmp_path / 'dataset'
+    image_dir = base_dir / 'images'
+    label_dir = base_dir / 'labels'
+    image_dir.mkdir(parents=True)
+    label_dir.mkdir()
+    current_image = image_dir / 'current.jpg'
+    other_image = image_dir / 'other.jpg'
+    current_image.write_text('img', encoding='utf-8')
+    other_image.write_text('img', encoding='utf-8')
+
+    app = MainApplication.__new__(MainApplication)
+    app.root = object()
+    app.ann_manager = AnnotationManager()
+    app.app_state = AppState()
+    app.app_state.base_directory = str(base_dir)
+    app.app_state.image_paths = [str(current_image), str(other_image)]
+    app.app_state.current_image_index = 0
+    app.app_state.data_is_safe_to_save = True
+    app.app_state.annotations = [{'yolo_string': '0 0.5 0.5 0.2 0.2'}]
+    app._save_and_refresh = lambda update_listbox=True: (label_dir / 'current.txt').write_text(
+        '0 0.5 0.5 0.2 0.2\n',
+        encoding='utf-8'
+    )
+    app._ask_remove_unlabeled_cleanup_options = lambda missing, empty: False
+
+    monkeypatch.setattr(main_module.messagebox, 'showinfo', lambda *args, **kwargs: None)
+
+    app.remove_images_without_labels()
+
+    filtered_dir = tmp_path / 'dataset_copia_sem_label'
+    assert current_image.exists()
+    assert other_image.exists()
+    assert (label_dir / 'current.txt').exists()
+    assert (filtered_dir / 'images' / 'current.jpg').exists()
+    assert (filtered_dir / 'labels' / 'current.txt').exists()
+    assert not (filtered_dir / 'images' / 'other.jpg').exists()
+
+
+def test_dataset_reduction_count_keeps_at_least_one_image():
+    app = MainApplication.__new__(MainApplication)
+
+    assert app._calculate_dataset_reduction_count(1, 50) == 0
+    assert app._calculate_dataset_reduction_count(2, 99) == 1
+    assert app._calculate_dataset_reduction_count(10, 30) == 3
+    assert app._calculate_dataset_reduction_count(10, 99) == 9
+
+
+def test_reduce_dataset_randomly_creates_reduced_copy_without_changing_original(monkeypatch, tmp_path):
+    base_dir = tmp_path / 'dataset'
+    image_dir = base_dir / 'images'
+    label_dir = base_dir / 'labels'
+    image_dir.mkdir(parents=True)
+    label_dir.mkdir()
+    (base_dir / 'classes.txt').write_text('cat', encoding='utf-8')
+    (base_dir / 'data.yaml').write_text('path: /old/path\ntrain: images\nnames:\n- cat\n', encoding='utf-8')
+    image_paths = []
+    for index in range(10):
+        image_path = image_dir / f'img_{index:02d}.jpg'
+        label_path = label_dir / f'img_{index:02d}.txt'
+        image_path.write_text('img', encoding='utf-8')
+        label_path.write_text('0 0.5 0.5 0.2 0.2\n', encoding='utf-8')
+        image_paths.append(str(image_path))
+
+    app = MainApplication.__new__(MainApplication)
+    app.root = object()
+    app.ann_manager = AnnotationManager()
+    app.app_state = AppState()
+    app.app_state.base_directory = str(base_dir)
+    app.app_state.image_paths = image_paths
+    app._ask_reduce_dataset_percentage = lambda: 30
+    refresh_calls = []
+    app.refresh_directory = lambda: refresh_calls.append('refresh')
+    infos = []
+
+    monkeypatch.setattr(main_module.random, 'sample', lambda items, count: sorted(items)[:count])
+    monkeypatch.setattr(main_module.messagebox, 'showinfo', lambda title, body, parent=None: infos.append((title, body)))
+
+    app.reduce_dataset_randomly()
+
+    reduced_dir = tmp_path / 'dataset_reduzido_70pct'
+    assert reduced_dir.exists()
+    for index in range(3):
+        assert (image_dir / f'img_{index:02d}.jpg').exists()
+        assert (label_dir / f'img_{index:02d}.txt').exists()
+        assert not (reduced_dir / 'images' / f'img_{index:02d}.jpg').exists()
+        assert not (reduced_dir / 'labels' / f'img_{index:02d}.txt').exists()
+    for index in range(3, 10):
+        assert (image_dir / f'img_{index:02d}.jpg').exists()
+        assert (label_dir / f'img_{index:02d}.txt').exists()
+        assert (reduced_dir / 'images' / f'img_{index:02d}.jpg').exists()
+        assert (reduced_dir / 'labels' / f'img_{index:02d}.txt').exists()
+    assert (reduced_dir / 'classes.txt').read_text(encoding='utf-8') == 'cat'
+    reduced_yaml = yaml.safe_load((reduced_dir / 'data.yaml').read_text(encoding='utf-8'))
+    assert reduced_yaml['path'] == '.'
+    assert refresh_calls == []
+    assert infos
+
+
+def test_open_dataset_copy_dialog_can_combine_cleanup_and_reduction(monkeypatch, tmp_path):
+    base_dir = tmp_path / 'dataset'
+    image_dir = base_dir / 'images'
+    label_dir = base_dir / 'labels'
+    image_dir.mkdir(parents=True)
+    label_dir.mkdir()
+    (base_dir / 'classes.txt').write_text('cat', encoding='utf-8')
+    (base_dir / 'data.yaml').write_text('path: /old/path\ntrain: images\nnames:\n- cat\n', encoding='utf-8')
+
+    missing_image = image_dir / 'missing.jpg'
+    missing_image.write_text('img', encoding='utf-8')
+    image_paths = [str(missing_image)]
+    for name in ('a', 'b', 'c'):
+        image_path = image_dir / f'{name}.jpg'
+        label_path = label_dir / f'{name}.txt'
+        image_path.write_text('img', encoding='utf-8')
+        label_path.write_text('0 0.5 0.5 0.2 0.2\n', encoding='utf-8')
+        image_paths.append(str(image_path))
+
+    app = MainApplication.__new__(MainApplication)
+    app.root = object()
+    app.ann_manager = AnnotationManager()
+    app.app_state = AppState()
+    app.app_state.base_directory = str(base_dir)
+    app.app_state.image_paths = image_paths
+    app._ask_dataset_copy_options = lambda: DatasetCopyOptions(remove_missing_labels=True, reduce_percentage=50)
+
+    infos = []
+    monkeypatch.setattr(main_module.random, 'sample', lambda items, count: sorted(items)[:count])
+    monkeypatch.setattr(main_module.messagebox, 'showinfo', lambda title, body, parent=None: infos.append((title, body)))
+
+    app.open_dataset_copy_dialog()
+
+    filtered_dir = tmp_path / 'dataset_copia_sem_label_reduzido_25pct'
+    assert filtered_dir.exists()
+    assert missing_image.exists()
+    assert not (filtered_dir / 'images' / 'missing.jpg').exists()
+    assert not (filtered_dir / 'images' / 'a.jpg').exists()
+    assert not (filtered_dir / 'images' / 'b.jpg').exists()
+    assert (filtered_dir / 'images' / 'c.jpg').exists()
+    assert (filtered_dir / 'labels' / 'c.txt').exists()
+    filtered_yaml = yaml.safe_load((filtered_dir / 'data.yaml').read_text(encoding='utf-8'))
+    assert filtered_yaml['path'] == '.'
+    assert infos
 
 
 def test_main_on_classes_updated_creates_yaml_when_missing(tmp_path):

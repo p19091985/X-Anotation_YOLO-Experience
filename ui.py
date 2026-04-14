@@ -159,6 +159,12 @@ class UIManager:
         if Config.FEATURE_SHOW_ANALYZER:
             btn_stats.pack(side=tk.LEFT, padx=5)
 
+        btn_dataset_copy = ttk.Button(top_frame, command=self.app.open_dataset_copy_dialog)
+        self._register_translation(btn_dataset_copy, 'REDUCE_DATASET')
+        self._register_tooltip(btn_dataset_copy, 'TIP_REDUCE_DATASET', 'Abre uma janela para criar uma copia filtrada ou reduzida do dataset atual.')
+        if Config.FEATURE_SHOW_REMOVE_UNLABELED or Config.FEATURE_SHOW_REDUCE_DATASET:
+            btn_dataset_copy.pack(side=tk.LEFT, padx=5)
+
         btn_split = ttk.Button(top_frame, command=self.app.open_split_wizard)
         self._register_translation(btn_split, 'SPLIT')
         self._register_tooltip(btn_split, 'TIP_SPLIT', 'Divide imagens em train, valid e opcionalmente test.')

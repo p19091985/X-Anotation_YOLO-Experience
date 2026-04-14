@@ -1,8 +1,9 @@
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox, simpledialog
+from dataclasses import dataclass
 from pathlib import Path
 from PIL import Image
-import os, json, yaml, logging, copy
+import os, json, yaml, logging, copy, random, shutil
 from typing import List, Tuple, Optional
 import localization
 import logger_config
@@ -17,9 +18,34 @@ from window_split_wizard import SplitWizard
 from visualizador_grid import GridViewerWindow
 from analisador_dataset import DatasetAnalyzerWindow
 from window_about import AboutWindow
-from utils_ui import maximize_window
+from utils_ui import center_window, maximize_window
 logger_config.setup_logging()
 logger = logging.getLogger(__name__)
+
+
+@dataclass(frozen=True)
+class DatasetCopyOptions:
+    remove_missing_labels: bool = False
+    remove_empty_labels: bool = False
+    reduce_percentage: int = 0
+
+
+@dataclass(frozen=True)
+class DatasetCopyPlan:
+    total_images: int
+    images_to_copy: Tuple[str, ...]
+    removed_missing_labels: int = 0
+    removed_empty_labels: int = 0
+    removed_by_reduction: int = 0
+
+    @property
+    def copied_count(self) -> int:
+        return len(self.images_to_copy)
+
+    @property
+    def removed_total(self) -> int:
+        return self.removed_missing_labels + self.removed_empty_labels + self.removed_by_reduction
+
 
 class MainApplication:
 
@@ -378,6 +404,670 @@ class MainApplication:
                 self.ui.annotation_listbox.delete(0, tk.END)
         except Exception as e:
             messagebox.showerror('Erro', str(e))
+
+    def _save_current_annotations_before_bulk_cleanup(self):
+        current_image_path = self.app_state.get_current_image_path()
+        if not current_image_path or not getattr(self.app_state, 'data_is_safe_to_save', False):
+            return
+        label_path = self.ann_manager.get_label_path(current_image_path)
+        if os.path.isfile(label_path) or self.app_state.annotations:
+            self._save_and_refresh(update_listbox=False)
+
+    def _label_file_is_empty(self, label_path: str) -> bool:
+        try:
+            with open(label_path, 'r', encoding='utf-8') as handle:
+                return not any(line.strip() for line in handle)
+        except OSError:
+            return False
+
+    def _delete_image_paths(
+        self,
+        image_paths: List[str],
+        remove_associated_labels: bool=False,
+        remove_empty_label_files: bool=False,
+    ) -> Tuple[int, List[str]]:
+        removed_count = 0
+        errors = []
+        for image_path in image_paths:
+            label_path = self.ann_manager.get_label_path(image_path)
+            try:
+                image_removed = False
+                if os.path.exists(image_path):
+                    os.remove(image_path)
+                    image_removed = True
+                    removed_count += 1
+                should_remove_label = (
+                    remove_associated_labels
+                    or (remove_empty_label_files and self._label_file_is_empty(label_path))
+                )
+                if image_removed and should_remove_label and os.path.isfile(label_path):
+                    os.remove(label_path)
+            except Exception as exc:
+                errors.append(f'{os.path.basename(image_path)}: {exc}')
+        return (removed_count, errors)
+
+    def _get_unlabeled_cleanup_groups(self) -> Tuple[List[str], List[str]]:
+        missing_label_images = []
+        empty_label_images = []
+        for image_path in self.app_state.image_paths:
+            label_path = self.ann_manager.get_label_path(image_path)
+            if not os.path.isfile(label_path):
+                missing_label_images.append(image_path)
+            elif self._label_file_is_empty(label_path):
+                empty_label_images.append(image_path)
+        return (missing_label_images, empty_label_images)
+
+    def _format_cleanup_preview(self, image_paths: List[str]) -> str:
+        if not image_paths:
+            return 'Nenhuma imagem selecionada para remocao.'
+        preview_limit = 10
+        preview_items = [
+            os.path.relpath(image_path, self.app_state.base_directory)
+            for image_path in image_paths[:preview_limit]
+        ]
+        preview = '\n'.join(preview_items)
+        remaining = len(image_paths) - preview_limit
+        if remaining > 0:
+            preview += f'\n... e mais {remaining} imagem(ns)'
+        return preview
+
+    def _ask_remove_unlabeled_cleanup_options(self, missing_label_images: List[str], empty_label_images: List[str]) -> Optional[bool]:
+        dialog = tk.Toplevel(self.root)
+        dialog.title('Limpeza de imagens')
+        dialog.resizable(False, False)
+        dialog.transient(self.root)
+        dialog.grab_set()
+
+        include_empty_labels = tk.BooleanVar(value=False)
+        result = {'confirmed': False, 'include_empty_labels': False}
+
+        container = ttk.Frame(dialog, padding=14)
+        container.pack(fill=tk.BOTH, expand=True)
+
+        ttk.Label(
+            container,
+            text='Remover imagens sem label',
+            font=Config.FONTS['main_bold'],
+        ).pack(anchor='w')
+        ttk.Label(
+            container,
+            text=(
+                f'{len(missing_label_images)} imagem(ns) sem arquivo .txt associado.\n'
+                f'{len(empty_label_images)} imagem(ns) com arquivo .txt vazio.'
+            ),
+            justify='left',
+            wraplength=520,
+        ).pack(anchor='w', pady=(8, 6))
+
+        empty_check = ttk.Checkbutton(
+            container,
+            text='Remover tambem imagens com label vazio',
+            variable=include_empty_labels,
+        )
+        empty_check.pack(anchor='w', pady=(0, 8))
+        if not empty_label_images:
+            empty_check.config(state='disabled')
+
+        ttk.Label(
+            container,
+            text='Arquivos que serao removidos:',
+            font=Config.FONTS['main_bold'],
+        ).pack(anchor='w')
+        preview_label = ttk.Label(container, justify='left', wraplength=520)
+        preview_label.pack(anchor='w', fill=tk.X, pady=(4, 10))
+
+        ttk.Label(
+            container,
+            text='Esta acao exclui permanentemente as imagens selecionadas do dataset.',
+            foreground='#A33',
+            wraplength=520,
+        ).pack(anchor='w', pady=(0, 12))
+
+        button_frame = ttk.Frame(container)
+        button_frame.pack(fill=tk.X)
+
+        def selected_images():
+            if include_empty_labels.get():
+                return missing_label_images + empty_label_images
+            return missing_label_images
+
+        def update_preview(*_):
+            images_to_remove = selected_images()
+            preview_label.config(text=self._format_cleanup_preview(images_to_remove))
+            remove_button.config(state='normal' if images_to_remove else 'disabled')
+
+        def confirm():
+            result['confirmed'] = True
+            result['include_empty_labels'] = include_empty_labels.get()
+            dialog.destroy()
+
+        def cancel():
+            dialog.destroy()
+
+        ttk.Button(button_frame, text='Cancelar', command=cancel).pack(side=tk.RIGHT)
+        remove_button = ttk.Button(button_frame, text='Remover', command=confirm)
+        remove_button.pack(side=tk.RIGHT, padx=(0, 8))
+
+        include_empty_labels.trace_add('write', update_preview)
+        update_preview()
+        dialog.protocol('WM_DELETE_WINDOW', cancel)
+        try:
+            center_window(dialog, self.root)
+        except Exception:
+            pass
+        dialog.wait_window()
+
+        if not result['confirmed']:
+            return None
+        return bool(result['include_empty_labels'])
+
+    def _build_dataset_copy_plan(self, options: DatasetCopyOptions) -> DatasetCopyPlan:
+        total_images = len(self.app_state.image_paths)
+        missing_label_images = []
+        empty_label_images = []
+        cleanup_exclusions = set()
+        removed_missing_labels = 0
+        removed_empty_labels = 0
+
+        if options.remove_missing_labels or options.remove_empty_labels:
+            missing_label_images, empty_label_images = self._get_unlabeled_cleanup_groups()
+            if options.remove_missing_labels:
+                cleanup_exclusions.update(missing_label_images)
+                removed_missing_labels = len(missing_label_images)
+            if options.remove_empty_labels:
+                cleanup_exclusions.update(empty_label_images)
+                removed_empty_labels = len(empty_label_images)
+
+        candidate_images = [
+            image_path
+            for image_path in self.app_state.image_paths
+            if image_path not in cleanup_exclusions
+        ]
+
+        removed_by_reduction = 0
+        images_to_copy = list(candidate_images)
+        if options.reduce_percentage > 0:
+            removed_by_reduction = self._calculate_dataset_reduction_count(len(candidate_images), options.reduce_percentage)
+            if removed_by_reduction > 0:
+                excluded_by_reduction = set(random.sample(candidate_images, removed_by_reduction))
+                images_to_copy = [
+                    image_path
+                    for image_path in candidate_images
+                    if image_path not in excluded_by_reduction
+                ]
+
+        return DatasetCopyPlan(
+            total_images=total_images,
+            images_to_copy=tuple(images_to_copy),
+            removed_missing_labels=removed_missing_labels,
+            removed_empty_labels=removed_empty_labels,
+            removed_by_reduction=removed_by_reduction,
+        )
+
+    def _format_dataset_copy_plan_summary(self, plan: DatasetCopyPlan, copied_count: Optional[int]=None) -> str:
+        copied = plan.copied_count if copied_count is None else copied_count
+        lines = [
+            f'Total original: {plan.total_images} imagem(ns)',
+            f'Copiadas na nova pasta: {copied} imagem(ns)',
+        ]
+        if plan.removed_missing_labels:
+            lines.append(f'Fora da copia por falta de label: {plan.removed_missing_labels} imagem(ns)')
+        if plan.removed_empty_labels:
+            lines.append(f'Fora da copia por label vazio: {plan.removed_empty_labels} imagem(ns)')
+        if plan.removed_by_reduction:
+            lines.append(f'Fora da copia por reducao aleatoria: {plan.removed_by_reduction} imagem(ns)')
+        return '\n'.join(lines)
+
+    def _build_dataset_copy_directory(self, options: DatasetCopyOptions, plan: DatasetCopyPlan) -> Path:
+        base_path = Path(self.app_state.base_directory).resolve()
+        keep_percentage = int(round((plan.copied_count / plan.total_images) * 100)) if plan.total_images else 0
+
+        if (
+            options.reduce_percentage > 0
+            and not options.remove_missing_labels
+            and not options.remove_empty_labels
+        ):
+            target_name = f'{base_path.name}_reduzido_{keep_percentage}pct'
+        else:
+            name_parts = ['copia']
+            if options.remove_missing_labels:
+                name_parts.append('sem_label')
+            if options.remove_empty_labels:
+                name_parts.append('sem_vazio')
+            if options.reduce_percentage > 0:
+                name_parts.append(f'reduzido_{keep_percentage}pct')
+            target_name = f'{base_path.name}_' + '_'.join(name_parts)
+
+        candidate = base_path.parent / target_name
+        suffix = 2
+        while candidate.exists():
+            candidate = base_path.parent / f'{target_name}_{suffix}'
+            suffix += 1
+        return candidate
+
+    def _create_dataset_copy(self, options: DatasetCopyOptions) -> Optional[Path]:
+        if not self.app_state.base_directory or not self.app_state.image_paths:
+            messagebox.showwarning('Aviso', 'Abra um dataset com imagens.', parent=self.root)
+            return None
+
+        self._save_current_annotations_before_bulk_cleanup()
+        plan = self._build_dataset_copy_plan(options)
+
+        if plan.removed_total <= 0:
+            messagebox.showinfo('Copia do dataset', 'Nenhuma imagem seria alterada com as opcoes escolhidas.', parent=self.root)
+            return None
+
+        if plan.copied_count <= 0:
+            messagebox.showinfo('Copia do dataset', 'Nenhuma imagem restou para compor a nova copia.', parent=self.root)
+            return None
+
+        target_dir = self._build_dataset_copy_directory(options, plan)
+        try:
+            copied_count, errors = self._copy_selected_dataset_files(list(plan.images_to_copy), target_dir)
+        except Exception as exc:
+            messagebox.showerror('Erro', f'Falha ao criar copia derivada:\n\n{exc}', parent=self.root)
+            return None
+
+        summary = self._format_dataset_copy_plan_summary(plan, copied_count=copied_count)
+        if errors:
+            details = '\n'.join(errors[:5])
+            if len(errors) > 5:
+                details += f'\n... e mais {len(errors) - 5} erro(s)'
+            messagebox.showwarning(
+                'Copia parcial',
+                f'Copia criada em:\n{target_dir}\n\n{summary}\n\nAlguns arquivos falharam:\n\n{details}',
+                parent=self.root,
+            )
+        else:
+            messagebox.showinfo(
+                'Copia derivada criada',
+                f'Copia criada em:\n{target_dir}\n\n{summary}',
+                parent=self.root,
+            )
+
+        return target_dir
+
+    def _ask_dataset_copy_options(self) -> Optional[DatasetCopyOptions]:
+        total_images = len(self.app_state.image_paths)
+        if total_images <= 0:
+            messagebox.showwarning('Aviso', 'Abra um dataset com imagens.', parent=self.root)
+            return None
+
+        missing_label_images, empty_label_images = self._get_unlabeled_cleanup_groups()
+        allow_cleanup = Config.FEATURE_SHOW_REMOVE_UNLABELED
+        allow_reduction = Config.FEATURE_SHOW_REDUCE_DATASET
+
+        dialog = tk.Toplevel(self.root)
+        dialog.title('Criar copia derivada')
+        dialog.resizable(False, False)
+        dialog.transient(self.root)
+        dialog.grab_set()
+
+        remove_missing_var = tk.BooleanVar(value=allow_cleanup and bool(missing_label_images))
+        remove_empty_var = tk.BooleanVar(value=allow_cleanup and not missing_label_images and bool(empty_label_images))
+        apply_reduction_var = tk.BooleanVar(value=allow_reduction and not allow_cleanup)
+        percentage_var = tk.DoubleVar(value=10)
+        result = {'options': None}
+
+        container = ttk.Frame(dialog, padding=14)
+        container.pack(fill=tk.BOTH, expand=True)
+
+        ttk.Label(
+            container,
+            text='Criar copia derivada do dataset',
+            font=Config.FONTS['main_bold'],
+        ).pack(anchor='w')
+        ttk.Label(
+            container,
+            text='Escolha quais transformacoes devem ser aplicadas na nova pasta. O dataset original permanecera intacto.',
+            justify='left',
+            wraplength=540,
+        ).pack(anchor='w', pady=(8, 10))
+
+        if allow_cleanup:
+            cleanup_frame = ttk.LabelFrame(container, text='Filtrar por labels', padding=10)
+            cleanup_frame.pack(fill=tk.X, pady=(0, 10))
+            ttk.Label(
+                cleanup_frame,
+                text=(
+                    f'{len(missing_label_images)} imagem(ns) sem arquivo .txt associado.\n'
+                    f'{len(empty_label_images)} imagem(ns) com arquivo .txt vazio.'
+                ),
+                justify='left',
+                wraplength=500,
+            ).pack(anchor='w', pady=(0, 8))
+
+            missing_check = ttk.Checkbutton(
+                cleanup_frame,
+                text='Deixar fora da copia imagens sem label',
+                variable=remove_missing_var,
+            )
+            missing_check.pack(anchor='w')
+            if not missing_label_images:
+                remove_missing_var.set(False)
+                missing_check.config(state='disabled')
+
+            empty_check = ttk.Checkbutton(
+                cleanup_frame,
+                text='Deixar fora da copia imagens com label vazio',
+                variable=remove_empty_var,
+            )
+            empty_check.pack(anchor='w', pady=(4, 0))
+            if not empty_label_images:
+                remove_empty_var.set(False)
+                empty_check.config(state='disabled')
+
+        percentage_label = None
+        slider = None
+        if allow_reduction:
+            reduction_frame = ttk.LabelFrame(container, text='Reducao aleatoria', padding=10)
+            reduction_frame.pack(fill=tk.X, pady=(0, 10))
+
+            reduction_toggle = ttk.Checkbutton(
+                reduction_frame,
+                text='Aplicar reducao percentual na copia',
+                variable=apply_reduction_var,
+            )
+            reduction_toggle.pack(anchor='w')
+
+            percentage_label = ttk.Label(reduction_frame, font=Config.FONTS['main_bold'])
+            percentage_label.pack(anchor='w', pady=(8, 0))
+
+            slider = ttk.Scale(
+                reduction_frame,
+                from_=1,
+                to=99,
+                orient=tk.HORIZONTAL,
+                variable=percentage_var,
+                length=360,
+            )
+            slider.pack(fill=tk.X, pady=(6, 0))
+
+        summary_label = ttk.Label(container, justify='left', wraplength=540)
+        summary_label.pack(anchor='w', pady=(0, 10))
+
+        ttk.Label(
+            container,
+            text='A pasta nova sera criada ao lado do dataset atual, com nome unico automatico.',
+            foreground='#2F6B3F',
+            wraplength=540,
+        ).pack(anchor='w', pady=(0, 12))
+
+        button_frame = ttk.Frame(container)
+        button_frame.pack(fill=tk.X)
+
+        def current_options() -> DatasetCopyOptions:
+            reduce_percentage = 0
+            if allow_reduction and apply_reduction_var.get():
+                reduce_percentage = max(1, min(99, int(float(percentage_var.get()) + 0.5)))
+            return DatasetCopyOptions(
+                remove_missing_labels=allow_cleanup and remove_missing_var.get(),
+                remove_empty_labels=allow_cleanup and remove_empty_var.get(),
+                reduce_percentage=reduce_percentage,
+            )
+
+        def update_summary(*_):
+            options = current_options()
+            if percentage_label is not None:
+                if options.reduce_percentage > 0:
+                    percentage_label.config(text=f'Reduzir aleatoriamente em {options.reduce_percentage}%')
+                else:
+                    percentage_label.config(text='Reducao desativada')
+            if slider is not None:
+                slider.config(state='normal' if options.reduce_percentage > 0 else 'disabled')
+
+            if not (options.remove_missing_labels or options.remove_empty_labels or options.reduce_percentage > 0):
+                summary_label.config(text='Selecione pelo menos uma transformacao para criar a copia.')
+                create_button.config(state='disabled')
+                return
+
+            plan = self._build_dataset_copy_plan(options)
+            preview = self._format_dataset_copy_plan_summary(plan)
+            if options.reduce_percentage > 0:
+                preview += '\nA selecao aleatoria sera definida ao confirmar.'
+            if plan.removed_total <= 0 or plan.copied_count <= 0:
+                if plan.copied_count <= 0:
+                    preview += '\nNenhuma imagem restaria na copia com as opcoes atuais.'
+                create_button.config(state='disabled')
+            else:
+                create_button.config(state='normal')
+            summary_label.config(text=preview)
+
+        def confirm():
+            result['options'] = current_options()
+            dialog.destroy()
+
+        def cancel():
+            dialog.destroy()
+
+        ttk.Button(button_frame, text='Cancelar', command=cancel).pack(side=tk.RIGHT)
+        create_button = ttk.Button(button_frame, text='Criar copia', command=confirm)
+        create_button.pack(side=tk.RIGHT, padx=(0, 8))
+
+        if allow_cleanup:
+            remove_missing_var.trace_add('write', update_summary)
+            remove_empty_var.trace_add('write', update_summary)
+        if allow_reduction:
+            apply_reduction_var.trace_add('write', update_summary)
+            slider.config(command=update_summary)
+
+        update_summary()
+        dialog.protocol('WM_DELETE_WINDOW', cancel)
+        try:
+            center_window(dialog, self.root)
+        except Exception:
+            pass
+        dialog.wait_window()
+
+        return result['options']
+
+    def open_dataset_copy_dialog(self):
+        if not self.app_state.base_directory or not self.app_state.image_paths:
+            messagebox.showwarning('Aviso', 'Abra um dataset com imagens.', parent=self.root)
+            return
+
+        self._save_current_annotations_before_bulk_cleanup()
+        options = self._ask_dataset_copy_options()
+        if options is None:
+            return
+        self._create_dataset_copy(options)
+
+    def remove_images_without_labels(self):
+        if not self.app_state.base_directory or not self.app_state.image_paths:
+            messagebox.showwarning('Aviso', 'Abra um dataset com imagens.', parent=self.root)
+            return
+
+        self._save_current_annotations_before_bulk_cleanup()
+        missing_label_images, empty_label_images = self._get_unlabeled_cleanup_groups()
+        if not missing_label_images and not empty_label_images:
+            messagebox.showinfo('Limpeza', 'Nenhuma imagem sem label ou com label vazio foi encontrada.', parent=self.root)
+            return
+
+        include_empty_labels = self._ask_remove_unlabeled_cleanup_options(missing_label_images, empty_label_images)
+        if include_empty_labels is None:
+            return
+
+        self._create_dataset_copy(
+            DatasetCopyOptions(
+                remove_missing_labels=True,
+                remove_empty_labels=include_empty_labels,
+            )
+        )
+
+    def _calculate_dataset_reduction_count(self, total_images: int, reduce_percentage: int) -> int:
+        if total_images <= 1 or reduce_percentage <= 0:
+            return 0
+        percentage = max(1, min(99, int(reduce_percentage)))
+        delete_count = int(total_images * percentage / 100 + 0.5)
+        return min(total_images - 1, max(1, delete_count))
+
+    def _ask_reduce_dataset_percentage(self) -> Optional[int]:
+        total_images = len(self.app_state.image_paths)
+        if total_images <= 1:
+            messagebox.showinfo('Reduzir dataset', 'O dataset precisa ter pelo menos 2 imagens para ser reduzido.', parent=self.root)
+            return None
+
+        dialog = tk.Toplevel(self.root)
+        dialog.title('Reduzir dataset')
+        dialog.resizable(False, False)
+        dialog.transient(self.root)
+        dialog.grab_set()
+
+        percentage_var = tk.DoubleVar(value=10)
+        result = {'percentage': None}
+
+        container = ttk.Frame(dialog, padding=14)
+        container.pack(fill=tk.BOTH, expand=True)
+
+        ttk.Label(
+            container,
+            text='Reduzir dataset aleatoriamente',
+            font=Config.FONTS['main_bold'],
+        ).pack(anchor='w')
+        ttk.Label(
+            container,
+            text='Escolha a porcentagem de imagens que ficara fora da copia reduzida.',
+            justify='left',
+            wraplength=520,
+        ).pack(anchor='w', pady=(8, 10))
+
+        percentage_label = ttk.Label(container, font=Config.FONTS['main_bold'])
+        percentage_label.pack(anchor='w')
+
+        slider = ttk.Scale(container, from_=1, to=99, orient=tk.HORIZONTAL, variable=percentage_var, length=360)
+        slider.pack(fill=tk.X, pady=(6, 10))
+
+        summary_label = ttk.Label(container, justify='left', wraplength=520)
+        summary_label.pack(anchor='w', pady=(0, 10))
+
+        ttk.Label(
+            container,
+            text='O dataset original nao sera alterado. Uma nova pasta reduzida sera criada ao lado dele.',
+            foreground='#2F6B3F',
+            wraplength=520,
+        ).pack(anchor='w', pady=(0, 12))
+
+        button_frame = ttk.Frame(container)
+        button_frame.pack(fill=tk.X)
+
+        def current_percentage():
+            return max(1, min(99, int(float(percentage_var.get()) + 0.5)))
+
+        def update_summary(*_):
+            percentage = current_percentage()
+            delete_count = self._calculate_dataset_reduction_count(total_images, percentage)
+            remaining = total_images - delete_count
+            percentage_label.config(text=f'Reduzir em {percentage}%')
+            summary_label.config(
+                text=(
+                    f'Total atual: {total_images} imagem(ns)\n'
+                    f'Ficarao fora da copia: {delete_count} imagem(ns)\n'
+                    f'Serao copiadas: {remaining} imagem(ns)'
+                )
+            )
+
+        def confirm():
+            result['percentage'] = current_percentage()
+            dialog.destroy()
+
+        def cancel():
+            dialog.destroy()
+
+        ttk.Button(button_frame, text='Cancelar', command=cancel).pack(side=tk.RIGHT)
+        ttk.Button(button_frame, text='Criar copia', command=confirm).pack(side=tk.RIGHT, padx=(0, 8))
+
+        slider.config(command=update_summary)
+        update_summary()
+        dialog.protocol('WM_DELETE_WINDOW', cancel)
+        try:
+            center_window(dialog, self.root)
+        except Exception:
+            pass
+        dialog.wait_window()
+
+        return result['percentage']
+
+    def _build_reduced_dataset_directory(self, total_images: int, delete_count: int) -> Path:
+        keep_count = max(total_images - delete_count, 0)
+        keep_percentage = int(round((keep_count / total_images) * 100)) if total_images else 0
+        plan = DatasetCopyPlan(total_images=total_images, images_to_copy=tuple([''] * keep_count))
+        return self._build_dataset_copy_directory(
+            DatasetCopyOptions(reduce_percentage=max(1, min(99, delete_count)) if delete_count else 0),
+            plan,
+        )
+
+    def _relative_to_dataset_base(self, path: str) -> Optional[Path]:
+        try:
+            return Path(path).resolve().relative_to(Path(self.app_state.base_directory).resolve())
+        except ValueError:
+            return None
+
+    def _copy_dataset_metadata_to_target_dir(self, target_dir: Path) -> None:
+        base_path = Path(self.app_state.base_directory).resolve()
+        metadata_files = ['classes.txt', *Config.SUPPORTED_DATA_FILES]
+        for file_name in metadata_files:
+            source_path = base_path / file_name
+            if not source_path.is_file():
+                continue
+            target_path = target_dir / file_name
+            target_path.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(source_path, target_path)
+            if file_name in Config.SUPPORTED_DATA_FILES:
+                try:
+                    with open(target_path, 'r', encoding='utf-8') as handle:
+                        data = yaml.safe_load(handle) or {}
+                    if isinstance(data, dict) and 'path' in data:
+                        data['path'] = '.'
+                        with open(target_path, 'w', encoding='utf-8') as handle:
+                            yaml.dump(data, handle, sort_keys=False, allow_unicode=True)
+                except Exception:
+                    logger.exception(f'Falha ao ajustar path em {target_path}')
+
+    def _copy_dataset_metadata_to_reduced_dir(self, target_dir: Path) -> None:
+        self._copy_dataset_metadata_to_target_dir(target_dir)
+
+    def _copy_selected_dataset_files(self, image_paths: List[str], target_dir: Path) -> Tuple[int, List[str]]:
+        copied_count = 0
+        errors = []
+        target_dir.mkdir(parents=True, exist_ok=False)
+        self._copy_dataset_metadata_to_target_dir(target_dir)
+
+        for image_path in image_paths:
+            try:
+                relative_image_path = self._relative_to_dataset_base(image_path)
+                if relative_image_path is None:
+                    errors.append(f'{os.path.basename(image_path)}: caminho fora do dataset')
+                    continue
+                target_image_path = target_dir / relative_image_path
+                target_image_path.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(image_path, target_image_path)
+                copied_count += 1
+
+                label_path = self.ann_manager.get_label_path(image_path)
+                if os.path.isfile(label_path):
+                    relative_label_path = self._relative_to_dataset_base(label_path)
+                    if relative_label_path is not None:
+                        target_label_path = target_dir / relative_label_path
+                        target_label_path.parent.mkdir(parents=True, exist_ok=True)
+                        shutil.copy2(label_path, target_label_path)
+            except Exception as exc:
+                errors.append(f'{os.path.basename(image_path)}: {exc}')
+        return (copied_count, errors)
+
+    def _copy_reduced_dataset_files(self, image_paths: List[str], target_dir: Path) -> Tuple[int, List[str]]:
+        return self._copy_selected_dataset_files(image_paths, target_dir)
+
+    def reduce_dataset_randomly(self):
+        if not self.app_state.base_directory or not self.app_state.image_paths:
+            messagebox.showwarning('Aviso', 'Abra um dataset com imagens.', parent=self.root)
+            return
+
+        self._save_current_annotations_before_bulk_cleanup()
+        reduce_percentage = self._ask_reduce_dataset_percentage()
+        if reduce_percentage is None:
+            return
+
+        self._create_dataset_copy(DatasetCopyOptions(reduce_percentage=reduce_percentage))
 
     def change_annotation_class(self):
         if self.app_state.selected_annotation_index is None:

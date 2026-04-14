@@ -56,7 +56,7 @@ def test_repository_metadata_is_generic():
     files_to_check = [
         Path('README.md'),
         Path('generate_languages.py'),
-        Path('teste/macro/runner.py'),
+        Path('tests/macro/runner.py'),
     ]
     forbidden = ('X-Annotation', 'X-Anotation', 'Patrik', 'Unisenai', 'Docol', 'dataset-geral-01')
     for file_path in files_to_check:

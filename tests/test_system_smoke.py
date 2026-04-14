@@ -32,5 +32,5 @@ def test_core_modules_import_successfully():
 def test_readme_documents_test_folder_and_command():
     readme = Path('README.md').read_text(encoding='utf-8')
 
-    assert 'teste/' in readme
-    assert 'python3 -m pytest -q teste' in readme
+    assert 'tests/' in readme
+    assert 'python3 -m pytest -q tests' in readme
