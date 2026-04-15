@@ -273,11 +273,27 @@ class MainApplication:
             else:
                 self.app_state.annotations = anns
                 self.app_state.data_is_safe_to_save = True
-            self.canvas_controller.reset_view()
-            self.canvas_controller.display_image()
             self.ui.sync_ui_to_state()
+            self._fit_current_image_to_canvas_when_ready(index)
         except Exception as e:
             messagebox.showerror('Erro Imagem', str(e))
+
+    def _fit_current_image_to_canvas_when_ready(self, image_index: int, retries: int=8):
+        if self.app_state.current_image_index != image_index or not self.app_state.current_pil_image:
+            return
+
+        canvas_width = self.ui.canvas.winfo_width()
+        canvas_height = self.ui.canvas.winfo_height()
+        if canvas_width > 1 and canvas_height > 1:
+            self.canvas_controller.reset_view()
+            self.canvas_controller.display_image()
+            return
+
+        if retries <= 0:
+            self.canvas_controller.display_image()
+            return
+
+        self.root.after(30, lambda: self._fit_current_image_to_canvas_when_ready(image_index, retries - 1))
 
     def process_canvas_update(self, **kwargs):
         if kwargs.get('save_history'):

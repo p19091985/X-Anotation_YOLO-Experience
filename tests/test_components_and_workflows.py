@@ -248,6 +248,51 @@ def test_main_load_class_names_from_yaml_when_classes_file_is_missing(tmp_path):
     assert calls == ['updated']
 
 
+def test_fit_current_image_to_canvas_retries_until_canvas_has_real_size():
+    class FakeCanvas:
+        def __init__(self):
+            self.width = 1
+            self.height = 1
+
+        def winfo_width(self):
+            return self.width
+
+        def winfo_height(self):
+            return self.height
+
+    class FakeRoot:
+        def __init__(self):
+            self.calls = []
+
+        def after(self, delay_ms, callback):
+            self.calls.append((delay_ms, callback))
+
+    canvas = FakeCanvas()
+    root = FakeRoot()
+    render_calls = []
+
+    app = MainApplication.__new__(MainApplication)
+    app.root = root
+    app.ui = SimpleNamespace(canvas=canvas)
+    app.canvas_controller = SimpleNamespace(
+        reset_view=lambda: render_calls.append('reset'),
+        display_image=lambda: render_calls.append('display'),
+    )
+    app.app_state = SimpleNamespace(current_image_index=0, current_pil_image=object())
+
+    app._fit_current_image_to_canvas_when_ready(0, retries=2)
+
+    assert render_calls == []
+    assert len(root.calls) == 1
+
+    canvas.width = 1200
+    canvas.height = 800
+    _, callback = root.calls.pop()
+    callback()
+
+    assert render_calls == ['reset', 'display']
+
+
 def test_remove_images_without_labels_creates_filtered_copy_without_changing_original(monkeypatch, tmp_path):
     base_dir = tmp_path / 'dataset'
     image_dir = base_dir / 'images'
